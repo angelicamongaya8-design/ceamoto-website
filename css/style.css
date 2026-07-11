@@ -1302,6 +1302,10 @@ footer::before{
     grid-template-columns:1fr;
 }
 
+footer{
+    padding:45px 8% 20px;
+}
+
 .footer-grid{
     grid-template-columns:1fr;
     text-align:center;
@@ -1309,7 +1313,7 @@ footer::before{
 }
 
 .footer-grid>div{
-    padding:32px 0;
+    padding:20px 0;
     border-top:1px solid rgba(210,105,30,.18);
 }
 
@@ -1324,6 +1328,12 @@ footer::before{
 
 .footer-logo{
     justify-content:center;
+    margin-bottom:12px;
+}
+
+.footer-bottom{
+    margin-top:25px;
+    padding-top:18px;
 }
 
 .footer-about{
