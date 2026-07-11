@@ -144,8 +144,7 @@ section{
       height: 88px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--primary);
-      box-shadow: 0 8px 20px rgba(255, 183, 3, 0.25);
+      box-shadow: 0 6px 16px rgba(0,0,0,.35);
 
 }
 
@@ -1175,8 +1174,7 @@ footer::before{
       height: 50px;
       border-radius: 50%;
       object-fit: cover;
-      border: 2px solid var(--primary);
-      box-shadow: 0 8px 20px rgba(255, 183, 3, 0.25);
+      box-shadow: 0 6px 16px rgba(0,0,0,.35);
 }
 
 .footer-about{
