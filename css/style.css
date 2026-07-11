@@ -558,11 +558,13 @@ text-align:center;
 
 padding-top:140px;
 
+gap:35px;
+
 }
 
 .hero-text p{
 
-margin:auto auto 40px;
+margin:auto auto 25px;
 
 }
 
@@ -576,11 +578,15 @@ justify-content:center;
 
 justify-content:center;
 
+margin-bottom:20px;
+
 }
 
 .hero-stats{
 
 justify-content:center;
+
+margin-top:30px;
 
 }
 
