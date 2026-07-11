@@ -546,6 +546,10 @@ section{
 
 @media(max-width:991px){
 
+.hero{
+    background-attachment:scroll;
+}
+
 .hero-content{
 
 grid-template-columns:1fr;
