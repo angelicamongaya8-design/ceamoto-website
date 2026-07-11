@@ -470,16 +470,14 @@ section{
 .hero-image-tag{
 
     position:absolute;
-    left:20px;
-    bottom:20px;
-    right:20px;
-    background:rgba(15,17,21,.78);
-    backdrop-filter:blur(4px);
-    border:1px solid rgba(210,105,30,.5);
-    border-radius:14px;
-    padding:12px 18px;
+    left:0;
+    right:0;
+    bottom:0;
+    background:linear-gradient(to top, rgba(15,17,21,.92), rgba(15,17,21,0));
+    border-radius:0 0 25px 25px;
+    padding:45px 22px 16px;
     color:var(--white);
-    font-size:.95rem;
+    font-size:.85rem;
     font-weight:600;
 
 }
@@ -488,11 +486,11 @@ section{
 
     display:block;
     color:var(--secondary);
-    font-size:.72rem;
+    font-size:.65rem;
     font-weight:500;
     text-transform:uppercase;
     letter-spacing:1px;
-    margin-top:3px;
+    margin-top:2px;
 
 }
 
@@ -1091,14 +1089,23 @@ gap:30px;
 }
 
 .contact-card a{
-    color:var(--primary);
-    text-decoration:underline;
-    text-underline-offset:3px;
+    display:inline-block;
+    margin-top:6px;
+    padding:8px 20px;
+    border-radius:30px;
+    background:rgba(210,105,30,.12);
+    border:1px solid rgba(210,105,30,.4);
+    color:var(--secondary);
+    text-decoration:none;
+    font-weight:600;
+    font-size:.9rem;
     transition:.3s;
 }
 
 .contact-card a:hover{
-    color:#fff;
+    background:var(--primary);
+    border-color:var(--primary);
+    color:#111;
 }
 
 .contact-map iframe{
