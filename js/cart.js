@@ -209,6 +209,48 @@
 
     });
 
+    // COPY-TO-CLIPBOARD HELPER
+    // (Messenger's m.me links don't reliably pre-fill a message
+    // on all devices/browsers, so we copy the order summary and
+    // ask the person to paste it into the chat instead.)
+
+    function copyToClipboard(text){
+        if(navigator.clipboard && navigator.clipboard.writeText){
+            navigator.clipboard.writeText(text).catch(() => fallbackCopy(text));
+        }else{
+            fallbackCopy(text);
+        }
+    }
+
+    function fallbackCopy(text){
+        const textarea = document.createElement("textarea");
+        textarea.value = text;
+        textarea.style.position = "fixed";
+        textarea.style.opacity = "0";
+        document.body.appendChild(textarea);
+        textarea.focus();
+        textarea.select();
+        try{ document.execCommand("copy"); }catch(e){}
+        document.body.removeChild(textarea);
+    }
+
+    // TOAST NOTICE
+
+    let toastTimer = null;
+
+    function showToast(text){
+        let toast = document.querySelector(".cart-toast");
+        if(!toast){
+            toast = document.createElement("div");
+            toast.className = "cart-toast";
+            document.body.appendChild(toast);
+        }
+        toast.textContent = text;
+        toast.classList.add("show");
+        clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => toast.classList.remove("show"), 4500);
+    }
+
     // CHECKOUT VIA MESSENGER
 
     checkoutBtn.addEventListener("click", () => {
@@ -224,9 +266,10 @@
         message += `\nSubtotal: ${formatPrice(totalPrice())}`;
         message += "\n\nPlease let me know how to pay (GCash/Cash) and arrange pickup or delivery. Thank you!";
 
-        const url = MESSENGER_URL + "?text=" + encodeURIComponent(message);
+        copyToClipboard(message);
+        showToast("Na-copy na ang order mo! Paste (tap & hold, then Paste) mo lang ito sa Messenger chat para makita namin ang mga produkto at quantity.");
 
-        window.open(url, "_blank");
+        window.open(MESSENGER_URL, "_blank");
 
     });
 
