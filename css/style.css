@@ -1952,6 +1952,11 @@ footer{
     justify-content:center;
     gap:16px;
     flex-wrap:wrap;
+    position:sticky;
+    top:120px;
+    z-index:500;
+    background:#12161d;
+    padding:14px 0 18px;
 }
 
 .catalog-search-wrap{
@@ -2006,6 +2011,18 @@ footer{
     display:flex;
     justify-content:center;
     margin-top:40px;
+}
+
+@media(max-width:991px){
+.catalog-controls{
+    top:100px;
+}
+}
+
+@media(max-width:600px){
+.catalog-controls{
+    top:85px;
+}
 }
 
 #catalog-load-more{
