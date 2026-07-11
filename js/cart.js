@@ -40,6 +40,13 @@
     const cartSubtotalAmount = document.querySelector(".cart-subtotal-amount");
     const checkoutBtn = document.querySelector(".checkout-btn");
 
+    const checkoutOverlay = document.querySelector(".checkout-overlay");
+    const checkoutModal = document.querySelector(".checkout-modal");
+    const checkoutModalClose = document.querySelector(".checkout-modal-close");
+    const checkoutModalText = document.querySelector(".checkout-modal-text");
+    const checkoutCopyBtn = document.querySelector(".checkout-copy-btn");
+    const checkoutOpenBtn = document.querySelector(".checkout-open-btn");
+
     // If this page has no cart UI (shouldn't happen on shop.html,
     // but keeps the script safe if included elsewhere), stop here.
     if(!cartBtn || !cartPanel){
@@ -234,28 +241,12 @@
         document.body.removeChild(textarea);
     }
 
-    // TOAST NOTICE
+    // CHECKOUT MODAL
+    // (Since Messenger can't be reliably pre-filled with the order
+    // text, we show the summary in a modal so the person can copy
+    // it, open Messenger, and paste it into the chat themselves.)
 
-    let toastTimer = null;
-
-    function showToast(text){
-        let toast = document.querySelector(".cart-toast");
-        if(!toast){
-            toast = document.createElement("div");
-            toast.className = "cart-toast";
-            document.body.appendChild(toast);
-        }
-        toast.textContent = text;
-        toast.classList.add("show");
-        clearTimeout(toastTimer);
-        toastTimer = setTimeout(() => toast.classList.remove("show"), 4500);
-    }
-
-    // CHECKOUT VIA MESSENGER
-
-    checkoutBtn.addEventListener("click", () => {
-
-        if(cart.length === 0) return;
+    function buildOrderMessage(){
 
         let message = "Hi CEAMOTO! I'd like to order:\n\n";
 
@@ -266,11 +257,46 @@
         message += `\nSubtotal: ${formatPrice(totalPrice())}`;
         message += "\n\nPlease let me know how to pay (GCash/Cash) and arrange pickup or delivery. Thank you!";
 
-        copyToClipboard(message);
-        showToast("Na-copy na ang order mo! Paste (tap & hold, then Paste) mo lang ito sa Messenger chat para makita namin ang mga produkto at quantity.");
+        return message;
+    }
 
+    function openCheckoutModal(){
+        checkoutModalText.value = buildOrderMessage();
+        copyToClipboard(checkoutModalText.value);
+        checkoutOverlay.classList.add("show");
+        checkoutModal.classList.add("show");
+    }
+
+    function closeCheckoutModal(){
+        checkoutOverlay.classList.remove("show");
+        checkoutModal.classList.remove("show");
+        checkoutCopyBtn.classList.remove("copied");
+        checkoutCopyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy Order';
+    }
+
+    checkoutBtn.addEventListener("click", () => {
+        if(cart.length === 0) return;
+        openCheckoutModal();
+    });
+
+    checkoutModalClose.addEventListener("click", closeCheckoutModal);
+    checkoutOverlay.addEventListener("click", (e) => {
+        if(e.target === checkoutOverlay) closeCheckoutModal();
+    });
+
+    checkoutCopyBtn.addEventListener("click", () => {
+        checkoutModalText.select();
+        copyToClipboard(checkoutModalText.value);
+        checkoutCopyBtn.classList.add("copied");
+        checkoutCopyBtn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+        setTimeout(() => {
+            checkoutCopyBtn.classList.remove("copied");
+            checkoutCopyBtn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy Order';
+        }, 2000);
+    });
+
+    checkoutOpenBtn.addEventListener("click", () => {
         window.open(MESSENGER_URL, "_blank");
-
     });
 
     // INITIAL RENDER
