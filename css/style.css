@@ -573,9 +573,31 @@ justify-content:center;
 
 .service-tags{
 
-justify-content:center;
+flex-wrap:nowrap;
 
-margin-bottom:20px;
+justify-content:flex-start;
+
+overflow-x:auto;
+
+-webkit-overflow-scrolling:touch;
+
+margin:0 -25px 20px;
+
+padding:0 25px 10px;
+
+scrollbar-width:none;
+
+}
+
+.service-tags::-webkit-scrollbar{
+
+display:none;
+
+}
+
+.service-tags a{
+
+flex-shrink:0;
 
 }
 
