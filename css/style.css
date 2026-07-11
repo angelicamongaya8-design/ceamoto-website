@@ -1382,6 +1382,11 @@ footer::before{
     bottom:15px;
 }
 
+.footer-bottom{
+    padding-left:70px;
+    padding-right:70px;
+}
+
 .messenger-btn{
     bottom:80px;
 }
