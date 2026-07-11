@@ -115,10 +115,18 @@
     // back into view right after re-rendering so that never happens.
 
     function keepSearchInView(){
-        const controls = document.querySelector(".catalog-controls");
-        if(controls){
-            controls.scrollIntoView({block:"nearest"});
-        }
+        // scrollIntoView() on the sticky search bar itself is not
+        // reliable (sticky elements report unstable geometry to it),
+        // and an animated ("smooth") scroll can get interrupted by the
+        // browser's own scroll-position clamp when the page suddenly
+        // gets shorter. So instead: compute the target position from
+        // the static (non-sticky) wrapper and jump there instantly.
+        const wrap = document.querySelector(".catalog-list-wrap");
+        if(!wrap) return;
+        const navbarH = navbar ? navbar.offsetHeight : 120;
+        const rect = wrap.getBoundingClientRect();
+        const targetY = window.scrollY + rect.top - navbarH;
+        window.scrollTo({top: Math.max(0, targetY), behavior: "instant"});
     }
 
     if(searchInput){
