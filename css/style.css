@@ -1823,6 +1823,18 @@ footer{
     width:100%;
 }
 
+@media(min-width:992px){
+.featured-grid{
+    grid-template-columns:repeat(4,1fr);
+}
+}
+
+@media(min-width:601px) and (max-width:991px){
+.featured-grid{
+    grid-template-columns:repeat(2,1fr);
+}
+}
+
 .shop-card{
     background:var(--card);
     border-radius:var(--radius);
