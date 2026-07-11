@@ -2004,7 +2004,7 @@ footer{
     gap:12px;
     flex-wrap:wrap;
     position:sticky;
-    top:120px;
+    top:var(--navbar-h,120px);
     z-index:500;
     background:#12161d;
     padding:8px 0 12px;
@@ -2064,17 +2064,6 @@ footer{
     margin-top:40px;
 }
 
-@media(max-width:991px){
-.catalog-controls{
-    top:100px;
-}
-}
-
-@media(max-width:600px){
-.catalog-controls{
-    top:85px;
-}
-}
 
 #catalog-load-more{
     display:none;
