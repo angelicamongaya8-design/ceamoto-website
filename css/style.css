@@ -1298,6 +1298,10 @@ footer::before{
     color:var(--gray);
 }
 
+.footer-bottom .nowrap{
+    white-space:nowrap;
+}
+
 /* ===========================
    FLOATING BUTTONS
 =========================== */
