@@ -52,7 +52,7 @@ document.querySelectorAll(".nav-links a").forEach(link => {
 // ===========================
 
 const reveals = document.querySelectorAll(
-".service-card, .gallery-item, .testimonial-card, .feature, .contact-card, .section-header, .about-image, .about-content, .contact-info, .contact-map"
+".service-card, .shop-card, .gallery-item, .testimonial-card, .feature, .contact-card, .section-header, .about-image, .about-content, .contact-info, .contact-map"
 );
 
 function revealElements(){
