@@ -139,6 +139,16 @@
             keepSearchInView();
         });
 
+        // Some mobile keyboards don't dismiss automatically when the
+        // "Done"/"Search"/"Go" key is tapped unless the input is
+        // explicitly blurred - so do that ourselves on Enter.
+        searchInput.addEventListener("keydown", (e) => {
+            if(e.key === "Enter"){
+                e.preventDefault();
+                searchInput.blur();
+            }
+        });
+
     }
 
     if(searchClearBtn){
