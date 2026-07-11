@@ -1924,6 +1924,100 @@ footer{
 }
 
 /* ===========================
+   SHOP - FULL CATALOG
+=========================== */
+
+.catalog-header{
+    margin:80px 0 40px;
+    text-align:center;
+}
+
+.catalog-header h2{
+    font-size:2.2rem;
+    margin-bottom:10px;
+}
+
+.catalog-header p{
+    color:var(--gray);
+    margin-bottom:25px;
+}
+
+.catalog-controls{
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:16px;
+    flex-wrap:wrap;
+}
+
+.catalog-search-wrap{
+    position:relative;
+    width:100%;
+    max-width:380px;
+}
+
+.catalog-search-wrap i{
+    position:absolute;
+    left:18px;
+    top:50%;
+    transform:translateY(-50%);
+    color:var(--gray);
+    font-size:.9rem;
+}
+
+.catalog-search-wrap input{
+    width:100%;
+    background:var(--card);
+    border:1px solid rgba(255,255,255,.1);
+    border-radius:30px;
+    padding:13px 20px 13px 42px;
+    color:#fff;
+    font-family:'Poppins',sans-serif;
+    font-size:.9rem;
+}
+
+.catalog-search-wrap input:focus{
+    outline:none;
+    border-color:var(--primary);
+}
+
+.catalog-search-wrap input::placeholder{
+    color:var(--gray);
+}
+
+.catalog-count{
+    color:var(--gray);
+    font-size:.85rem;
+    white-space:nowrap;
+}
+
+.catalog-empty{
+    grid-column:1/-1;
+    text-align:center;
+    color:var(--gray);
+    padding:40px 0;
+}
+
+.catalog-load-more-wrap{
+    display:flex;
+    justify-content:center;
+    margin-top:40px;
+}
+
+#catalog-load-more{
+    display:none;
+    align-items:center;
+    justify-content:center;
+}
+
+button.secondary-btn{
+    background:transparent;
+    font-family:'Poppins',sans-serif;
+    font-size:1rem;
+    cursor:pointer;
+}
+
+/* ===========================
    CART - FLOATING BUTTON
 =========================== */
 
