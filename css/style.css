@@ -602,6 +602,19 @@ display:none;
 
 }
 
+.logo img{
+
+width:60px;
+height:60px;
+
+}
+
+.logo span{
+
+font-size:1.1rem;
+
+}
+
 .hero-text h1{
 
 font-size:3rem;
@@ -627,6 +640,25 @@ padding:80px 25px;
 .navbar{
 
 padding:18px 25px;
+
+}
+
+.logo img{
+
+width:48px;
+height:48px;
+
+}
+
+.logo span{
+
+font-size:1rem;
+
+}
+
+.section-header{
+
+margin-bottom:45px;
 
 }
 
