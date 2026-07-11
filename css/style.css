@@ -2030,7 +2030,7 @@ footer{
     background:var(--card);
     border:1px solid rgba(255,255,255,.1);
     border-radius:30px;
-    padding:9px 18px 9px 38px;
+    padding:9px 36px 9px 38px;
     color:#fff;
     font-family:'Poppins',sans-serif;
     font-size:.82rem;
@@ -2043,6 +2043,36 @@ footer{
 
 .catalog-search-wrap input::placeholder{
     color:var(--gray);
+}
+
+.catalog-search-clear{
+    position:absolute;
+    right:6px;
+    top:50%;
+    transform:translateY(-50%);
+    width:26px;
+    height:26px;
+    border-radius:50%;
+    border:none;
+    background:transparent;
+    color:var(--gray);
+    font-size:.75rem;
+    cursor:pointer;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    transition:.2s;
+}
+
+.catalog-search-clear.show{
+    display:flex;
+}
+
+@media (hover:hover){
+.catalog-search-clear:hover{
+    background:rgba(255,255,255,.1);
+    color:#fff;
+}
 }
 
 .catalog-count{
