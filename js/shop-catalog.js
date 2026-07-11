@@ -10,6 +10,22 @@
 
 (function(){
 
+    // Keep the sticky search bar's top offset locked to the real,
+    // rendered height of the fixed navbar (instead of a guessed
+    // pixel value per breakpoint) so there's never a gap or overlap
+    // between the navbar and the sticky bar at any screen size.
+
+    const navbar = document.querySelector(".navbar");
+
+    function syncNavbarHeight(){
+        if(!navbar) return;
+        document.documentElement.style.setProperty("--navbar-h", navbar.offsetHeight + "px");
+    }
+
+    syncNavbarHeight();
+    window.addEventListener("resize", syncNavbarHeight);
+    window.addEventListener("orientationchange", syncNavbarHeight);
+
     const container = document.getElementById("catalog-grid");
 
     if(!container || typeof CEAMOTO_CATALOG === "undefined"){
