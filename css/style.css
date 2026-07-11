@@ -550,12 +550,6 @@ justify-content:center;
 
 }
 
-.hero-image{
-
-order:-1;
-
-}
-
 .nav-links{
 
 display:none;
@@ -1243,6 +1237,14 @@ footer::before{
 }
 
 .footer-contact li{
+    justify-content:center;
+}
+
+.footer-links ul{
+    align-items:center;
+}
+
+.footer-links a{
     justify-content:center;
 }
 
