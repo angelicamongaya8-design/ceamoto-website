@@ -148,36 +148,38 @@
     }
 
     // ADD TO CART BUTTONS
+    // (event delegation so this also works for catalog
+    // cards that get rendered into the page after load)
 
-    document.querySelectorAll(".add-to-cart-btn").forEach(btn => {
+    document.addEventListener("click", (e) => {
 
-        btn.addEventListener("click", () => {
+        const btn = e.target.closest(".add-to-cart-btn");
 
-            const card = btn.closest(".shop-card");
+        if(!btn) return;
 
-            if(!card) return;
+        const card = btn.closest(".shop-card");
 
-            const product = {
-                id: card.dataset.id,
-                name: card.dataset.name,
-                price: Number(card.dataset.price),
-                img: card.dataset.img
-            };
+        if(!card) return;
 
-            addToCart(product);
+        const product = {
+            id: card.dataset.id,
+            name: card.dataset.name,
+            price: Number(card.dataset.price),
+            img: card.dataset.img
+        };
 
-            btn.classList.add("added");
-            const original = btn.innerHTML;
-            btn.innerHTML = '<i class="fa-solid fa-check"></i> Added';
+        addToCart(product);
 
-            setTimeout(() => {
-                btn.classList.remove("added");
-                btn.innerHTML = original;
-            }, 1200);
+        btn.classList.add("added");
+        const original = btn.innerHTML;
+        btn.innerHTML = '<i class="fa-solid fa-check"></i> Added';
 
-            openCart();
+        setTimeout(() => {
+            btn.classList.remove("added");
+            btn.innerHTML = original;
+        }, 1200);
 
-        });
+        openCart();
 
     });
 

@@ -7,12 +7,6 @@
 
 (function(){
 
-    const cards = document.querySelectorAll(".shop-card-img");
-
-    if(cards.length === 0){
-        return;
-    }
-
     // Build the lightbox once and reuse it
 
     const lightbox = document.createElement("div");
@@ -44,7 +38,12 @@
         currentIndex = (index + currentImages.length) % currentImages.length;
 
         lightboxImg.src = currentImages[currentIndex];
-        counter.textContent = (currentIndex + 1) + " / " + currentImages.length;
+
+        const multiple = currentImages.length > 1;
+
+        counter.textContent = multiple ? (currentIndex + 1) + " / " + currentImages.length : "";
+        prevBtn.style.display = multiple ? "flex" : "none";
+        nextBtn.style.display = multiple ? "flex" : "none";
 
     }
 
@@ -62,26 +61,29 @@
         lightbox.classList.remove("show");
     }
 
-    cards.forEach(card => {
+    // Event delegation so this also works for catalog
+    // cards that get rendered into the page after load.
 
-        card.addEventListener("click", () => {
+    document.addEventListener("click", (e) => {
 
-            let images = [];
+        const card = e.target.closest(".shop-card-img");
 
-            try{
-                images = JSON.parse(card.dataset.images || "[]");
-            }catch(e){
-                images = [];
-            }
+        if(!card) return;
 
-            if(images.length === 0){
-                const img = card.querySelector("img");
-                if(img) images = [img.src];
-            }
+        let images = [];
 
-            openLightbox(images, 0);
+        try{
+            images = JSON.parse(card.dataset.images || "[]");
+        }catch(err){
+            images = [];
+        }
 
-        });
+        if(images.length === 0){
+            const img = card.querySelector("img");
+            if(img) images = [img.src];
+        }
+
+        openLightbox(images, 0);
 
     });
 
