@@ -584,16 +584,20 @@ margin:auto auto 25px;
 
 justify-content:center;
 
-gap:12px;
+flex-wrap:nowrap;
+
+gap:10px;
 
 }
 
 .primary-btn,
 .secondary-btn{
 
-padding:13px 26px;
+padding:12px 16px;
 
-font-size:.9rem;
+font-size:.8rem;
+
+white-space:nowrap;
 
 }
 
