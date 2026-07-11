@@ -185,6 +185,7 @@ section{
 
 }
 
+@media (hover:hover){
 .nav-links a:hover::after{
 
     width:100%;
@@ -195,6 +196,7 @@ section{
 
     color:var(--primary);
 
+}
 }
 
 .btn-nav{
@@ -213,12 +215,14 @@ section{
 
 }
 
+@media (hover:hover){
 .btn-nav:hover{
 
     transform:translateY(-3px);
 
     background:#fff;
 
+}
 }
 
 .menu-btn{
@@ -795,8 +799,10 @@ gap:30px;
     font-weight:600;
 }
 
+@media (hover:hover){
 .service-card a:hover{
     color:#fff;
+}
 }
 
 /* ===========================
@@ -1133,10 +1139,12 @@ gap:30px;
     transition:.3s;
 }
 
+@media (hover:hover){
 .contact-card a:hover{
     background:var(--primary);
     border-color:var(--primary);
     color:#111;
+}
 }
 
 .contact-map iframe{
@@ -1215,15 +1223,6 @@ footer::before{
     font-style:italic;
 }
 
-.footer-about::before{
-    content:"";
-    display:block;
-    width:40px;
-    height:2px;
-    background:var(--primary);
-    margin:0 0 14px;
-}
-
 .footer-links h3,
 .footer-social h3{
     margin-bottom:20px;
@@ -1248,9 +1247,11 @@ footer::before{
     transition:.3s;
 }
 
+@media (hover:hover){
 .footer-links a:hover{
     color:var(--primary);
     transform:translateX(6px);
+}
 }
 
 .social-icons{
@@ -1269,11 +1270,13 @@ footer::before{
     transition:.3s;
 }
 
+@media (hover:hover){
 .social-icons a:hover{
     background:var(--primary);
     color:#111;
     transform:translateY(-4px);
     box-shadow:0 8px 20px rgba(212,160,23,.35);
+}
 }
 
 .footer-bottom{
@@ -1312,9 +1315,11 @@ footer::before{
     bottom:95px;
 }
 
+@media (hover:hover){
 .back-to-top:hover,
 .messenger-btn:hover{
     transform:translateY(-5px);
+}
 }
 
 /* ===========================
@@ -1378,10 +1383,6 @@ footer{
 
 .footer-about{
     margin:auto;
-}
-
-.footer-about::before{
-    margin:0 auto 14px;
 }
 
 .footer-contact li{
