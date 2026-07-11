@@ -2338,6 +2338,32 @@ button.secondary-btn{
     line-height:1.5;
 }
 
+.cart-toast{
+    position:fixed;
+    left:50%;
+    bottom:30px;
+    transform:translateX(-50%) translateY(20px);
+    background:#1c2129;
+    color:#fff;
+    padding:14px 22px;
+    border-radius:12px;
+    box-shadow:var(--shadow);
+    font-family:'Poppins',sans-serif;
+    font-size:.85rem;
+    line-height:1.5;
+    max-width:min(90%,380px);
+    text-align:center;
+    z-index:2000;
+    opacity:0;
+    pointer-events:none;
+    transition:.3s;
+}
+
+.cart-toast.show{
+    opacity:1;
+    transform:translateX(-50%) translateY(0);
+}
+
 @media(max-width:600px){
 
 .cart-btn{
