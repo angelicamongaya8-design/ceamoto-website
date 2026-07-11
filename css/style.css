@@ -410,12 +410,14 @@ section{
 
 }
 
+@media (hover:hover){
 .primary-btn:hover{
 
     transform:translateY(-5px);
 
     box-shadow:var(--shadow);
 
+}
 }
 
 .secondary-btn{
@@ -432,12 +434,14 @@ section{
 
 }
 
+@media (hover:hover){
 .secondary-btn:hover{
 
     background:var(--primary);
 
     color:#111;
 
+}
 }
 
 .hero-stats{
