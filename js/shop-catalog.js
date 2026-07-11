@@ -33,6 +33,7 @@
     }
 
     const searchInput = document.getElementById("catalog-search");
+    const searchClearBtn = document.getElementById("catalog-search-clear");
     const loadMoreBtn = document.getElementById("catalog-load-more");
     const resultsCount = document.getElementById("catalog-count");
 
@@ -101,12 +102,47 @@
 
     }
 
+    function syncClearBtn(){
+        if(!searchClearBtn) return;
+        searchClearBtn.classList.toggle("show", searchInput.value.length > 0);
+    }
+
+    // When a search narrows the results a lot, the catalog (and the
+    // whole page) suddenly gets much shorter. If the person was
+    // scrolled down while typing, the browser clamps the scroll
+    // position to the new, shorter page - which can strand them at
+    // the very bottom, below the search bar. Nudge the search bar
+    // back into view right after re-rendering so that never happens.
+
+    function keepSearchInView(){
+        const controls = document.querySelector(".catalog-controls");
+        if(controls){
+            controls.scrollIntoView({block:"nearest"});
+        }
+    }
+
     if(searchInput){
 
         searchInput.addEventListener("input", () => {
             query = searchInput.value.trim();
             shown = BATCH_SIZE;
+            syncClearBtn();
             render();
+            keepSearchInView();
+        });
+
+    }
+
+    if(searchClearBtn){
+
+        searchClearBtn.addEventListener("click", () => {
+            searchInput.value = "";
+            query = "";
+            shown = BATCH_SIZE;
+            syncClearBtn();
+            render();
+            searchInput.focus();
+            keepSearchInView();
         });
 
     }
