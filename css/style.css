@@ -1548,3 +1548,81 @@ footer{
         padding-top:130px;
     }
 }
+
+/* ===========================
+   TABLET / IPAD FIX
+   (keep 2-column layouts on
+   tablet widths instead of
+   forcing the phone stack)
+=========================== */
+
+@media(min-width:768px) and (max-width:991px){
+
+.hero-content{
+    grid-template-columns:1fr 1fr;
+    text-align:left;
+    gap:40px;
+}
+
+.hero-buttons{
+    justify-content:flex-start;
+}
+
+.service-tags{
+    margin:0 0 20px;
+}
+
+.hero-stats{
+    justify-content:flex-start;
+}
+
+.about-container{
+    grid-template-columns:1fr 1fr;
+}
+
+.features{
+    grid-template-columns:repeat(2,1fr);
+}
+
+.contact-container{
+    grid-template-columns:1fr 1fr;
+}
+
+.footer-grid{
+    grid-template-columns:1fr 1fr;
+    text-align:left;
+    gap:40px 30px;
+}
+
+.footer-grid>div{
+    padding:0;
+    border-top:none;
+}
+
+.footer-logo{
+    justify-content:flex-start;
+    margin-bottom:20px;
+}
+
+.footer-about{
+    margin:0;
+}
+
+.footer-contact li{
+    justify-content:flex-start;
+}
+
+.footer-links a{
+    justify-content:flex-start;
+}
+
+.social-icons{
+    justify-content:flex-start;
+}
+
+.footer-bottom{
+    margin-top:50px;
+    padding-top:25px;
+}
+
+}
