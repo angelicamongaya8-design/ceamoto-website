@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Book a Service | CEAMOTO</title>
+
+    <meta name="description" content="Book a motorcycle service, repair, or custom build with CEAMOTO in Calamba, Laguna. Tell us the modifications you want so we can prep the parts ahead of time.">
+    <meta name="theme-color" content="#d2691e">
+
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
+
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="Book a Service | CEAMOTO">
+    <meta property="og:description" content="Book a motorcycle service, repair, or custom build with CEAMOTO in Calamba, Laguna. Tell us the modifications you want so we can prep the parts ahead of time.">
+    <meta property="og:image" content="images/caferacer.jpg">
+    <meta property="og:url" content="https://angelicamongaya8-design.github.io/ceamoto-website/booking.html">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" href="css/style.css?v=2">
+</head>
+
+<body data-page="booking.html">
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        <img src="images/logo.jpg" alt="CEAMOTO Logo">
+        <span>CEAMOTO</span>
+    </a>
+
+    <ul class="nav-links">
+
+        <li><a href="index.html">Home</a></li>
+
+        <li><a href="services.html">Services</a></li>
+
+        <li><a href="shop.html">Shop</a></li>
+
+        <li><a href="gallery.html">Gallery</a></li>
+
+        <li><a href="about.html">About</a></li>
+
+        <li><a href="contact.html">Contact</a></li>
+
+        <li class="nav-cta-item"><a href="booking.html">Book Service</a></li>
+
+    </ul>
+
+    <a href="booking.html" class="btn-nav">
+
+        Book Service
+
+    </a>
+
+    <button class="menu-btn">
+
+        <i class="fa-solid fa-bars"></i>
+
+    </button>
+
+</nav>
+
+<!-- ===========================
+     BOOKING
+=========================== -->
+
+<section id="booking" class="top-offset">
+
+    <div class="section-header reveal">
+
+        <span>Book a Service</span>
+
+        <h2>Schedule Your Visit</h2>
+
+        <p>
+            Tell us what you'd like done and when you'd like to come in.
+            Let us know the modifications you have in mind so we can
+            prep the right parts ahead of your visit.
+        </p>
+
+    </div>
+
+    <div class="booking-wrap">
+
+        <form id="booking-form" class="booking-form" novalidate>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="bk-name">Full Name <span class="req">*</span></label>
+                    <input type="text" id="bk-name" name="name" required autocomplete="name">
+                </div>
+
+                <div class="form-group">
+                    <label for="bk-contact">Contact Number <span class="req">*</span></label>
+                    <input type="tel" id="bk-contact" name="contact" required autocomplete="tel">
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="bk-fb">Facebook Name / Messenger (optional)</label>
+                    <input type="text" id="bk-fb" name="facebook" autocomplete="off">
+                </div>
+
+                <div class="form-group">
+                    <label for="bk-moto">Motorcycle Model <span class="req">*</span></label>
+                    <input type="text" id="bk-moto" name="motorcycle" placeholder="e.g. Honda TMX155" required>
+                </div>
+
+            </div>
+
+            <div class="form-row">
+
+                <div class="form-group">
+                    <label for="bk-date">Preferred Date <span class="req">*</span></label>
+                    <input type="date" id="bk-date" name="date" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="bk-time">Preferred Time <span class="req">*</span></label>
+                    <select id="bk-time" name="time" required>
+                        <option value="" disabled selected>Select a time</option>
+                        <option>9:00 AM</option>
+                        <option>10:00 AM</option>
+                        <option>11:00 AM</option>
+                        <option>1:00 PM</option>
+                        <option>2:00 PM</option>
+                        <option>3:00 PM</option>
+                        <option>4:00 PM</option>
+                        <option>5:00 PM</option>
+                    </select>
+                </div>
+
+            </div>
+
+            <div class="form-group">
+
+                <label>What modifications would you like? <span class="req">*</span></label>
+
+                <div class="checkbox-grid" id="bk-mods">
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="Cafe Racer Conversion">
+                        <span>Cafe Racer Conversion</span>
+                    </label>
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="Scrambler Conversion">
+                        <span>Scrambler Conversion</span>
+                    </label>
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="Handlebar Change">
+                        <span>Handlebar Change</span>
+                    </label>
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="Seat Modification">
+                        <span>Seat Modification</span>
+                    </label>
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="Exhaust Upgrade">
+                        <span>Exhaust Upgrade</span>
+                    </label>
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="Paint Job / Repaint">
+                        <span>Paint Job / Repaint</span>
+                    </label>
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="Tire / Rim Change">
+                        <span>Tire / Rim Change</span>
+                    </label>
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="Electrical / Wiring Work">
+                        <span>Electrical / Wiring Work</span>
+                    </label>
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="General Repair / PMS">
+                        <span>General Repair / PMS</span>
+                    </label>
+
+                    <label class="checkbox-item">
+                        <input type="checkbox" value="Other">
+                        <span>Other</span>
+                    </label>
+
+                </div>
+
+                <p class="field-error" id="bk-mods-error">Please select at least one.</p>
+
+            </div>
+
+            <div class="form-group">
+                <label for="bk-details">Additional Details</label>
+                <textarea id="bk-details" name="details" rows="5" placeholder="Describe what you'd like done to your motorcycle, including specific parts if you already have something in mind..."></textarea>
+            </div>
+
+            <button type="submit" class="booking-submit-btn" id="bk-submit-btn">
+                <i class="fa-solid fa-calendar-check"></i> Submit Booking
+            </button>
+
+            <p class="booking-note">
+                We'll review your booking and reach out via your contact
+                number or Messenger to confirm your schedule.
+            </p>
+
+        </form>
+
+        <div class="booking-success" id="booking-success">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <h3>Booking Received!</h3>
+
+            <p>
+                Thank you! We've received your booking request and will
+                contact you shortly to confirm your schedule.
+            </p>
+
+            <a href="https://m.me/CEAmotorparts" target="_blank" class="primary-btn">
+                Message Us for Faster Confirmation
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     FOOTER
+=========================== -->
+
+<footer>
+
+    <div class="footer-grid">
+
+        <div>
+
+            <div class="footer-logo">
+
+                <img src="images/logo.jpg"
+                     alt="CEAMOTO Logo">
+
+                <h3>CEAMOTO</h3>
+
+            </div>
+
+            <p class="footer-about">
+
+                Custom Cafe Racer & Scrambler builds,
+                fabrication,
+                motorcycle parts,
+                and repairs.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>Quick Links</h3>
+
+            <ul>
+
+                <li><a href="index.html"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+
+                <li><a href="services.html"><i class="fa-solid fa-chevron-right"></i> Services</a></li>
+
+                <li><a href="shop.html"><i class="fa-solid fa-chevron-right"></i> Shop</a></li>
+
+                <li><a href="gallery.html"><i class="fa-solid fa-chevron-right"></i> Gallery</a></li>
+
+                <li><a href="about.html"><i class="fa-solid fa-chevron-right"></i> About</a></li>
+
+                <li><a href="contact.html"><i class="fa-solid fa-chevron-right"></i> Contact</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer-contact">
+
+            <h3>Get In Touch</h3>
+
+            <ul>
+
+                <li>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Calamba, Laguna, Philippines</span>
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+63 976 293 8465</span>
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Mon - Sat: 9:00 AM - 6:00 PM</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer-social">
+
+            <h3>Follow Us</h3>
+
+            <div class="social-icons">
+
+                <a href="https://www.facebook.com/CEAmotorparts" target="_blank">
+
+                    <i class="fab fa-facebook-f"></i>
+
+                </a>
+
+                <a href="https://shopee.ph/ceamoto?uls_trackid=563u4bgt00m5&utm_content=G359thLQrXK61xgoouaKKDGLCej" target="_blank">
+
+                    <i class="fas fa-shopping-bag"></i>
+
+                </a>
+
+                <a href="#" target="_blank">
+
+                    <i class="fab fa-instagram"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        © 2026 CEAMOTO. <span class="nowrap">All Rights Reserved.</span>
+
+    </div>
+
+</footer>
+
+<!-- ===========================
+     FLOATING BUTTONS
+=========================== -->
+
+<a href="#home" class="back-to-top">
+
+    <i class="fa-solid fa-arrow-up"></i>
+
+</a>
+
+<a href="https://m.me/CEAmotorparts"
+   class="messenger-btn"
+   target="_blank">
+
+    <i class="fa-brands fa-facebook-messenger"></i>
+
+</a>
+
+<!-- ===========================
+     JAVASCRIPT
+=========================== -->
+
+<script src="js/script.js?v=2"></script>
+
+<script src="js/booking-config.js"></script>
+<script src="js/booking.js?v=1"></script>
+
+</body>
+</html>
