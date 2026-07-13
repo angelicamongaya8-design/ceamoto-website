@@ -197,7 +197,20 @@
             if(data && data.result === "success"){
                 form.style.display = "none";
                 successBox.classList.add("show");
-                successBox.scrollIntoView({block: "start", behavior: "instant"});
+
+                // Hiding the form makes the page much shorter, and
+                // scrollIntoView() run in the same tick can compute its
+                // target against the stale (taller) layout - landing the
+                // person at the bottom instead of the top of the success
+                // message. Wait a frame for the layout to settle, then
+                // jump to a manually-computed position instead.
+                requestAnimationFrame(() => {
+                    const navbar = document.querySelector(".navbar");
+                    const navbarH = navbar ? navbar.offsetHeight : 100;
+                    const rect = successBox.getBoundingClientRect();
+                    const targetY = window.scrollY + rect.top - navbarH;
+                    window.scrollTo({top: Math.max(0, targetY), behavior: "instant"});
+                });
             }else{
                 throw new Error(data && data.error ? data.error : "Unknown error");
             }
