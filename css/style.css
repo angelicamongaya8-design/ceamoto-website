@@ -1531,6 +1531,10 @@ footer{
     color:var(--primary)!important;
 }
 
+.nav-cta-item a.current{
+    color:#111!important;
+}
+
 .current::after{
     width:100%!important;
 }
