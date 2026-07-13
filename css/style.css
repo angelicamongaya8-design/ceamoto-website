@@ -2650,6 +2650,10 @@ button.secondary-btn{
     transition:.25s;
 }
 
+.form-group input[type="date"]{
+    color-scheme:dark;
+}
+
 .form-group select{
     cursor:pointer;
 }
