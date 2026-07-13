@@ -65,6 +65,7 @@
         const booking = {
             name: document.getElementById("bk-name").value.trim(),
             contact: document.getElementById("bk-contact").value.trim(),
+            email: document.getElementById("bk-email").value.trim(),
             facebook: document.getElementById("bk-fb").value.trim(),
             motorcycle: document.getElementById("bk-moto").value.trim(),
             date: document.getElementById("bk-date").value,
