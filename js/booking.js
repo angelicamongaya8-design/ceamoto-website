@@ -18,14 +18,112 @@
     const modsError = document.getElementById("bk-mods-error");
     const successBox = document.getElementById("booking-success");
 
-    // Don't allow picking a date in the past.
+    // ===========================
+    // BUSINESS HOURS
+    // Open Monday-Saturday, 9:00 AM - 6:00 PM. Closed Sundays.
+    // ===========================
     const dateInput = document.getElementById("bk-date");
-    if(dateInput){
+    const dateError = document.getElementById("bk-date-error");
+    const timeSelect = document.getElementById("bk-time");
+
+    function todayParts(){
         const today = new Date();
-        const yyyy = today.getFullYear();
-        const mm = String(today.getMonth() + 1).padStart(2, "0");
-        const dd = String(today.getDate()).padStart(2, "0");
-        dateInput.min = `${yyyy}-${mm}-${dd}`;
+        return {
+            yyyy: today.getFullYear(),
+            mm: String(today.getMonth() + 1).padStart(2, "0"),
+            dd: String(today.getDate()).padStart(2, "0")
+        };
+    }
+
+    // Don't allow picking a date in the past.
+    if(dateInput){
+        const t = todayParts();
+        dateInput.min = `${t.yyyy}-${t.mm}-${t.dd}`;
+    }
+
+    // Parses an "h:mm AM/PM" option value into a 24hr hour number.
+    function optionHour24(text){
+        const match = /^(\d+):\d+\s*(AM|PM)$/i.exec(text.trim());
+        if(!match){
+            return null;
+        }
+        let hour = parseInt(match[1], 10);
+        const isPM = match[2].toUpperCase() === "PM";
+        if(isPM && hour !== 12){
+            hour += 12;
+        }
+        if(!isPM && hour === 12){
+            hour = 0;
+        }
+        return hour;
+    }
+
+    // Grey out (disable) time slots that no longer make sense for the
+    // currently selected date - i.e. slots already passed, if the
+    // selected date is today.
+    function refreshTimeAvailability(){
+
+        if(!timeSelect || !dateInput || !dateInput.value){
+            return;
+        }
+
+        const t = todayParts();
+        const isToday = dateInput.value === `${t.yyyy}-${t.mm}-${t.dd}`;
+        const now = new Date();
+
+        Array.from(timeSelect.options).forEach(opt => {
+
+            if(!opt.value){
+                return;
+            }
+
+            const hour24 = optionHour24(opt.value);
+            const alreadyPassed = isToday && hour24 !== null &&
+                (hour24 < now.getHours() || (hour24 === now.getHours() && now.getMinutes() > 0));
+
+            opt.disabled = alreadyPassed;
+
+            if(alreadyPassed && opt.selected){
+                timeSelect.value = "";
+            }
+
+        });
+
+    }
+
+    function isSunday(dateStr){
+        // "YYYY-MM-DD" -> Date parsed as local time (avoids UTC day-shift).
+        const parts = dateStr.split("-");
+        if(parts.length !== 3){
+            return false;
+        }
+        const d = new Date(parts[0], parts[1] - 1, parts[2]);
+        return d.getDay() === 0;
+    }
+
+    function validateDate(){
+
+        if(!dateInput || !dateInput.value){
+            dateError.classList.remove("show");
+            return true;
+        }
+
+        if(isSunday(dateInput.value)){
+            dateError.classList.add("show");
+            dateInput.value = "";
+            return false;
+        }
+
+        dateError.classList.remove("show");
+        return true;
+
+    }
+
+    if(dateInput){
+        dateInput.addEventListener("change", () => {
+            validateDate();
+            refreshTimeAvailability();
+        });
     }
 
     function getSelectedMods(){
@@ -44,6 +142,11 @@
 
         if(!form.checkValidity()){
             form.reportValidity();
+            return;
+        }
+
+        if(!validateDate()){
+            dateInput.scrollIntoView({block: "center", behavior: "instant"});
             return;
         }
 
