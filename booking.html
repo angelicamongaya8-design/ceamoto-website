@@ -131,6 +131,8 @@
                 <div class="form-group">
                     <label for="bk-date">Preferred Date <span class="req">*</span></label>
                     <input type="date" id="bk-date" name="date" required>
+                    <p class="field-hint">Open Monday–Saturday, 9:00 AM–6:00 PM. Closed Sundays.</p>
+                    <p class="field-error" id="bk-date-error">We're closed on Sundays. Please pick a date Monday–Saturday.</p>
                 </div>
 
             </div>
@@ -141,14 +143,14 @@
                     <label for="bk-time">Preferred Time <span class="req">*</span></label>
                     <select id="bk-time" name="time" required>
                         <option value="" disabled selected>Select a time</option>
-                        <option>9:00 AM</option>
-                        <option>10:00 AM</option>
-                        <option>11:00 AM</option>
-                        <option>1:00 PM</option>
-                        <option>2:00 PM</option>
-                        <option>3:00 PM</option>
-                        <option>4:00 PM</option>
-                        <option>5:00 PM</option>
+                        <option value="9:00 AM">9:00 AM</option>
+                        <option value="10:00 AM">10:00 AM</option>
+                        <option value="11:00 AM">11:00 AM</option>
+                        <option value="1:00 PM">1:00 PM</option>
+                        <option value="2:00 PM">2:00 PM</option>
+                        <option value="3:00 PM">3:00 PM</option>
+                        <option value="4:00 PM">4:00 PM</option>
+                        <option value="5:00 PM">5:00 PM</option>
                     </select>
                 </div>
 
