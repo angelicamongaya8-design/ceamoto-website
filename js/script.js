@@ -240,15 +240,15 @@ e.stopPropagation();
 // PARALLAX HERO
 // ===========================
 
-const hero=document.querySelector(".hero");
+const gelai=document.querySelector(".gelai");
 
 window.addEventListener("scroll",()=>{
 
 let offset=window.pageYOffset;
 
-if(hero){
+if(gelai){
 
-hero.style.backgroundPositionY=offset*0.5+"px";
+gelai.style.backgroundPositionY=offset*0.5+"px";
 
 }
 
@@ -258,7 +258,7 @@ hero.style.backgroundPositionY=offset*0.5+"px";
 // HERO COUNTER
 // ===========================
 
-const counters=document.querySelectorAll(".hero-stats h2");
+const counters=document.querySelectorAll(".gelai-stats h2");
 
 let started=false;
 
