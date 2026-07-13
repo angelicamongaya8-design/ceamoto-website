@@ -237,7 +237,7 @@ e.stopPropagation();
 });
 
 // ===========================
-// PARALLAX HERO
+// PARALLAX GELAI
 // ===========================
 
 const gelai=document.querySelector(".gelai");
@@ -255,7 +255,7 @@ gelai.style.backgroundPositionY=offset*0.5+"px";
 });
 
 // ===========================
-// HERO COUNTER
+// GELAI COUNTER
 // ===========================
 
 const counters=document.querySelectorAll(".gelai-stats h2");
