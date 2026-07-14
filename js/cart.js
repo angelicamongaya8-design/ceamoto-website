@@ -29,6 +29,35 @@
         return "₱" + Number(num).toLocaleString("en-US");
     }
 
+    // TRUSTED PRICE LOOKUP
+    // A customer can open devtools and edit a product card's data-price
+    // attribute (or edit the cart's saved data in localStorage directly)
+    // before adding to cart / checking out. To stop a tampered price from
+    // ever reaching the order message Rollie sees on Messenger, every price
+    // is re-derived here from a source-of-truth list instead of trusted
+    // from the page/DOM/localStorage at the moment it's used.
+    const FEATURED_PRICES = {
+        product1: 4839,
+        product2: 3499,
+        product3: 3449,
+        product4: 3339
+    };
+
+    function trustedPrice(id, fallbackPrice){
+        if(typeof CEAMOTO_CATALOG !== "undefined"){
+            const match = CEAMOTO_CATALOG.find(p => p.id === id);
+            if(match) return match.price;
+        }
+        if(Object.prototype.hasOwnProperty.call(FEATURED_PRICES, id)){
+            return FEATURED_PRICES[id];
+        }
+        return fallbackPrice;
+    }
+
+    function sanitizeItems(items){
+        return items.map(item => ({...item, price: trustedPrice(item.id, item.price)}));
+    }
+
     let cart = loadCart();
 
     const cartBtn = document.querySelector(".cart-btn");
@@ -175,7 +204,7 @@
         const product = {
             id: card.dataset.id,
             name: card.dataset.name,
-            price: Number(card.dataset.price),
+            price: trustedPrice(card.dataset.id, Number(card.dataset.price)),
             img: card.dataset.img
         };
 
@@ -211,7 +240,7 @@
         const product = {
             id: card.dataset.id,
             name: card.dataset.name,
-            price: Number(card.dataset.price),
+            price: trustedPrice(card.dataset.id, Number(card.dataset.price)),
             img: card.dataset.img,
             qty: 1
         };
@@ -308,7 +337,7 @@
     // saved cart.
     function openCheckoutModal(items){
 
-        const orderItems = items || cart;
+        const orderItems = sanitizeItems(items || cart);
         const orderNumber = generateOrderNumber();
 
         checkoutModalText.value = buildOrderMessage(orderItems, orderNumber);
@@ -357,5 +386,24 @@
     // INITIAL RENDER
 
     renderCart();
+
+    // Re-check saved cart prices once every script (including the product
+    // catalog) has finished loading, in case someone edited the cart's
+    // localStorage entry directly instead of using the Add to Cart button.
+    window.addEventListener("load", () => {
+        cart = sanitizeItems(cart);
+        saveCart(cart);
+        renderCart();
+    });
+
+    // shop-catalog.js now loads the real product list asynchronously
+    // (fetched from the Products Google Sheet), so it can still be
+    // loading after the page's "load" event fires. Once it's ready,
+    // re-check the saved cart's prices again against the live data.
+    window.addEventListener("ceamotoCatalogReady", () => {
+        cart = sanitizeItems(cart);
+        saveCart(cart);
+        renderCart();
+    });
 
 })();

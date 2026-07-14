@@ -1,11 +1,12 @@
 // ===========================
 // CEAMOTO - shop-catalog.js
-// Renders the full Shopee-synced
-// product catalog into the Shop
-// page: search + "Load More"
-// pagination, reusing the same
-// .shop-card markup/behavior as
-// the featured builds above it.
+// Fetches every product from the CEAMOTO Products Google Sheet (via
+// the Apps Script Web App, the same backend the booking form uses)
+// and renders both the "Featured Builds" grid and the full
+// searchable/filterable catalog grid from that single source. No more
+// static shop-products.js or hardcoded featured cards - whoever
+// manages the Products sheet (directly, or via admin.html) can add,
+// edit, or remove products and they appear here automatically.
 // ===========================
 
 (function(){
@@ -26,9 +27,10 @@
     window.addEventListener("resize", syncNavbarHeight);
     window.addEventListener("orientationchange", syncNavbarHeight);
 
+    const featuredGrid = document.getElementById("featured-grid");
     const container = document.getElementById("catalog-grid");
 
-    if(!container || typeof CEAMOTO_CATALOG === "undefined"){
+    if(!featuredGrid && !container){
         return;
     }
 
@@ -45,6 +47,7 @@
     let query = "";
     let category = "all";
     let sortBy = "relevance";
+    let allProducts = [];
 
     function escapeAttr(str){
         return String(str).replace(/"/g, "&quot;");
@@ -57,11 +60,11 @@
     // Populate the category dropdown from whatever categories actually
     // exist in the catalog data, so it never goes stale if products
     // are added/removed/recategorized later.
-    function populateCategoryOptions(){
+    function populateCategoryOptions(list){
 
         if(!categorySelect) return;
 
-        const categories = Array.from(new Set(CEAMOTO_CATALOG.map(p => p.category).filter(Boolean))).sort();
+        const categories = Array.from(new Set(list.map(p => p.category).filter(Boolean))).sort();
 
         categorySelect.innerHTML = '<option value="all">All Categories</option>' +
             categories.map(c => `<option value="${escapeAttr(c)}">${c}</option>`).join("");
@@ -70,8 +73,9 @@
 
     function getFiltered(){
 
-        // Auto-hide out-of-stock products from the catalog entirely.
-        let list = CEAMOTO_CATALOG.filter(p => p.stock === undefined || p.stock > 0);
+        // The catalog grid never shows Featured Builds (those get their
+        // own section above) and always hides out-of-stock products.
+        let list = allProducts.filter(p => !p.featured && (p.stock === undefined || p.stock > 0));
 
         if(category !== "all"){
             list = list.filter(p => p.category === category);
@@ -108,14 +112,24 @@
         return "";
     }
 
+    function imageCountHTML(images){
+        if(images.length > 1){
+            return `<span class="shop-img-count"><i class="fa-solid fa-images"></i> ${images.length}</span>`;
+        }
+        return "";
+    }
+
     function cardHTML(p){
 
         const safeName = escapeAttr(p.name);
+        const images = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
+        const mainImg = images[0] || "";
 
         return `
-            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${p.img}" data-stock="${p.stock}">
-                <div class="shop-card-img" data-images='${JSON.stringify([p.img])}'>
-                    <img src="${p.img}" alt="${safeName}" loading="lazy">
+            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}">
+                <div class="shop-card-img" data-images='${JSON.stringify(images)}'>
+                    <img src="${mainImg}" alt="${safeName}" loading="lazy">
+                    ${imageCountHTML(images)}
                 </div>
                 <div class="shop-card-body">
                     <h3>${p.name}</h3>
@@ -135,7 +149,28 @@
 
     }
 
+    // FEATURED BUILDS
+    // A small hand-picked set of products (Featured = TRUE in the
+    // Products sheet). Rendered once per load - simple grid, no
+    // search/filter/sort, same as when this section was hardcoded.
+
+    function renderFeatured(){
+
+        if(!featuredGrid) return;
+
+        const featured = allProducts.filter(p => p.featured && (p.stock === undefined || p.stock > 0));
+
+        featuredGrid.innerHTML = featured.length
+            ? featured.map(cardHTML).join("")
+            : '<p class="catalog-empty">No featured builds right now.</p>';
+
+    }
+
+    // FULL CATALOG (search + filter + sort + "Load More" pagination)
+
     function render(){
+
+        if(!container) return;
 
         const filtered = getSorted(getFiltered());
         const visible = filtered.slice(0, shown);
@@ -169,12 +204,6 @@
     // back into view right after re-rendering so that never happens.
 
     function keepSearchInView(){
-        // scrollIntoView() on the sticky search bar itself is not
-        // reliable (sticky elements report unstable geometry to it),
-        // and an animated ("smooth") scroll can get interrupted by the
-        // browser's own scroll-position clamp when the page suddenly
-        // gets shorter. So instead: compute the target position from
-        // the static (non-sticky) wrapper and jump there instantly.
         const wrap = document.querySelector(".catalog-list-wrap");
         if(!wrap) return;
         const navbarH = navbar ? navbar.offsetHeight : 120;
@@ -248,7 +277,67 @@
 
     }
 
-    populateCategoryOptions();
-    render();
+    // LOADING / ERROR STATES
+
+    function showLoading(){
+        const msg = '<p class="catalog-empty">Loading products...</p>';
+        if(featuredGrid) featuredGrid.innerHTML = msg;
+        if(container) container.innerHTML = msg;
+    }
+
+    function showLoadError(){
+        const msg = '<p class="catalog-empty">Unable to load products right now. Please refresh the page or check back later.</p>';
+        if(featuredGrid) featuredGrid.innerHTML = msg;
+        if(container) container.innerHTML = msg;
+    }
+
+    // FETCH PRODUCTS
+    // Single source of truth for every product on the Shop page - the
+    // Products tab of the CEAMOTO Bookings Google Sheet, read through
+    // the same Apps Script Web App the booking form posts to.
+
+    async function loadProducts(){
+
+        if(typeof BOOKING_ENDPOINT_URL === "undefined" || BOOKING_ENDPOINT_URL.indexOf("PASTE_YOUR") !== -1){
+            showLoadError();
+            return;
+        }
+
+        showLoading();
+
+        try{
+
+            const res = await fetch(BOOKING_ENDPOINT_URL + "?action=products");
+            const data = await res.json();
+
+            if(!data || data.result !== "success" || !Array.isArray(data.products)){
+                throw new Error("Bad response from products endpoint");
+            }
+
+            allProducts = data.products;
+
+            // Exposed globally so cart.js's trustedPrice() re-derives
+            // every price from this same source of truth, instead of
+            // ever trusting a page/localStorage value that a customer
+            // could tamper with.
+            window.CEAMOTO_CATALOG = allProducts;
+
+            populateCategoryOptions(allProducts.filter(p => !p.featured));
+            renderFeatured();
+            render();
+
+            // Let cart.js know real catalog data is available now, in
+            // case it already tried to sanitize the saved cart before
+            // this fetch finished.
+            window.dispatchEvent(new Event("ceamotoCatalogReady"));
+
+        }catch(err){
+            console.error("Failed to load products:", err);
+            showLoadError();
+        }
+
+    }
+
+    loadProducts();
 
 })();
