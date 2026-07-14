@@ -46,6 +46,7 @@
     const checkoutModalText = document.querySelector(".checkout-modal-text");
     const checkoutCopyBtn = document.querySelector(".checkout-copy-btn");
     const checkoutOpenBtn = document.querySelector(".checkout-open-btn");
+    const checkoutOrderNumberEl = document.querySelector(".checkout-order-number");
 
     // If this page has no cart UI (shouldn't happen on shop.html,
     // but keeps the script safe if included elsewhere), stop here.
@@ -164,7 +165,10 @@
 
         if(!btn) return;
 
-        const card = btn.closest(".shop-card");
+        // closest("[data-id]") instead of ".shop-card" so this also
+        // works from the product detail modal, which carries the same
+        // data-id/name/price/img attributes but isn't a .shop-card.
+        const card = btn.closest("[data-id]");
 
         if(!card) return;
 
@@ -187,6 +191,32 @@
         }, 1200);
 
         openCart();
+
+    });
+
+    // BUY NOW BUTTONS
+    // Skips the cart entirely - builds a single-item order and jumps
+    // straight to the checkout modal, Shopee-style.
+
+    document.addEventListener("click", (e) => {
+
+        const btn = e.target.closest(".buy-now-btn");
+
+        if(!btn) return;
+
+        const card = btn.closest("[data-id]");
+
+        if(!card) return;
+
+        const product = {
+            id: card.dataset.id,
+            name: card.dataset.name,
+            price: Number(card.dataset.price),
+            img: card.dataset.img,
+            qty: 1
+        };
+
+        openCheckoutModal([product]);
 
     });
 
@@ -246,22 +276,47 @@
     // text, we show the summary in a modal so the person can copy
     // it, open Messenger, and paste it into the chat themselves.)
 
-    function buildOrderMessage(){
+    // Order reference number so both the customer and CEAMOTO can point
+    // to the same order when following up - not a database ID (there's
+    // no backend for shop orders yet), just a shared reference stamped
+    // onto the Messenger message at the moment of checkout.
+    function generateOrderNumber(){
+        const stamp = Date.now().toString().slice(-8);
+        return "CEA-" + stamp;
+    }
 
-        let message = "Hi CEAMOTO! I'd like to order:\n\n";
+    function itemsTotal(items){
+        return items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+    }
 
-        cart.forEach(item => {
+    function buildOrderMessage(items, orderNumber){
+
+        let message = `Hi CEAMOTO! I'd like to order (Order #${orderNumber}):\n\n`;
+
+        items.forEach(item => {
             message += `- ${item.name} x${item.qty} (${formatPrice(item.price)} each)\n`;
         });
 
-        message += `\nSubtotal: ${formatPrice(totalPrice())}`;
+        message += `\nSubtotal: ${formatPrice(itemsTotal(items))}`;
         message += "\n\nPlease let me know how to pay (GCash/Cash) and arrange pickup or delivery. Thank you!";
 
         return message;
     }
 
-    function openCheckoutModal(){
-        checkoutModalText.value = buildOrderMessage();
+    // items defaults to the full persisted cart (normal "Checkout" flow).
+    // Buy Now passes a single-item array instead, without touching the
+    // saved cart.
+    function openCheckoutModal(items){
+
+        const orderItems = items || cart;
+        const orderNumber = generateOrderNumber();
+
+        checkoutModalText.value = buildOrderMessage(orderItems, orderNumber);
+
+        if(checkoutOrderNumberEl){
+            checkoutOrderNumberEl.textContent = "Order #" + orderNumber;
+        }
+
         copyToClipboard(checkoutModalText.value);
         checkoutOverlay.classList.add("show");
         checkoutModal.classList.add("show");

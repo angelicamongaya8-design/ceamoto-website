@@ -36,11 +36,15 @@
     const searchClearBtn = document.getElementById("catalog-search-clear");
     const loadMoreBtn = document.getElementById("catalog-load-more");
     const resultsCount = document.getElementById("catalog-count");
+    const categorySelect = document.getElementById("catalog-category");
+    const sortSelect = document.getElementById("catalog-sort");
 
     const BATCH_SIZE = 16;
 
     let shown = BATCH_SIZE;
     let query = "";
+    let category = "all";
+    let sortBy = "relevance";
 
     function escapeAttr(str){
         return String(str).replace(/"/g, "&quot;");
@@ -50,14 +54,58 @@
         return "₱" + Number(num).toLocaleString("en-US");
     }
 
+    // Populate the category dropdown from whatever categories actually
+    // exist in the catalog data, so it never goes stale if products
+    // are added/removed/recategorized later.
+    function populateCategoryOptions(){
+
+        if(!categorySelect) return;
+
+        const categories = Array.from(new Set(CEAMOTO_CATALOG.map(p => p.category).filter(Boolean))).sort();
+
+        categorySelect.innerHTML = '<option value="all">All Categories</option>' +
+            categories.map(c => `<option value="${escapeAttr(c)}">${c}</option>`).join("");
+
+    }
+
     function getFiltered(){
 
-        if(!query) return CEAMOTO_CATALOG;
+        // Auto-hide out-of-stock products from the catalog entirely.
+        let list = CEAMOTO_CATALOG.filter(p => p.stock === undefined || p.stock > 0);
 
-        const q = query.toLowerCase();
+        if(category !== "all"){
+            list = list.filter(p => p.category === category);
+        }
 
-        return CEAMOTO_CATALOG.filter(p => p.name.toLowerCase().includes(q));
+        if(query){
+            const q = query.toLowerCase();
+            list = list.filter(p => p.name.toLowerCase().includes(q));
+        }
 
+        return list;
+
+    }
+
+    function getSorted(list){
+
+        const sorted = list.slice();
+
+        if(sortBy === "price-low"){
+            sorted.sort((a, b) => a.price - b.price);
+        }else if(sortBy === "price-high"){
+            sorted.sort((a, b) => b.price - a.price);
+        }
+        // "relevance" (default) keeps the original catalog order.
+
+        return sorted;
+
+    }
+
+    function stockBadgeHTML(stock){
+        if(typeof stock === "number" && stock > 0 && stock <= 5){
+            return `<span class="stock-badge">Only ${stock} left!</span>`;
+        }
+        return "";
     }
 
     function cardHTML(p){
@@ -65,16 +113,22 @@
         const safeName = escapeAttr(p.name);
 
         return `
-            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${p.img}">
+            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${p.img}" data-stock="${p.stock}">
                 <div class="shop-card-img" data-images='${JSON.stringify([p.img])}'>
                     <img src="${p.img}" alt="${safeName}" loading="lazy">
                 </div>
                 <div class="shop-card-body">
                     <h3>${p.name}</h3>
                     <span class="shop-price">${formatPrice(p.price)}</span>
-                    <button class="add-to-cart-btn">
-                        <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                    </button>
+                    ${stockBadgeHTML(p.stock)}
+                    <div class="shop-card-actions">
+                        <button class="add-to-cart-btn">
+                            <i class="fa-solid fa-cart-plus"></i> Add to Cart
+                        </button>
+                        <button class="buy-now-btn">
+                            <i class="fa-solid fa-bolt"></i> Buy Now
+                        </button>
+                    </div>
                 </div>
             </div>
         `;
@@ -83,7 +137,7 @@
 
     function render(){
 
-        const filtered = getFiltered();
+        const filtered = getSorted(getFiltered());
         const visible = filtered.slice(0, shown);
 
         if(filtered.length === 0){
@@ -174,6 +228,27 @@
 
     }
 
+    if(categorySelect){
+
+        categorySelect.addEventListener("change", () => {
+            category = categorySelect.value;
+            shown = BATCH_SIZE;
+            render();
+            keepSearchInView();
+        });
+
+    }
+
+    if(sortSelect){
+
+        sortSelect.addEventListener("change", () => {
+            sortBy = sortSelect.value;
+            render();
+        });
+
+    }
+
+    populateCategoryOptions();
     render();
 
 })();
