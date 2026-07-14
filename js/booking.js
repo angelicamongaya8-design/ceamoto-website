@@ -17,6 +17,9 @@
     const modsWrap = document.getElementById("bk-mods");
     const modsError = document.getElementById("bk-mods-error");
     const successBox = document.getElementById("booking-success");
+    const bookingRefDisplay = document.getElementById("booking-ref-display");
+    const checkingNote = document.getElementById("bk-time-checking");
+    const fullyBookedError = document.getElementById("bk-fullybooked-error");
 
     // ===========================
     // BUSINESS HOURS
@@ -60,7 +63,10 @@
 
     // Grey out (disable) time slots that no longer make sense for the
     // currently selected date - i.e. slots already passed, if the
-    // selected date is today.
+    // selected date is today, or slots that are already booked (see
+    // checkAvailability() below, which populates takenTimes).
+    let takenTimes = [];
+
     function refreshTimeAvailability(){
 
         if(!timeSelect || !dateInput || !dateInput.value){
@@ -71,6 +77,8 @@
         const isToday = dateInput.value === `${t.yyyy}-${t.mm}-${t.dd}`;
         const now = new Date();
 
+        let allTaken = true;
+
         Array.from(timeSelect.options).forEach(opt => {
 
             if(!opt.value){
@@ -80,14 +88,74 @@
             const hour24 = optionHour24(opt.value);
             const alreadyPassed = isToday && hour24 !== null &&
                 (hour24 < now.getHours() || (hour24 === now.getHours() && now.getMinutes() > 0));
+            const isTaken = takenTimes.indexOf(opt.value) !== -1;
 
-            opt.disabled = alreadyPassed;
+            opt.disabled = alreadyPassed || isTaken;
 
-            if(alreadyPassed && opt.selected){
+            // Label taken slots so it's obvious why they're greyed out
+            // (as opposed to just being in the past).
+            const baseLabel = opt.dataset.baseLabel || opt.textContent;
+            opt.dataset.baseLabel = baseLabel;
+            opt.textContent = isTaken && !alreadyPassed ? baseLabel + " (Fully Booked)" : baseLabel;
+
+            if(opt.disabled && opt.selected){
                 timeSelect.value = "";
             }
 
+            if(!alreadyPassed && !isTaken){
+                allTaken = false;
+            }
+
         });
+
+        if(fullyBookedError){
+            fullyBookedError.classList.toggle("show", allTaken);
+        }
+
+    }
+
+    // Asks the Apps Script backend which of the day's time slots are
+    // already taken for the selected date, so we don't let two people
+    // book the same slot. Runs on every date change; if it fails
+    // (offline, etc.) we just fall back to no slots being pre-blocked -
+    // the sheet is still the source of truth and Rollie can catch a
+    // rare double-booking manually.
+    let availabilityRequestId = 0;
+
+    async function checkAvailability(dateStr){
+
+        if(!dateStr || typeof BOOKING_ENDPOINT_URL === "undefined"){
+            return;
+        }
+
+        const requestId = ++availabilityRequestId;
+
+        if(checkingNote) checkingNote.style.display = "block";
+        if(fullyBookedError) fullyBookedError.classList.remove("show");
+
+        try{
+
+            const res = await fetch(BOOKING_ENDPOINT_URL + "?action=availability&date=" + encodeURIComponent(dateStr));
+            const data = await res.json();
+
+            // A newer request already started (person changed the date
+            // again while this one was in flight) - ignore this stale result.
+            if(requestId !== availabilityRequestId){
+                return;
+            }
+
+            takenTimes = (data && data.result === "success" && Array.isArray(data.taken)) ? data.taken : [];
+
+        }catch(err){
+            console.error("Availability check failed:", err);
+            takenTimes = [];
+        }
+
+        if(requestId === availabilityRequestId && checkingNote){
+            checkingNote.style.display = "none";
+        }
+
+        refreshTimeAvailability();
 
     }
 
@@ -121,8 +189,12 @@
 
     if(dateInput){
         dateInput.addEventListener("change", () => {
-            validateDate();
+            const valid = validateDate();
+            takenTimes = [];
             refreshTimeAvailability();
+            if(valid && dateInput.value){
+                checkAvailability(dateInput.value);
+            }
         });
     }
 
@@ -197,6 +269,10 @@
             if(data && data.result === "success"){
                 form.style.display = "none";
                 successBox.classList.add("show");
+
+                if(bookingRefDisplay){
+                    bookingRefDisplay.textContent = data.ref ? ("Booking Reference: " + data.ref) : "";
+                }
 
                 // Hiding the form makes the page much shorter, and
                 // scrollIntoView() run in the same tick can compute its
