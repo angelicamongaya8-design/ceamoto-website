@@ -152,6 +152,8 @@
                         <option value="4:00 PM">4:00 PM</option>
                         <option value="5:00 PM">5:00 PM</option>
                     </select>
+                    <p class="field-hint" id="bk-time-checking" style="display:none;">Checking availability...</p>
+                    <p class="field-error" id="bk-fullybooked-error">Fully booked na ang date na ito. Pumili ng ibang araw.</p>
                 </div>
 
             </div>
@@ -230,6 +232,8 @@
             <p class="booking-note">
                 We'll review your booking and reach out via your contact
                 number or Messenger to confirm your schedule.
+                Need to cancel or reschedule later?
+                <a href="manage-booking.html">Manage your booking here</a>.
             </p>
 
         </form>
@@ -245,8 +249,14 @@
                 contact you shortly to confirm your schedule.
             </p>
 
+            <p class="booking-ref" id="booking-ref-display"></p>
+
             <a href="https://m.me/CEAmotorparts" target="_blank" class="primary-btn">
                 Message Us for Faster Confirmation
+            </a>
+
+            <a href="manage-booking.html" class="booking-manage-link">
+                Need to cancel? Manage your booking
             </a>
 
         </div>
@@ -395,7 +405,7 @@
 <script src="js/script.js?v=2"></script>
 
 <script src="js/booking-config.js"></script>
-<script src="js/booking.js?v=3"></script>
+<script src="js/booking.js?v=4"></script>
 
 </body>
 </html>

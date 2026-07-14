@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Manage Your Booking | CEAMOTO</title>
+
+    <meta name="description" content="Cancel your CEAMOTO service booking using your booking reference number and email address.">
+    <meta name="theme-color" content="#d2691e">
+
+    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+    <link rel="stylesheet" href="css/style.css?v=2">
+</head>
+
+<body data-page="manage-booking.html">
+
+<nav class="navbar">
+
+    <a href="index.html" class="logo">
+        <img src="images/logo.jpg" alt="CEAMOTO Logo">
+        <span>CEAMOTO</span>
+    </a>
+
+    <ul class="nav-links">
+
+        <li><a href="index.html">Home</a></li>
+
+        <li><a href="services.html">Services</a></li>
+
+        <li><a href="shop.html">Shop</a></li>
+
+        <li><a href="gallery.html">Gallery</a></li>
+
+        <li><a href="about.html">About</a></li>
+
+        <li><a href="contact.html">Contact</a></li>
+
+        <li class="nav-cta-item"><a href="booking.html">Book Service</a></li>
+
+    </ul>
+
+    <a href="booking.html" class="btn-nav">
+
+        Book Service
+
+    </a>
+
+    <button class="menu-btn">
+
+        <i class="fa-solid fa-bars"></i>
+
+    </button>
+
+</nav>
+
+<!-- ===========================
+     MANAGE BOOKING
+=========================== -->
+
+<section id="manage-booking" class="top-offset">
+
+    <div class="section-header reveal">
+
+        <span>Manage Your Booking</span>
+
+        <h2>Cancel a Booking</h2>
+
+        <p>
+            Enter your Booking Reference number (from your confirmation
+            email or the success page after you booked) along with the
+            email you used, to cancel your service booking.
+        </p>
+
+    </div>
+
+    <div class="booking-wrap">
+
+        <form id="manage-booking-form" class="booking-form" novalidate>
+
+            <div class="form-group">
+                <label for="mb-ref">Booking Reference <span class="req">*</span></label>
+                <input type="text" id="mb-ref" name="ref" placeholder="e.g. BK-12345678" required autocomplete="off">
+            </div>
+
+            <div class="form-group">
+                <label for="mb-email">Email Address <span class="req">*</span></label>
+                <input type="email" id="mb-email" name="email" placeholder="you@example.com" required autocomplete="email">
+            </div>
+
+            <p class="field-error" id="mb-error">We couldn't find a matching booking. Please check your reference number and email.</p>
+
+            <button type="submit" class="booking-submit-btn" id="mb-submit-btn">
+                <i class="fa-solid fa-calendar-xmark"></i> Cancel Booking
+            </button>
+
+            <p class="booking-note">
+                Need to reschedule instead of cancel? Cancel this booking
+                and submit a new one for your preferred date and time, or
+                <a href="https://m.me/CEAmotorparts" target="_blank">message us on Facebook</a>.
+            </p>
+
+        </form>
+
+        <div class="booking-success" id="manage-booking-success">
+
+            <i class="fa-solid fa-circle-check"></i>
+
+            <h3>Booking Cancelled</h3>
+
+            <p>
+                Your booking has been cancelled. Feel free to book again
+                anytime for a new date and time.
+            </p>
+
+            <a href="booking.html" class="primary-btn">
+                Book a New Service
+            </a>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- ===========================
+     FOOTER
+=========================== -->
+
+<footer>
+
+    <div class="footer-grid">
+
+        <div>
+
+            <div class="footer-logo">
+
+                <img src="images/logo.jpg"
+                     alt="CEAMOTO Logo">
+
+                <h3>CEAMOTO</h3>
+
+            </div>
+
+            <p class="footer-about">
+
+                Custom Cafe Racer & Scrambler builds,
+                fabrication,
+                motorcycle parts,
+                and repairs.
+
+            </p>
+
+        </div>
+
+        <div class="footer-links">
+
+            <h3>Quick Links</h3>
+
+            <ul>
+
+                <li><a href="index.html"><i class="fa-solid fa-chevron-right"></i> Home</a></li>
+
+                <li><a href="services.html"><i class="fa-solid fa-chevron-right"></i> Services</a></li>
+
+                <li><a href="shop.html"><i class="fa-solid fa-chevron-right"></i> Shop</a></li>
+
+                <li><a href="gallery.html"><i class="fa-solid fa-chevron-right"></i> Gallery</a></li>
+
+                <li><a href="about.html"><i class="fa-solid fa-chevron-right"></i> About</a></li>
+
+                <li><a href="contact.html"><i class="fa-solid fa-chevron-right"></i> Contact</a></li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer-contact">
+
+            <h3>Get In Touch</h3>
+
+            <ul>
+
+                <li>
+                    <i class="fa-solid fa-location-dot"></i>
+                    <span>Calamba, Laguna, Philippines</span>
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-phone"></i>
+                    <span>+63 976 293 8465</span>
+                </li>
+
+                <li>
+                    <i class="fa-solid fa-clock"></i>
+                    <span>Mon - Sat: 9:00 AM - 6:00 PM</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+        <div class="footer-social">
+
+            <h3>Follow Us</h3>
+
+            <div class="social-icons">
+
+                <a href="https://www.facebook.com/CEAmotorparts" target="_blank">
+
+                    <i class="fab fa-facebook-f"></i>
+
+                </a>
+
+                <a href="https://shopee.ph/ceamoto?uls_trackid=563u4bgt00m5&utm_content=G359thLQrXK61xgoouaKKDGLCej" target="_blank">
+
+                    <i class="fas fa-shopping-bag"></i>
+
+                </a>
+
+                <a href="#" target="_blank">
+
+                    <i class="fab fa-instagram"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="footer-bottom">
+
+        © 2026 CEAMOTO. <span class="nowrap">All Rights Reserved.</span>
+
+    </div>
+
+</footer>
+
+<!-- ===========================
+     FLOATING BUTTONS
+=========================== -->
+
+<a href="#home" class="back-to-top">
+
+    <i class="fa-solid fa-arrow-up"></i>
+
+</a>
+
+<a href="https://m.me/CEAmotorparts"
+   class="messenger-btn"
+   target="_blank">
+
+    <i class="fa-brands fa-facebook-messenger"></i>
+
+</a>
+
+<!-- ===========================
+     JAVASCRIPT
+=========================== -->
+
+<script src="js/script.js?v=2"></script>
+
+<script src="js/booking-config.js"></script>
+<script src="js/manage-booking.js?v=1"></script>
+
+</body>
+</html>
