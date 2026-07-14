@@ -3001,6 +3001,28 @@ button.secondary-btn{
     line-height:1.7;
 }
 
+.booking-ref{
+    display:block;
+    color:var(--primary);
+    font-weight:700;
+    font-size:1rem;
+    margin:-14px 0 26px;
+}
+
+.booking-manage-link{
+    display:block;
+    margin-top:18px;
+    color:var(--gray);
+    font-size:.82rem;
+    text-decoration:underline;
+}
+
+@media (hover:hover){
+.booking-manage-link:hover{
+    color:#fff;
+}
+}
+
 @media(max-width:768px){
 
 .booking-form{
