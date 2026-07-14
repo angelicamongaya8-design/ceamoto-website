@@ -1491,9 +1491,7 @@ footer{
 
 /* ===========================
    MOBILE NAV - BOOK SERVICE
-   (btn-nav is hidden at 991px,
-   so give it a visible entry
-   inside the dropdown instead)
+   (btn-nav is hidden at 991px)
 =========================== */
 
 .nav-cta-item{
@@ -1742,9 +1740,6 @@ footer{
 
 /* ===========================
    TABLET / IPAD FIX
-   (keep 2-column layouts on
-   tablet widths instead of
-   forcing the phone stack)
 =========================== */
 
 @media(min-width:768px) and (max-width:991px){
