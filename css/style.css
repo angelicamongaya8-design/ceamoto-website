@@ -2335,6 +2335,20 @@ button.secondary-btn{
     border:2px solid var(--dark);
 }
 
+/* Little pulse on the cart icon the instant the "flying" product
+   photo (see cart.js flyToCart) lands on it - the payoff moment of
+   the animation, Shopee-style. */
+@keyframes cartBump{
+    0%{transform:scale(1);}
+    35%{transform:scale(1.28);}
+    65%{transform:scale(.92);}
+    100%{transform:scale(1);}
+}
+
+.cart-btn.bump{
+    animation:cartBump .35s ease;
+}
+
 /* ===========================
    CART - OVERLAY + PANEL
 =========================== */
@@ -3287,6 +3301,7 @@ body[data-page="shop.html"] footer{
 .booking-form{
     padding:28px 22px;
 }
+
 .form-row{
     grid-template-columns:1fr;
     gap:0;
