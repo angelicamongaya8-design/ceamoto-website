@@ -20,6 +20,10 @@
     const bookingRefDisplay = document.getElementById("booking-ref-display");
     const checkingNote = document.getElementById("bk-time-checking");
     const fullyBookedError = document.getElementById("bk-fullybooked-error");
+    const waitlistBox = document.getElementById("bk-waitlist-box");
+    const waitlistBtn = document.getElementById("bk-waitlist-btn");
+    const waitlistError = document.getElementById("bk-waitlist-error");
+    const waitlistSuccess = document.getElementById("bk-waitlist-success");
 
     // ===========================
     // BUSINESS HOURS
@@ -112,6 +116,26 @@
             fullyBookedError.classList.toggle("show", allTaken);
         }
 
+        if(waitlistBox){
+            waitlistBox.classList.toggle("show", allTaken);
+        }
+
+    }
+
+    // Resets the "Join Waitlist" box back to its default state (button
+    // enabled, no success/error messages showing) - used whenever the
+    // person picks a different date, since a waitlist join only ever
+    // applies to the date that was fully booked at the time.
+    function resetWaitlistUI(){
+
+        if(waitlistBtn){
+            waitlistBtn.disabled = false;
+            waitlistBtn.innerHTML = '<i class="fa-solid fa-bell"></i> Sumali sa Waitlist';
+        }
+
+        if(waitlistError) waitlistError.classList.remove("show");
+        if(waitlistSuccess) waitlistSuccess.classList.remove("show");
+
     }
 
     // Asks the Apps Script backend which of the day's time slots are
@@ -191,11 +215,91 @@
         dateInput.addEventListener("change", () => {
             const valid = validateDate();
             takenTimes = [];
+            resetWaitlistUI();
             refreshTimeAvailability();
             if(valid && dateInput.value){
                 checkAvailability(dateInput.value);
             }
         });
+    }
+
+    // "Join Waitlist" - reuses the name/contact/email fields already
+    // filled in at the top of the booking form, so the person doesn't
+    // have to re-type anything. Posts to the same Apps Script backend
+    // (action: "joinWaitlist"), which appends a row to the Waitlist
+    // sheet and auto-emails the person if a slot on that date opens up
+    // from a cancellation.
+    if(waitlistBtn){
+
+        waitlistBtn.addEventListener("click", async () => {
+
+            if(waitlistError) waitlistError.classList.remove("show");
+            if(waitlistSuccess) waitlistSuccess.classList.remove("show");
+
+            const name = document.getElementById("bk-name").value.trim();
+            const contact = document.getElementById("bk-contact").value.trim();
+            const email = document.getElementById("bk-email").value.trim();
+            const date = dateInput ? dateInput.value : "";
+
+            if(!name || !contact){
+                if(waitlistError){
+                    waitlistError.textContent = "Punan muna ang Name at Contact Number sa taas bago sumali sa waitlist.";
+                    waitlistError.classList.add("show");
+                }
+                return;
+            }
+
+            if(!date){
+                return;
+            }
+
+            if(typeof BOOKING_ENDPOINT_URL === "undefined"){
+                return;
+            }
+
+            waitlistBtn.disabled = true;
+            waitlistBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sumasali...';
+
+            try{
+
+                const res = await fetch(BOOKING_ENDPOINT_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "text/plain;charset=utf-8"
+                    },
+                    body: JSON.stringify({
+                        action: "joinWaitlist",
+                        name: name,
+                        contact: contact,
+                        email: email,
+                        date: date
+                    })
+                });
+
+                const data = await res.json();
+
+                if(data && data.result === "success"){
+                    waitlistBtn.innerHTML = '<i class="fa-solid fa-check"></i> Nasa Waitlist Ka Na';
+                    if(waitlistSuccess) waitlistSuccess.classList.add("show");
+                }else{
+                    throw new Error(data && data.error ? data.error : "Unknown error");
+                }
+
+            }catch(err){
+
+                console.error("Join waitlist failed:", err);
+                waitlistBtn.disabled = false;
+                waitlistBtn.innerHTML = '<i class="fa-solid fa-bell"></i> Sumali sa Waitlist';
+
+                if(waitlistError){
+                    waitlistError.textContent = "May problema sa pag-sali sa waitlist. Subukan ulit.";
+                    waitlistError.classList.add("show");
+                }
+
+            }
+
+        });
+
     }
 
     function getSelectedMods(){
