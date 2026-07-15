@@ -2111,9 +2111,11 @@ body[data-page="shop.html"] .messenger-btn{
 }
 .add-to-cart-btn,
 .buy-now-btn{
-    padding:9px 10px;
-    font-size:.7rem;
+    padding:9px 8px;
+    font-size:.68rem;
     gap:5px;
+    border-radius:10px;
+    line-height:1.25;
 }
 }
 
