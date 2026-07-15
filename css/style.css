@@ -2043,6 +2043,49 @@ footer{
     margin-bottom:14px;
 }
 
+/* Sold Out - dims the product photo and stamps a centered badge on
+   top of it (card grid and the detail modal both reuse this), and
+   the Add to Cart / Buy Now buttons get disabled wherever the item
+   is marked SoldOut = TRUE in the Products sheet. The product still
+   shows up (so it stays browsable / shareable) - it just can't be
+   bought. */
+.shop-card-img.sold-out img,
+.product-modal-img-wrap.sold-out .product-modal-img{
+    filter:grayscale(1) brightness(.55);
+}
+
+.sold-out-badge{
+    position:absolute;
+    inset:0;
+    display:none;
+    align-items:center;
+    justify-content:center;
+    z-index:3;
+    pointer-events:none;
+}
+
+.shop-card-img.sold-out .sold-out-badge,
+.product-modal-img-wrap.sold-out .sold-out-badge{
+    display:flex;
+}
+
+.sold-out-badge span{
+    background:rgba(20,20,20,.75);
+    color:#fff;
+    font-weight:700;
+    font-size:1rem;
+    letter-spacing:.5px;
+    padding:8px 24px;
+    border-radius:6px;
+    border:1px solid rgba(255,255,255,.25);
+}
+
+.add-to-cart-btn:disabled,
+.buy-now-btn:disabled{
+    opacity:.5;
+    cursor:not-allowed;
+}
+
 .shop-card-actions{
     margin-top:auto;
     display:flex;
