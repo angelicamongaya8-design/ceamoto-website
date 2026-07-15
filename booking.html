@@ -400,13 +400,11 @@
      FLOATING BUTTONS
 =========================== -->
 
-<a href="https://m.me/CEAmotorparts"
-   class="messenger-btn"
-   target="_blank">
+<button class="messenger-btn" id="chat-launch-btn" aria-label="Chat with us" onclick="if(window.Tawk_API && Tawk_API.toggle){Tawk_API.toggle();}">
 
-    <i class="fa-brands fa-facebook-messenger"></i>
+    <i class="fa-solid fa-comment-dots"></i>
 
-</a>
+</button>
 
 <!-- ===========================
      JAVASCRIPT
@@ -416,6 +414,27 @@
 <script src="js/booking-config.js?v=1"></script>
 <script src="js/script.js?v=5"></script>
 <script src="js/booking.js?v=1"></script>
+
+<!-- ===========================
+     LIVE CHAT (Tawk.to)
+=========================== -->
+
+<script type="text/javascript">
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6a5780f56076b81d4b66861c/1jtisvg57';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
+})();
+Tawk_API.onLoad = function(){
+    // Using our own site-styled chat button instead of tawk.to's
+    // default floating launcher, so hide theirs here.
+    Tawk_API.hideWidget();
+};
+</script>
 
 </body>
 </html>
