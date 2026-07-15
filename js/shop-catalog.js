@@ -73,9 +73,12 @@
 
     function getFiltered(){
 
-        // The catalog grid never shows Featured Builds (those get their
-        // own section above) and always hides out-of-stock products.
-        let list = allProducts.filter(p => !p.featured && (p.stock === undefined || p.stock > 0));
+        // The catalog grid shows every active, in-stock product -
+        // including Featured Builds, which also get their own showcase
+        // section above. This way a Featured item is still one single
+        // entry in the Products sheet, but shows up both up top and when
+        // browsing/searching/filtering the full catalog.
+        let list = allProducts.filter(p => (p.stock === undefined || p.stock > 0));
 
         if(category !== "all"){
             list = list.filter(p => p.category === category);
@@ -322,7 +325,7 @@
             // could tamper with.
             window.CEAMOTO_CATALOG = allProducts;
 
-            populateCategoryOptions(allProducts.filter(p => !p.featured));
+            populateCategoryOptions(allProducts.filter(p => (p.stock === undefined || p.stock > 0)));
             renderFeatured();
             render();
 
