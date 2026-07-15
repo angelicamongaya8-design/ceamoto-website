@@ -2066,6 +2066,12 @@ footer{
 }
 
 @media(max-width:600px){
+/* Extra right clearance so the right-column cards never sit
+   underneath the fixed cart/messenger/back-to-top buttons that
+   float in that same corner while scrolling. */
+#shop{
+    padding-right:calc(8% + 60px);
+}
 .shop-grid{
     grid-template-columns:repeat(2,1fr);
     gap:14px;
