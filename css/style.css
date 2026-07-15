@@ -1529,26 +1529,33 @@ footer{
     transform:none;
 }
 
-/* Floating button(s) move from the right edge to a centered
-   horizontal row along the bottom on mobile, so they never sit on
-   top of / obscure page content while scrolling. Pages without a
-   cart button (everywhere except Shop) center the messenger button
-   alone; Shop sits it side-by-side with the cart button. */
+/* Messenger button stays in its normal bottom-right corner on
+   mobile everywhere, same as the standard Messenger chat-bubble
+   placement, so it never sits on top of centered page content
+   (hero stats, footer text, etc). Shop is the one exception: it
+   also has a cart button, so on Shop only, both float as a
+   centered horizontal pair along the bottom so neither one sits
+   on top of the product grid's right column. */
 .messenger-btn{
     width:50px;
     height:50px;
-    left:50%;
-    right:auto;
+    right:16px;
+    left:auto;
     top:auto;
     bottom:16px;
-    transform:translateX(-50%);
 }
 
 body[data-page="shop.html"] .messenger-btn{
+    left:50%;
+    right:auto;
     transform:translateX(calc(-50% - 33px));
 }
 
 .footer-bottom{
+    padding-right:70px;
+}
+
+body[data-page="shop.html"] .footer-bottom{
     padding-left:70px;
     padding-right:70px;
 }
