@@ -1995,7 +1995,41 @@ footer{
     color:var(--secondary);
     font-weight:700;
     font-size:1.3rem;
-    margin-bottom:18px;
+    margin-bottom:8px;
+}
+
+/* Rating + sold sit together on one line under the price, Shopee-style:
+   a small gold rating chip, then the sold count as plain text next to
+   it - instead of each being its own separate row. */
+.shop-meta-row{
+    display:flex;
+    align-items:center;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:14px;
+}
+
+.shop-rating{
+    display:inline-flex;
+    align-items:center;
+    gap:4px;
+    background:var(--secondary);
+    color:#111;
+    font-weight:700;
+    font-size:.75rem;
+    padding:3px 8px;
+    border-radius:6px;
+    line-height:1.3;
+}
+
+.shop-rating i{
+    font-size:.7rem;
+}
+
+.shop-sold{
+    color:var(--gray);
+    font-size:.78rem;
+    white-space:nowrap;
 }
 
 .stock-badge{
@@ -2079,7 +2113,17 @@ footer{
 }
 .shop-price{
     font-size:1.05rem;
-    margin-bottom:12px;
+}
+.shop-meta-row{
+    margin-bottom:10px;
+    gap:6px;
+}
+.shop-rating{
+    font-size:.68rem;
+    padding:2px 6px;
+}
+.shop-sold{
+    font-size:.68rem;
 }
 .add-to-cart-btn,
 .buy-now-btn{
@@ -2910,12 +2954,33 @@ button.secondary-btn{
     margin-bottom:10px;
 }
 
+.product-modal-rating{
+    display:flex;
+    align-items:center;
+    gap:6px;
+    color:var(--gray);
+    font-size:.9rem;
+    margin-bottom:10px;
+}
+
+.product-modal-rating i{
+    color:var(--secondary);
+    font-size:.85rem;
+}
+
 .product-modal-price{
-    display:block;
+    display:inline-block;
     color:var(--secondary);
     font-weight:700;
     font-size:1.5rem;
+    margin-right:12px;
     margin-bottom:20px;
+}
+
+.product-modal-sold{
+    display:inline;
+    color:var(--gray);
+    font-size:.85rem;
 }
 
 .product-modal-hint{
