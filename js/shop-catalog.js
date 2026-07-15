@@ -28,10 +28,20 @@
     window.addEventListener("orientationchange", syncNavbarHeight);
 
     const featuredGrid = document.getElementById("featured-grid");
+    const featuredSection = document.getElementById("featured-section");
     const container = document.getElementById("catalog-grid");
 
     if(!featuredGrid && !container){
         return;
+    }
+
+    // Hide the Featured Builds section by default until product data
+    // has actually loaded and confirmed there's something featured to
+    // show - otherwise it flashes ("Featured Builds" heading + a
+    // "Loading products..." placeholder) for a moment on every page
+    // load, then disappears if there turn out to be no featured items.
+    if(featuredSection){
+        featuredSection.style.display = "none";
     }
 
     const searchInput = document.getElementById("catalog-search");
@@ -163,9 +173,15 @@
 
         const featured = allProducts.filter(p => p.featured && (p.stock === undefined || p.stock > 0));
 
-        featuredGrid.innerHTML = featured.length
-            ? featured.map(cardHTML).join("")
-            : '<p class="catalog-empty">No featured builds right now.</p>';
+        // Featured items also show up in the full catalog below (see
+        // getFiltered()), so if there are none right now, hide this whole
+        // section instead of leaving an empty "Featured Builds" heading
+        // with nothing under it.
+        if(featuredSection){
+            featuredSection.style.display = featured.length ? "" : "none";
+        }
+
+        featuredGrid.innerHTML = featured.map(cardHTML).join("");
 
     }
 
