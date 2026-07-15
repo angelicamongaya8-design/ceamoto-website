@@ -184,6 +184,66 @@
         cartPanel.classList.remove("show");
     }
 
+    // "FLY TO CART" ANIMATION
+    // Shopee-style: instead of popping the cart panel open on every
+    // single Add to Cart tap (annoying when adding several items in a
+    // row), clone the product's photo and animate it flying into the
+    // cart icon, then give the icon a little bump. The cart itself
+    // stays closed until the person actually taps it.
+    function flyToCart(sourceImgEl){
+
+        if(!sourceImgEl || !cartBtn) return;
+
+        const startRect = sourceImgEl.getBoundingClientRect();
+        const endRect = cartBtn.getBoundingClientRect();
+
+        if(startRect.width === 0 || endRect.width === 0) return;
+
+        const flyer = sourceImgEl.cloneNode(true);
+
+        flyer.style.position = "fixed";
+        flyer.style.left = startRect.left + "px";
+        flyer.style.top = startRect.top + "px";
+        flyer.style.width = startRect.width + "px";
+        flyer.style.height = startRect.height + "px";
+        flyer.style.margin = "0";
+        flyer.style.zIndex = "100000";
+        flyer.style.borderRadius = "50%";
+        flyer.style.objectFit = "cover";
+        flyer.style.boxShadow = "0 8px 24px rgba(0,0,0,.4)";
+        flyer.style.pointerEvents = "none";
+        flyer.style.transition = "transform .55s cubic-bezier(.55,0,.1,1), opacity .55s ease .1s";
+        flyer.style.willChange = "transform, opacity";
+
+        document.body.appendChild(flyer);
+
+        const startCenterX = startRect.left + startRect.width / 2;
+        const startCenterY = startRect.top + startRect.height / 2;
+        const endCenterX = endRect.left + endRect.width / 2;
+        const endCenterY = endRect.top + endRect.height / 2;
+
+        const deltaX = endCenterX - startCenterX;
+        const deltaY = endCenterY - startCenterY;
+
+        // Force a reflow so the browser registers the starting position
+        // before we change it, otherwise the transition gets skipped.
+        void flyer.offsetWidth;
+
+        requestAnimationFrame(() => {
+            flyer.style.transform = `translate(${deltaX}px, ${deltaY}px) scale(0.12)`;
+            flyer.style.opacity = "0.35";
+        });
+
+        const cleanup = () => {
+            flyer.remove();
+            cartBtn.classList.add("bump");
+            setTimeout(() => cartBtn.classList.remove("bump"), 350);
+        };
+
+        flyer.addEventListener("transitionend", cleanup, { once: true });
+        setTimeout(cleanup, 700); // safety net in case transitionend never fires
+    }
+
     // ADD TO CART BUTTONS
     // (event delegation so this also works for catalog
     // cards that get rendered into the page after load)
@@ -219,7 +279,8 @@
             btn.innerHTML = original;
         }, 1200);
 
-        openCart();
+        const productImg = card.querySelector("img");
+        flyToCart(productImg);
 
     });
 
