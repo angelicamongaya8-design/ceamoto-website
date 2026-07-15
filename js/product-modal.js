@@ -34,6 +34,8 @@
     const priceEl = modal.querySelector(".product-modal-price");
     const ratingEl = modal.querySelector(".product-modal-rating");
     const soldEl = modal.querySelector(".product-modal-sold");
+    const addToCartBtn = modal.querySelector(".add-to-cart-btn");
+    const buyNowBtn = modal.querySelector(".buy-now-btn");
 
     function formatPrice(num){
         return "₱" + Number(num).toLocaleString("en-US");
@@ -61,6 +63,15 @@
         }
         soldEl.style.display = "inline";
         soldEl.textContent = num.toLocaleString("en-US") + " sold";
+    }
+
+    // Same SoldOut flag as the card grid (see shop-catalog.js) - dims the
+    // modal photo, stamps the badge on it, and disables both buy buttons
+    // so a sold-out item can still be viewed but not ordered.
+    function renderSoldOut(soldOut){
+        imgWrap.classList.toggle("sold-out", !!soldOut);
+        if(addToCartBtn) addToCartBtn.disabled = !!soldOut;
+        if(buyNowBtn) buyNowBtn.disabled = !!soldOut;
     }
 
     function openModal(card){
@@ -110,6 +121,7 @@
         priceEl.textContent = formatPrice(price);
         renderRating(card.dataset.rating);
         renderSold(card.dataset.sold);
+        renderSoldOut(card.dataset.soldout === "1");
 
         overlay.classList.add("show");
         modal.classList.add("show");

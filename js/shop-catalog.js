@@ -149,17 +149,31 @@
         return `<span class="shop-sold">${num.toLocaleString("en-US")} sold</span>`;
     }
 
+    // Sold Out - manually flagged in the Products sheet (SoldOut column),
+    // same reasoning as rating/sold: Shopee can't be auto-synced, so
+    // Rollie marks it herself when an item runs out there.
+    function isSoldOut(p){
+        return p.soldOut === true || p.soldOut === "TRUE" || p.soldOut === 1;
+    }
+
+    function soldOutBadgeHTML(soldOut){
+        if(!soldOut) return "";
+        return '<div class="sold-out-badge"><span>Sold Out</span></div>';
+    }
+
     function cardHTML(p){
 
         const safeName = escapeAttr(p.name);
         const images = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
         const mainImg = images[0] || "";
+        const soldOut = isSoldOut(p);
 
         return `
-            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}" data-rating="${p.rating || ''}" data-sold="${p.sold || ''}">
-                <div class="shop-card-img" data-images='${JSON.stringify(images)}'>
+            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}" data-rating="${p.rating || ''}" data-sold="${p.sold || ''}" data-soldout="${soldOut ? '1' : ''}">
+                <div class="shop-card-img${soldOut ? ' sold-out' : ''}" data-images='${JSON.stringify(images)}'>
                     <img src="${mainImg}" alt="${safeName}" loading="lazy">
                     ${imageCountHTML(images)}
+                    ${soldOutBadgeHTML(soldOut)}
                 </div>
                 <div class="shop-card-body">
                     <h3>${p.name}</h3>
