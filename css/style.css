@@ -2680,6 +2680,41 @@ button.secondary-btn{
     border-color:var(--primary);
 }
 
+.checkout-payment{
+    margin-top:18px;
+    padding-top:18px;
+    border-top:1px solid rgba(255,255,255,.08);
+    text-align:center;
+}
+
+.checkout-payment h4{
+    font-size:.9rem;
+    margin-bottom:12px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    color:#fff;
+}
+
+.checkout-payment h4 i{
+    color:var(--primary);
+}
+
+.checkout-qr-img{
+    width:160px;
+    max-width:60%;
+    margin:0 auto 12px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,.1);
+}
+
+.checkout-payment-note{
+    color:var(--gray);
+    font-size:.78rem;
+    line-height:1.6;
+}
+
 .checkout-modal-footer{
     display:flex;
     gap:12px;
