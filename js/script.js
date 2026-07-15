@@ -1,17 +1,6 @@
 // ===========================
 // CEAMOTO - script.js
 // ===========================
-
-// ===========================
-// SEAMLESS BG VIDEO ACROSS PAGES
-// Same video file plays on every page (home hero + sitewide bg).
-// We save its current time to localStorage as it plays, then on the
-// next page load we jump the new <video> to roughly where the last
-// one left off (adjusted for real time elapsed) instead of restarting
-// at 0. Not frame-perfect (page load/buffering adds a little gap),
-// but it removes the "starts over every tab" jump.
-// ===========================
-
 (function(){
 
     const vid = document.querySelector(".gelai-video-bg video, .site-video-bg video");
