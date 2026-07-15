@@ -25,7 +25,7 @@
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <link rel="stylesheet" href="css/style.css?v=2">
+    <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 
 <body data-page="booking.html">
@@ -154,6 +154,16 @@
                     </select>
                     <p class="field-hint" id="bk-time-checking" style="display:none;">Checking availability...</p>
                     <p class="field-error" id="bk-fullybooked-error">Fully booked na ang date na ito. Pumili ng ibang araw.</p>
+
+                    <div class="bk-waitlist-box" id="bk-waitlist-box">
+                        <p>Gusto mo bang sumali sa waitlist para sa araw na ito? I-email ka namin kapag may nabakanteng slot dahil sa cancellation.</p>
+                        <button type="button" class="bk-waitlist-btn" id="bk-waitlist-btn">
+                            <i class="fa-solid fa-bell"></i> Sumali sa Waitlist
+                        </button>
+                        <p class="field-error" id="bk-waitlist-error"></p>
+                        <p class="field-success" id="bk-waitlist-success">Nasa waitlist ka na! I-eemail ka namin kapag may bumakanteng slot.</p>
+                    </div>
+
                 </div>
 
             </div>
@@ -405,7 +415,7 @@
 <script src="js/script.js?v=2"></script>
 
 <script src="js/booking-config.js"></script>
-<script src="js/booking.js?v=4"></script>
+<script src="js/booking.js?v=5"></script>
 
 </body>
 </html>
