@@ -172,46 +172,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
 });
 
 // ===========================
-// BACK TO TOP BUTTON
-// ===========================
-
-const backBtn=document.querySelector(".back-to-top");
-
-window.addEventListener("scroll",()=>{
-
-    if(!backBtn) return;
-
-    if(window.scrollY>400){
-
-        backBtn.style.opacity="1";
-        backBtn.style.pointerEvents="all";
-
-    }else{
-
-        backBtn.style.opacity="0";
-        backBtn.style.pointerEvents="none";
-
-    }
-
-});
-
-if(backBtn){
-
-backBtn.addEventListener("click",()=>{
-
-window.scrollTo({
-
-top:0,
-
-behavior:"smooth"
-
-});
-
-});
-
-}
-
-// ===========================
 // ACTIVE NAVIGATION (per page)
 // ===========================
 

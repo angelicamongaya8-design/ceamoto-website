@@ -187,12 +187,42 @@
 
     // FULL CATALOG (search + filter + sort + "Load More" pagination)
 
+    // Works out how many columns the grid is actually rendering right
+    // now (it's a fluid auto-fit grid, so this changes with screen
+    // width) so pagination can round up to a full row instead of ever
+    // cutting off mid-row and leaving a big empty gap next to the last
+    // card before the "Load More" button.
+    function currentColumnCount(){
+
+        if(!container || !container.clientWidth) return 1;
+
+        const styles = getComputedStyle(container);
+        const gap = parseFloat(styles.columnGap || styles.gap) || 0;
+        const minCardWidth = 260;
+
+        return Math.max(1, Math.floor((container.clientWidth + gap) / (minCardWidth + gap)));
+
+    }
+
     function render(){
 
         if(!container) return;
 
         const filtered = getSorted(getFiltered());
-        const visible = filtered.slice(0, shown);
+
+        // Round "shown" up to the next full row (pulling in real
+        // products that are already loaded, not phantom ones) so the
+        // grid never ends on a half-empty row unless we've genuinely
+        // run out of products to show.
+        let visibleCount = Math.min(shown, filtered.length);
+        const columns = currentColumnCount();
+        const remainder = visibleCount % columns;
+
+        if(remainder !== 0 && visibleCount < filtered.length){
+            visibleCount = Math.min(filtered.length, visibleCount + (columns - remainder));
+        }
+
+        const visible = filtered.slice(0, visibleCount);
 
         if(filtered.length === 0){
             container.innerHTML = '<p class="catalog-empty">No products found. Try a different search term.</p>';
@@ -205,7 +235,7 @@
         }
 
         if(loadMoreBtn){
-            loadMoreBtn.style.display = shown < filtered.length ? "inline-flex" : "none";
+            loadMoreBtn.style.display = visibleCount < filtered.length ? "inline-flex" : "none";
         }
 
     }
