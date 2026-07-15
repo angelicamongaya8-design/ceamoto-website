@@ -1532,10 +1532,10 @@ footer{
 /* Messenger button stays in its normal bottom-right corner on
    mobile everywhere, same as the standard Messenger chat-bubble
    placement, so it never sits on top of centered page content
-   (hero stats, footer text, etc). Shop is the one exception: it
-   also has a cart button, so on Shop only, both float as a
-   centered horizontal pair along the bottom so neither one sits
-   on top of the product grid's right column. */
+   (hero stats, footer text, etc). Shop is the one exception: its
+   messenger button lives inside .mobile-tabbar instead (docked
+   bottom bar, styled further down), so this corner rule is
+   overridden there rather than applying on top of it. */
 .messenger-btn{
     width:50px;
     height:50px;
@@ -1545,19 +1545,11 @@ footer{
     bottom:16px;
 }
 
-body[data-page="shop.html"] .messenger-btn{
-    left:50%;
-    right:auto;
-    transform:translateX(calc(-50% - 33px));
-}
-
+/* Extra bottom clearance (not side padding, so the centered
+   copyright text stays centered) so the fixed corner button never
+   sits on top of it once you're scrolled to the very bottom. */
 .footer-bottom{
-    padding-right:70px;
-}
-
-body[data-page="shop.html"] .footer-bottom{
-    padding-left:70px;
-    padding-right:70px;
+    padding-bottom:70px;
 }
 
 }
@@ -2936,15 +2928,62 @@ button.secondary-btn{
 
 @media(max-width:600px){
 
-.cart-btn{
-    width:50px;
-    height:50px;
-    left:50%;
-    right:auto;
+/* Shop page: instead of two floating circles that inevitably land
+   on top of product cards while scrolling a full-bleed grid, dock
+   cart + messenger into one solid bottom bar - same pattern as
+   Shopee's bottom nav. It owns its own strip at the screen edge
+   (like browser chrome) instead of floating as an island over
+   content, so nothing ever looks "stuck on top of" a card. */
+.mobile-tabbar{
+    position:fixed;
+    left:0;
+    right:0;
+    bottom:0;
+    width:100%;
+    height:62px;
+    display:flex;
+    background:var(--dark);
+    border-top:1px solid rgba(255,255,255,.08);
+    box-shadow:0 -10px 30px rgba(0,0,0,.35);
+    z-index:999;
+}
+
+.mobile-tabbar .cart-btn,
+.mobile-tabbar .messenger-btn{
+    position:relative;
     top:auto;
-    bottom:16px;
-    font-size:1.05rem;
-    transform:translateX(calc(-50% + 33px));
+    left:auto;
+    right:auto;
+    bottom:auto;
+    flex:1;
+    width:auto;
+    height:100%;
+    border-radius:0;
+    box-shadow:none;
+    font-size:1.2rem;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+}
+
+.mobile-tabbar .cart-btn{
+    border-right:1px solid rgba(255,255,255,.08);
+}
+
+.mobile-tabbar .messenger-btn{
+    background:var(--card);
+    color:var(--primary);
+}
+
+.mobile-tabbar .cart-count{
+    position:static;
+    margin-left:6px;
+}
+
+/* Reserve room so the footer's copyright line never ends up
+   hidden behind the docked bar once fully scrolled. */
+body[data-page="shop.html"] footer{
+    padding-bottom:80px;
 }
 
 .cart-panel{
@@ -3248,7 +3287,6 @@ button.secondary-btn{
 .booking-form{
     padding:28px 22px;
 }
-
 .form-row{
     grid-template-columns:1fr;
     gap:0;
