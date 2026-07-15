@@ -66,17 +66,53 @@ section{
 
     position:relative;
 
-    background:
-        linear-gradient(
-        rgba(0,0,0,.70),
-        rgba(0,0,0,.75)
-        ),
+    overflow:hidden;
 
-        url("../images/shop.jpg");
-
+    background:url("../images/shop.jpg");
     background-size:cover;
     background-position:center;
     background-attachment:fixed;
+
+}
+
+.gelai::before{
+
+    content:"";
+    position:absolute;
+    inset:0;
+    z-index:1;
+
+    background:linear-gradient(
+        rgba(0,0,0,.70),
+        rgba(0,0,0,.75)
+    );
+
+}
+
+/* Video hero background: single clip, cropped full-bleed to fill the
+   whole banner (same treatment as a normal landscape hero video).
+   The source clip is portrait, so this zooms into the center of the
+   frame - deliberate, so it reads as an intentional close-up detail
+   shot instead of a vertical video "windowed" inside a blurred box. */
+
+.hero-video-bg{
+
+    position:absolute;
+    inset:0;
+    z-index:0;
+    overflow:hidden;
+
+}
+
+.hero-video-bg video{
+
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    transform:translate(-50%,-50%);
 
 }
 
@@ -254,6 +290,9 @@ section{
 
 .gelai-content{
 
+    position:relative;
+    z-index:2;
+
     display:grid;
 
     grid-template-columns:1fr 1fr;
@@ -313,6 +352,20 @@ section{
     margin-bottom:40px;
 
     font-size:1.05rem;
+
+}
+
+.hero-subline-tl{
+
+    display:inline-block;
+
+    margin-top:8px;
+
+    color:var(--secondary);
+
+    font-size:.92rem;
+
+    font-weight:500;
 
 }
 
@@ -1823,7 +1876,7 @@ footer{
 
 .shop-grid{
     display:grid;
-    grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
+    grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
     gap:30px;
     justify-content:start;
 }
