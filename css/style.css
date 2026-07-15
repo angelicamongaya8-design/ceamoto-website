@@ -14,6 +14,8 @@ body{
     color:#fff;
     overflow-x:hidden;
     line-height:1.7;
+    position:relative;
+    z-index:0;
 }
 
 /* Sitewide video background - same clip as the Home hero, but fixed
