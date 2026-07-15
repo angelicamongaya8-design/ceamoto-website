@@ -1538,24 +1538,41 @@ footer{
     transform:none;
 }
 
+/* Floating buttons move from a stacked column on the right edge
+   to a centered horizontal row along the bottom on mobile, so they
+   never sit on top of / obscure the shop grid's right column while
+   scrolling. Pages without a cart button (everywhere except Shop)
+   center just back-to-top + messenger as a pair; Shop widens to a
+   3-across row to also fit the cart button. */
 .back-to-top,
 .messenger-btn{
     width:50px;
     height:50px;
-    right:15px;
+    left:50%;
+    right:auto;
+    top:auto;
+    bottom:16px;
 }
 
 .back-to-top{
-    bottom:15px;
+    transform:translateX(calc(-50% - 33px));
+}
+
+.messenger-btn{
+    transform:translateX(calc(-50% + 33px));
+}
+
+body[data-page="shop.html"] .back-to-top{
+    transform:translateX(calc(-50% - 66px));
+}
+
+body[data-page="shop.html"] .messenger-btn{
+    transform:translateX(-50%);
 }
 
 .footer-bottom{
     padding-left:70px;
     padding-right:70px;
-}
-
-.messenger-btn{
-    bottom:80px;
 }
 
 }
@@ -2066,16 +2083,6 @@ footer{
 }
 
 @media(max-width:600px){
-/* Extra right clearance so the right-column cards never sit
-   underneath the fixed cart/messenger/back-to-top buttons that
-   float in that same corner while scrolling. Small buffer past
-   the buttons' own footprint (50px wide + 15px offset), balanced
-   with a touch more left padding too so the grid reads as evenly
-   centered instead of shoved to one side. */
-#shop{
-    padding-left:calc(8% + 10px);
-    padding-right:calc(8% + 40px);
-}
 .shop-grid{
     grid-template-columns:repeat(2,1fr);
     gap:14px;
@@ -2927,9 +2934,12 @@ button.secondary-btn{
 .cart-btn{
     width:50px;
     height:50px;
-    right:15px;
-    bottom:145px;
+    left:50%;
+    right:auto;
+    top:auto;
+    bottom:16px;
     font-size:1.05rem;
+    transform:translateX(calc(-50% + 66px));
 }
 
 .cart-panel{
