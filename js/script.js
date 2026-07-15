@@ -2,6 +2,66 @@
 // CEAMOTO - script.js
 // ===========================
 
+// ===========================
+// SEAMLESS BG VIDEO ACROSS PAGES
+// Same video file plays on every page (home hero + sitewide bg).
+// We save its current time to localStorage as it plays, then on the
+// next page load we jump the new <video> to roughly where the last
+// one left off (adjusted for real time elapsed) instead of restarting
+// at 0. Not frame-perfect (page load/buffering adds a little gap),
+// but it removes the "starts over every tab" jump.
+// ===========================
+
+(function(){
+
+    const vid = document.querySelector(".gelai-video-bg video, .site-video-bg video");
+
+    if(!vid) return;
+
+    const STORAGE_KEY = "ceamotoBgVideoState";
+
+    function saveState(){
+        try{
+            localStorage.setItem(STORAGE_KEY, JSON.stringify({
+                time: vid.currentTime,
+                ts: Date.now()
+            }));
+        }catch(e){}
+    }
+
+    function restoreState(){
+        try{
+            const raw = localStorage.getItem(STORAGE_KEY);
+            if(!raw) return;
+
+            const state = JSON.parse(raw);
+            if(!state || typeof state.time !== "number") return;
+
+            const elapsedSinceSave = (Date.now() - state.ts) / 1000;
+            let target = state.time + elapsedSinceSave;
+
+            if(vid.duration && isFinite(vid.duration) && vid.duration > 0){
+                target = target % vid.duration;
+            }
+
+            if(isFinite(target) && target >= 0){
+                vid.currentTime = target;
+            }
+        }catch(e){}
+    }
+
+    if(vid.readyState >= 1){
+        restoreState();
+    }else{
+        vid.addEventListener("loadedmetadata", restoreState, { once:true });
+    }
+
+    setInterval(saveState, 500);
+    window.addEventListener("pagehide", saveState);
+    window.addEventListener("beforeunload", saveState);
+
+})();
+
 // NAVBAR SCROLL EFFECT
 const navbar = document.querySelector(".navbar");
 
