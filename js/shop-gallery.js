@@ -3,6 +3,12 @@
 // Clickable product images with
 // a prev/next lightbox showing
 // the 3 angles per product.
+// Only triggers from inside the
+// product detail modal's photo now
+// (product-modal.js) - the grid
+// card's own photo opens that modal
+// first instead of jumping straight
+// to the gallery.
 // ===========================
 
 (function(){
@@ -66,7 +72,7 @@
 
     document.addEventListener("click", (e) => {
 
-        const card = e.target.closest(".shop-card-img");
+        const card = e.target.closest(".product-modal-img-wrap");
 
         if(!card) return;
 

@@ -2,13 +2,18 @@
 // CEAMOTO - product-modal.js
 // Shopee-style "tap a product to
 // see it up close" detail modal.
-// Clicking anywhere on a shop card
-// (except the image, which keeps
-// opening the angle gallery, and
-// the action buttons) opens this
-// modal with a bigger photo, name,
-// price, and the same Add to Cart /
-// Buy Now buttons.
+// Clicking anywhere on a shop card,
+// including its photo (this used to
+// open the angle gallery directly,
+// but on phones the photo is most of
+// the tappable card so that meant
+// people almost never reached the
+// modal), opens this modal with a
+// bigger photo, name, price, and the
+// same Add to Cart / Buy Now buttons.
+// The angle gallery is still one tap
+// away - just from inside the modal's
+// own photo instead of the card's.
 // ===========================
 
 (function(){
@@ -87,17 +92,16 @@
         modal.classList.remove("show");
     }
 
-    // Open on any shop-card click, except taps on the image (that opens
-    // the angle gallery instead) or the action buttons (those already
-    // add to cart / buy now on their own).
+    // Open on any shop-card click, including the photo now - only the
+    // action buttons (Add to Cart / Buy Now) skip opening the modal
+    // since they already do their own thing.
     document.addEventListener("click", (e) => {
 
         const card = e.target.closest(".shop-card");
 
         if(!card) return;
 
-        if(e.target.closest(".shop-card-img") ||
-           e.target.closest(".add-to-cart-btn") ||
+        if(e.target.closest(".add-to-cart-btn") ||
            e.target.closest(".buy-now-btn")){
             return;
         }
