@@ -71,7 +71,6 @@ section{
     background:url("../images/shop.jpg");
     background-size:cover;
     background-position:center;
-    background-attachment:fixed;
 
 }
 
@@ -89,13 +88,13 @@ section{
 
 }
 
-/* Video hero background: single clip, cropped full-bleed to fill the
-   whole banner (same treatment as a normal landscape hero video).
+/* Video gelai background: single clip, cropped full-bleed to fill the
+   whole banner (same treatment as a normal landscape gelai video).
    The source clip is portrait, so this zooms into the center of the
    frame - deliberate, so it reads as an intentional close-up detail
    shot instead of a vertical video "windowed" inside a blurred box. */
 
-.hero-video-bg{
+.gelai-video-bg{
 
     position:absolute;
     inset:0;
@@ -104,7 +103,7 @@ section{
 
 }
 
-.hero-video-bg video{
+.gelai-video-bg video{
 
     position:absolute;
     top:50%;
@@ -355,7 +354,7 @@ section{
 
 }
 
-.hero-subline-tl{
+.gelai-subline-tl{
 
     display:inline-block;
 
