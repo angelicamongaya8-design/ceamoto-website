@@ -132,6 +132,23 @@
         return "";
     }
 
+    // Rating + sold count, entered manually in the Products sheet from
+    // Rollie's Shopee Seller Centre (Shopee blocks automated scraping,
+    // so this can't be a live sync - it just displays whatever numbers
+    // are in the sheet). Hidden gracefully if a product has no rating
+    // or sold count entered yet.
+    function ratingHTML(rating){
+        const num = Number(rating);
+        if(!rating || isNaN(num) || num <= 0) return "";
+        return `<span class="shop-rating"><i class="fa-solid fa-star"></i> ${num.toFixed(1)}</span>`;
+    }
+
+    function soldHTML(sold){
+        const num = Number(sold);
+        if(!sold || isNaN(num) || num <= 0) return "";
+        return `<span class="shop-sold">${num.toLocaleString("en-US")} sold</span>`;
+    }
+
     function cardHTML(p){
 
         const safeName = escapeAttr(p.name);
@@ -139,7 +156,7 @@
         const mainImg = images[0] || "";
 
         return `
-            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}">
+            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}" data-rating="${p.rating || ''}" data-sold="${p.sold || ''}">
                 <div class="shop-card-img" data-images='${JSON.stringify(images)}'>
                     <img src="${mainImg}" alt="${safeName}" loading="lazy">
                     ${imageCountHTML(images)}
@@ -147,15 +164,11 @@
                 <div class="shop-card-body">
                     <h3>${p.name}</h3>
                     <span class="shop-price">${formatPrice(p.price)}</span>
-                    ${stockBadgeHTML(p.stock)}
-                    <div class="shop-card-actions">
-                        <button class="add-to-cart-btn">
-                            <i class="fa-solid fa-cart-plus"></i> Add to Cart
-                        </button>
-                        <button class="buy-now-btn">
-                            <i class="fa-solid fa-bolt"></i> Buy Now
-                        </button>
+                    <div class="shop-meta-row">
+                        ${ratingHTML(p.rating)}
+                        ${soldHTML(p.sold)}
                     </div>
+                    ${stockBadgeHTML(p.stock)}
                 </div>
             </div>
         `;

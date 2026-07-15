@@ -32,9 +32,35 @@
     const countNum = modal.querySelector(".product-modal-imgcount-num");
     const nameEl = modal.querySelector(".product-modal-name");
     const priceEl = modal.querySelector(".product-modal-price");
+    const ratingEl = modal.querySelector(".product-modal-rating");
+    const soldEl = modal.querySelector(".product-modal-sold");
 
     function formatPrice(num){
         return "₱" + Number(num).toLocaleString("en-US");
+    }
+
+    // Same manually-entered rating/sold numbers as the card grid (see
+    // shop-catalog.js) - Shopee blocks scraping, so this isn't live.
+    function renderRating(rating){
+        const num = Number(rating);
+        if(!ratingEl) return;
+        if(!rating || isNaN(num) || num <= 0){
+            ratingEl.style.display = "none";
+            return;
+        }
+        ratingEl.style.display = "flex";
+        ratingEl.innerHTML = `<i class="fa-solid fa-star"></i> ${num.toFixed(1)}`;
+    }
+
+    function renderSold(sold){
+        const num = Number(sold);
+        if(!soldEl) return;
+        if(!sold || isNaN(num) || num <= 0){
+            soldEl.style.display = "none";
+            return;
+        }
+        soldEl.style.display = "inline";
+        soldEl.textContent = num.toLocaleString("en-US") + " sold";
     }
 
     function openModal(card){
@@ -82,6 +108,8 @@
 
         nameEl.textContent = name;
         priceEl.textContent = formatPrice(price);
+        renderRating(card.dataset.rating);
+        renderSold(card.dataset.sold);
 
         overlay.classList.add("show");
         modal.classList.add("show");
