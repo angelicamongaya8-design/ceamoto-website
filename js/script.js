@@ -237,24 +237,6 @@ e.stopPropagation();
 });
 
 // ===========================
-// PARALLAX GELAI
-// ===========================
-
-const gelai=document.querySelector(".gelai");
-
-window.addEventListener("scroll",()=>{
-
-let offset=window.pageYOffset;
-
-if(gelai){
-
-gelai.style.backgroundPositionY=offset*0.5+"px";
-
-}
-
-});
-
-// ===========================
 // GELAI COUNTER
 // ===========================
 
