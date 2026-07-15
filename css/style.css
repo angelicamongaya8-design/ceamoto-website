@@ -1400,10 +1400,10 @@ footer::before{
    FLOATING BUTTONS
 =========================== */
 
-.back-to-top,
 .messenger-btn{
     position:fixed;
     right:25px;
+    bottom:25px;
     width:55px;
     height:55px;
     border-radius:50%;
@@ -1416,16 +1416,7 @@ footer::before{
     transition:.3s;
 }
 
-.back-to-top{
-    bottom:25px;
-}
-
-.messenger-btn{
-    bottom:95px;
-}
-
 @media (hover:hover){
-.back-to-top:hover,
 .messenger-btn:hover{
     transform:translateY(-5px);
 }
@@ -1538,13 +1529,11 @@ footer{
     transform:none;
 }
 
-/* Floating buttons move from a stacked column on the right edge
-   to a centered horizontal row along the bottom on mobile, so they
-   never sit on top of / obscure the shop grid's right column while
-   scrolling. Pages without a cart button (everywhere except Shop)
-   center just back-to-top + messenger as a pair; Shop widens to a
-   3-across row to also fit the cart button. */
-.back-to-top,
+/* Floating button(s) move from the right edge to a centered
+   horizontal row along the bottom on mobile, so they never sit on
+   top of / obscure page content while scrolling. Pages without a
+   cart button (everywhere except Shop) center the messenger button
+   alone; Shop sits it side-by-side with the cart button. */
 .messenger-btn{
     width:50px;
     height:50px;
@@ -1552,22 +1541,11 @@ footer{
     right:auto;
     top:auto;
     bottom:16px;
-}
-
-.back-to-top{
-    transform:translateX(calc(-50% - 33px));
-}
-
-.messenger-btn{
-    transform:translateX(calc(-50% + 33px));
-}
-
-body[data-page="shop.html"] .back-to-top{
-    transform:translateX(calc(-50% - 66px));
+    transform:translateX(-50%);
 }
 
 body[data-page="shop.html"] .messenger-btn{
-    transform:translateX(-50%);
+    transform:translateX(calc(-50% - 33px));
 }
 
 .footer-bottom{
@@ -1806,11 +1784,6 @@ body[data-page="shop.html"] .messenger-btn{
     width:min(92%,650px);
 }
 
-}
-
-.back-to-top{
-    opacity:0;
-    pointer-events:none;
 }
 
 .loaded{
@@ -2117,6 +2090,29 @@ body[data-page="shop.html"] .messenger-btn{
     border-radius:10px;
     line-height:1.25;
 }
+.catalog-controls{
+    padding:12px;
+    gap:10px;
+}
+.catalog-search-wrap{
+    max-width:100%;
+}
+.catalog-filter-wrap{
+    flex-wrap:nowrap;
+    width:100%;
+    gap:8px;
+}
+.catalog-select{
+    flex:1;
+    min-width:0;
+    padding:9px 26px 9px 12px;
+    font-size:.72rem;
+    background-position:right 8px center;
+}
+#catalog-count{
+    width:100%;
+    text-align:center;
+}
 }
 
 /* ===========================
@@ -2302,7 +2298,7 @@ button.secondary-btn{
 .cart-btn{
     position:fixed;
     right:25px;
-    bottom:165px;
+    bottom:95px;
     width:55px;
     height:55px;
     border-radius:50%;
@@ -2941,7 +2937,7 @@ button.secondary-btn{
     top:auto;
     bottom:16px;
     font-size:1.05rem;
-    transform:translateX(calc(-50% + 66px));
+    transform:translateX(calc(-50% + 33px));
 }
 
 .cart-panel{
@@ -3255,3 +3251,4 @@ button.secondary-btn{
     grid-template-columns:1fr 1fr;
 }
 
+}
