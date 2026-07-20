@@ -296,6 +296,7 @@
         sortSelect.addEventListener("change", () => {
             sortBy = sortSelect.value;
             render();
+            keepSearchInView();
         });
 
     }
