@@ -109,4 +109,38 @@
 
     });
 
+    // swipe
+    let touchStartX = 0;
+    let touchStartY = 0;
+
+    lightbox.addEventListener("touchstart", (e) => {
+        if(e.touches.length !== 1) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+    }, {passive: true});
+
+    lightbox.addEventListener("touchend", (e) => {
+
+        if(!e.changedTouches || e.changedTouches.length === 0) return;
+
+        const dx = e.changedTouches[0].clientX - touchStartX;
+        const dy = e.changedTouches[0].clientY - touchStartY;
+        const absDx = Math.abs(dx);
+        const absDy = Math.abs(dy);
+        const threshold = 40;
+
+        if(absDx < threshold && absDy < threshold) return;
+
+        if(absDx > absDy){
+            if(dx < 0){
+                showImage(currentIndex + 1);
+            }else{
+                showImage(currentIndex - 1);
+            }
+        }else if(dy > 0){
+            closeLightbox();
+        }
+
+    }, {passive: true});
+
 })();
