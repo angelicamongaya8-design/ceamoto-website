@@ -41,6 +41,7 @@
     const reviewsEl = modal.querySelector(".product-modal-reviews");
     const addToCartBtn = modal.querySelector(".add-to-cart-btn");
     const buyNowBtn = modal.querySelector(".buy-now-btn");
+    const hintEl = modal.querySelector(".product-modal-hint");
 
     function formatPrice(num){
         return "₱" + Number(num).toLocaleString("en-US");
@@ -148,6 +149,12 @@
             countNum.textContent = images.length;
         }else{
             countWrap.style.display = "none";
+        }
+
+        // "Tap the photo to see more angles" only makes sense when
+        // there's more than one photo to tap through.
+        if(hintEl){
+            hintEl.style.display = images.length > 1 ? "block" : "none";
         }
 
         nameEl.textContent = data.name;
