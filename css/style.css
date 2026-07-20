@@ -636,6 +636,129 @@ section{
 }
 }
 
+/* styles */
+
+#build-styles{
+    background:transparent;
+}
+
+.style-accordion{
+    display:flex;
+    gap:10px;
+    height:460px;
+}
+
+.style-panel{
+    flex:1;
+    position:relative;
+    display:flex;
+    align-items:flex-end;
+    border-radius:var(--radius);
+    overflow:hidden;
+    background-size:cover;
+    background-position:center;
+    text-decoration:none;
+    transition:flex .5s ease;
+}
+
+.style-panel::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:linear-gradient(to top, rgba(15,17,21,.9), rgba(15,17,21,.15) 55%, rgba(15,17,21,.35));
+    transition:.4s;
+}
+
+@media (hover:hover){
+.style-panel:hover{
+    flex:3.2;
+}
+.style-panel:hover::before{
+    background:linear-gradient(to top, rgba(15,17,21,.92), rgba(15,17,21,0) 60%);
+}
+}
+
+.style-panel-body{
+    position:relative;
+    z-index:1;
+    width:100%;
+    padding:22px 18px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+}
+
+.style-label-vertical{
+    display:block;
+    color:var(--white);
+    font-weight:600;
+    letter-spacing:2px;
+    text-transform:uppercase;
+    writing-mode:vertical-rl;
+    transform:rotate(180deg);
+    font-size:.85rem;
+    white-space:nowrap;
+    transition:.3s;
+}
+
+.style-label-horizontal{
+    display:block;
+    color:var(--white);
+    font-weight:700;
+    font-size:1.3rem;
+    opacity:0;
+    transform:translateY(6px);
+    transition:.3s;
+    white-space:nowrap;
+}
+
+.style-panel-arrow{
+    color:var(--secondary);
+    font-size:1.1rem;
+    opacity:0;
+    transform:translateX(-6px);
+    transition:.3s;
+    flex-shrink:0;
+}
+
+@media (hover:hover){
+.style-panel:hover .style-label-vertical{
+    opacity:0;
+    width:0;
+}
+.style-panel:hover .style-label-horizontal{
+    opacity:1;
+    transform:translateY(0);
+}
+.style-panel:hover .style-panel-arrow{
+    opacity:1;
+    transform:translateX(0);
+}
+}
+
+@media (hover:none){
+.style-accordion{
+    flex-direction:column;
+    height:auto;
+}
+.style-panel{
+    height:140px;
+}
+.style-label-vertical{
+    display:none;
+}
+.style-label-horizontal{
+    opacity:1;
+    transform:none;
+    font-size:1.1rem;
+}
+.style-panel-arrow{
+    opacity:1;
+    transform:none;
+}
+}
+
 /* animations */
 
 @keyframes fadeUp{
