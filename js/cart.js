@@ -332,6 +332,14 @@ changeQty(id, 1);
 changeQty(id, -1);
 }else if(e.target.closest(".cart-item-remove")){
 removeItem(id);
+}else if(typeof window.CEAMOTO_OPEN_PRODUCT_MODAL === "function"){
+// Let a customer check full product details (photos, description,
+// reviews) for something already in the cart, instead of having to
+// close the cart and go find it again in the grid.
+const opened = window.CEAMOTO_OPEN_PRODUCT_MODAL(id);
+if(opened){
+closeCart();
+}
 }
 
 });

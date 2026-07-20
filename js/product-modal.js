@@ -121,6 +121,47 @@
         if(buyNowBtn) buyNowBtn.disabled = !!soldOut;
     }
 
+    // Shared modal-population logic, fed by either a shop-card element
+    // (openModal, below) or raw catalog product data looked up by id
+    // (openModalById, further below) - so the same modal can be opened
+    // from the grid or from the cart panel.
+    function populateModal(data){
+
+        const images = (data.images && data.images.length) ? data.images : [];
+
+        // Carry the product's data attributes on the modal itself so
+        // cart.js's Add to Cart / Buy Now listeners (which look for the
+        // nearest ancestor with data-id) work here too.
+        modal.dataset.id = data.id;
+        modal.dataset.name = data.name;
+        modal.dataset.price = data.price;
+        modal.dataset.img = images[0] || "";
+
+        // Also let the shop-gallery.js lightbox open the full set of
+        // angles when the modal photo itself is tapped.
+        imgWrap.dataset.images = JSON.stringify(images);
+        imgEl.src = images[0] || "";
+        imgEl.alt = data.name;
+
+        if(images.length > 1){
+            countWrap.style.display = "flex";
+            countNum.textContent = images.length;
+        }else{
+            countWrap.style.display = "none";
+        }
+
+        nameEl.textContent = data.name;
+        priceEl.textContent = formatPrice(data.price);
+        renderRating(data.rating);
+        renderSold(data.sold);
+        renderDescription(data.description);
+        renderReviews(data.reviewsJson);
+        renderSoldOut(data.soldOut);
+
+        overlay.classList.add("show");
+        modal.classList.add("show");
+    }
+
     function openModal(card){
 
         const id = card.dataset.id;
@@ -143,38 +184,54 @@
             images = [img];
         }
 
-        // Carry the product's data attributes on the modal itself so
-        // cart.js's Add to Cart / Buy Now listeners (which look for the
-        // nearest ancestor with data-id) work here too.
-        modal.dataset.id = id;
-        modal.dataset.name = name;
-        modal.dataset.price = price;
-        modal.dataset.img = img;
+        populateModal({
+            id: id,
+            name: name,
+            price: price,
+            images: images,
+            rating: card.dataset.rating,
+            sold: card.dataset.sold,
+            description: card.dataset.description,
+            reviewsJson: card.dataset.reviews,
+            soldOut: card.dataset.soldout === "1"
+        });
+    }
 
-        // Also let the shop-gallery.js lightbox open the full set of
-        // angles when the modal photo itself is tapped.
-        imgWrap.dataset.images = JSON.stringify(images);
-        imgEl.src = images[0];
-        imgEl.alt = name;
+    // Opens the modal for a product id straight from the shared catalog
+    // data (window.CEAMOTO_CATALOG, already exposed by shop-catalog.js
+    // for cart price-checking) instead of requiring a live .shop-card in
+    // the grid. Needed because the cart panel can hold an item whose
+    // card isn't currently in the DOM (e.g. the shop grid is filtered to
+    // a different search/category than when the item was added).
+    // Returns true if the product was found and the modal opened.
+    function openModalById(id){
 
-        if(images.length > 1){
-            countWrap.style.display = "flex";
-            countNum.textContent = images.length;
-        }else{
-            countWrap.style.display = "none";
+        const catalog = window.CEAMOTO_CATALOG || [];
+        const p = catalog.find(item => String(item.id) === String(id));
+
+        if(!p){
+            return false;
         }
 
-        nameEl.textContent = name;
-        priceEl.textContent = formatPrice(price);
-        renderRating(card.dataset.rating);
-        renderSold(card.dataset.sold);
-        renderDescription(card.dataset.description);
-        renderReviews(card.dataset.reviews);
-        renderSoldOut(card.dataset.soldout === "1");
+        const images = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
+        const soldOut = p.soldOut === true || p.soldOut === "TRUE" || p.soldOut === 1;
 
-        overlay.classList.add("show");
-        modal.classList.add("show");
+        populateModal({
+            id: p.id,
+            name: p.name,
+            price: p.price,
+            images: images,
+            rating: p.rating,
+            sold: p.sold,
+            description: p.description,
+            reviewsJson: JSON.stringify(p.reviews || []),
+            soldOut: soldOut
+        });
+
+        return true;
     }
+
+    window.CEAMOTO_OPEN_PRODUCT_MODAL = openModalById;
 
     function closeModal(){
         overlay.classList.remove("show");
