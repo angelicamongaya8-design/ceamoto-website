@@ -299,7 +299,7 @@
      FLOATING BUTTONS
 =========================== -->
 
-<button class="messenger-btn" id="chat-launch-btn" aria-label="Chat with us" onclick="if(window.Tawk_API && Tawk_API.toggle){Tawk_API.toggle();}">
+<button class="messenger-btn" id="chat-launch-btn" aria-label="Chat with us" onclick="if(window.$crisp){$crisp.push(['do','chat:show']);$crisp.push(['do','chat:open']);}">
 
     <i class="fa-solid fa-comment-dots"></i>
 
@@ -312,24 +312,26 @@
 <script src="js/script.js?v=5"></script>
 
 <!-- ===========================
-     LIVE CHAT (Tawk.to)
+     LIVE CHAT (Crisp)
 =========================== -->
 
 <script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/6a5780f56076b81d4b66861c/1jtisvg57';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
+window.$crisp = [];
+window.CRISP_WEBSITE_ID = "bf5a1d59-a713-45bc-83fe-ba802aa8304f";
+(function() {
+    var d = document;
+    var s = d.createElement("script");
+    s.src = "https://client.crisp.chat/l.js";
+    s.async = 1;
+    d.getElementsByTagName("head")[0].appendChild(s);
 })();
-Tawk_API.onLoad = function(){
-    // Using our own site-styled chat button instead of tawk.to's
-    // default floating launcher, so hide theirs here.
-    Tawk_API.hideWidget();
-};
+// Using our own site-styled chat button instead of Crisp's default
+// floating launcher, so keep theirs hidden and only reveal the panel
+// when our button is clicked.
+$crisp.push(["do", "chat:hide"]);
+$crisp.push(["on", "chat:closed", function () {
+    $crisp.push(["do", "chat:hide"]);
+}]);
 </script>
 
 </body>
