@@ -9,8 +9,11 @@
 // the tappable card so that meant
 // people almost never reached the
 // modal), opens this modal with a
-// bigger photo, name, price, and the
-// same Add to Cart / Buy Now buttons.
+// bigger photo, name, price, specs/
+// description, rating, and the same
+// Add to Cart / Buy Now buttons - so
+// a customer can check the details
+// before adding to cart.
 // The angle gallery is still one tap
 // away - just from inside the modal's
 // own photo instead of the card's.
@@ -34,6 +37,7 @@
     const priceEl = modal.querySelector(".product-modal-price");
     const ratingEl = modal.querySelector(".product-modal-rating");
     const soldEl = modal.querySelector(".product-modal-sold");
+    const descriptionEl = modal.querySelector(".product-modal-description");
     const addToCartBtn = modal.querySelector(".add-to-cart-btn");
     const buyNowBtn = modal.querySelector(".buy-now-btn");
 
@@ -63,6 +67,22 @@
         }
         soldEl.style.display = "inline";
         soldEl.textContent = num.toLocaleString("en-US") + " sold";
+    }
+
+    // Specs/description, entered per product in the admin panel
+    // (Description field) - lets a customer check what they're
+    // actually getting before adding to cart. Hidden entirely if a
+    // product doesn't have one filled in yet.
+    function renderDescription(description){
+        if(!descriptionEl) return;
+        const text = (description || "").trim();
+        if(!text){
+            descriptionEl.style.display = "none";
+            descriptionEl.textContent = "";
+            return;
+        }
+        descriptionEl.style.display = "block";
+        descriptionEl.textContent = text;
     }
 
     // Same SoldOut flag as the card grid (see shop-catalog.js) - dims the
@@ -121,6 +141,7 @@
         priceEl.textContent = formatPrice(price);
         renderRating(card.dataset.rating);
         renderSold(card.dataset.sold);
+        renderDescription(card.dataset.description);
         renderSoldOut(card.dataset.soldout === "1");
 
         overlay.classList.add("show");

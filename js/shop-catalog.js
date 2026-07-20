@@ -164,12 +164,13 @@
     function cardHTML(p){
 
         const safeName = escapeAttr(p.name);
+        const safeDescription = escapeAttr(p.description || "");
         const images = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
         const mainImg = images[0] || "";
         const soldOut = isSoldOut(p);
 
         return `
-            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}" data-rating="${p.rating || ''}" data-sold="${p.sold || ''}" data-soldout="${soldOut ? '1' : ''}">
+            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}" data-rating="${p.rating || ''}" data-sold="${p.sold || ''}" data-soldout="${soldOut ? '1' : ''}" data-description="${safeDescription}">
                 <div class="shop-card-img${soldOut ? ' sold-out' : ''}" data-images='${JSON.stringify(images)}'>
                     <img src="${mainImg}" alt="${safeName}" loading="lazy">
                     ${imageCountHTML(images)}
@@ -370,7 +371,8 @@
     // FETCH PRODUCTS
     // Single source of truth for every product on the Shop page - the
     // Products tab of the CEAMOTO Bookings Google Sheet, read through
-    // the same Apps Script Web App the booking form posts to.
+    // the same Apps Script Web App the Shop page reads from and the
+    // booking form posts to.
 
     async function loadProducts(){
 
