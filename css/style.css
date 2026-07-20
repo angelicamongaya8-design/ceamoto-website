@@ -2850,6 +2850,24 @@ button.secondary-btn{
     line-height:1.6;
 }
 
+.checkout-review-note{
+    color:var(--gray);
+    font-size:.78rem;
+    line-height:1.6;
+    margin-top:14px;
+    padding-top:14px;
+    border-top:1px solid rgba(255,255,255,.08);
+}
+
+.checkout-review-note i{
+    color:var(--secondary);
+}
+
+.checkout-review-note a{
+    color:var(--secondary);
+    text-decoration:underline;
+}
+
 .checkout-modal-footer{
     display:flex;
     gap:12px;
@@ -3418,6 +3436,34 @@ body[data-page="shop.html"] footer{
     text-align:center;
     margin-top:16px;
     line-height:1.6;
+}
+
+.review-form-wrap{
+    display:none;
+    background:var(--card);
+    border-radius:var(--radius);
+    border:1px solid rgba(255,255,255,.05);
+    padding:40px;
+}
+
+.review-form-wrap.show{
+    display:block;
+}
+
+.review-form-wrap h3{
+    font-size:1.4rem;
+    margin-bottom:10px;
+}
+
+.review-form-note{
+    color:var(--gray);
+    font-size:.85rem;
+    line-height:1.6;
+    margin-bottom:26px;
+}
+
+.review-item{
+    margin-bottom:18px;
 }
 
 .booking-success{
