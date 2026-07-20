@@ -335,11 +335,12 @@ removeItem(id);
 }else if(typeof window.CEAMOTO_OPEN_PRODUCT_MODAL === "function"){
 // Let a customer check full product details (photos, description,
 // reviews) for something already in the cart, instead of having to
-// close the cart and go find it again in the grid.
-const opened = window.CEAMOTO_OPEN_PRODUCT_MODAL(id);
-if(opened){
-closeCart();
-}
+// close the cart and go find it again in the grid. The product
+// modal's own overlay renders on top of the cart panel (it has a
+// higher z-index), so the cart stays open underneath - closing the
+// modal reveals the cart again exactly as it was, no re-click of
+// the cart button needed.
+window.CEAMOTO_OPEN_PRODUCT_MODAL(id);
 }
 
 });
