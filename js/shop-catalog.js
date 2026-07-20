@@ -165,12 +165,13 @@
 
         const safeName = escapeAttr(p.name);
         const safeDescription = escapeAttr(p.description || "");
+        const safeReviews = escapeAttr(JSON.stringify(p.reviews || []));
         const images = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
         const mainImg = images[0] || "";
         const soldOut = isSoldOut(p);
 
         return `
-            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}" data-rating="${p.rating || ''}" data-sold="${p.sold || ''}" data-soldout="${soldOut ? '1' : ''}" data-description="${safeDescription}">
+            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}" data-rating="${p.rating || ''}" data-sold="${p.sold || ''}" data-soldout="${soldOut ? '1' : ''}" data-description="${safeDescription}" data-reviews="${safeReviews}">
                 <div class="shop-card-img${soldOut ? ' sold-out' : ''}" data-images='${JSON.stringify(images)}'>
                     <img src="${mainImg}" alt="${safeName}" loading="lazy">
                     ${imageCountHTML(images)}

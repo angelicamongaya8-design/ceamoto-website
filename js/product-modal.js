@@ -38,6 +38,7 @@
     const ratingEl = modal.querySelector(".product-modal-rating");
     const soldEl = modal.querySelector(".product-modal-sold");
     const descriptionEl = modal.querySelector(".product-modal-description");
+    const reviewsEl = modal.querySelector(".product-modal-reviews");
     const addToCartBtn = modal.querySelector(".add-to-cart-btn");
     const buyNowBtn = modal.querySelector(".buy-now-btn");
 
@@ -83,6 +84,32 @@
         }
         descriptionEl.style.display = "block";
         descriptionEl.textContent = text;
+    }
+
+    // Manually-entered review quotes (Reviews column in the Products
+    // sheet, pipe-separated same as Images) - shown as static customer
+    // quotes under the description. Hidden entirely if a product has
+    // no reviews entered yet.
+    function renderReviews(reviewsJson){
+        if(!reviewsEl) return;
+        let reviews = [];
+        try{
+            reviews = JSON.parse(reviewsJson || "[]");
+        }catch(e){
+            reviews = [];
+        }
+        if(!Array.isArray(reviews) || reviews.length === 0){
+            reviewsEl.style.display = "none";
+            reviewsEl.innerHTML = "";
+            return;
+        }
+        reviewsEl.style.display = "block";
+        reviewsEl.innerHTML = '<h4 class="product-modal-reviews-title">Customer Reviews</h4>' +
+            reviews.map(r => {
+                const div = document.createElement("div");
+                div.textContent = r;
+                return `<div class="product-modal-review"><i class="fa-solid fa-quote-left"></i><p>${div.innerHTML}</p></div>`;
+            }).join("");
     }
 
     // Same SoldOut flag as the card grid (see shop-catalog.js) - dims the
@@ -142,6 +169,7 @@
         renderRating(card.dataset.rating);
         renderSold(card.dataset.sold);
         renderDescription(card.dataset.description);
+        renderReviews(card.dataset.reviews);
         renderSoldOut(card.dataset.soldout === "1");
 
         overlay.classList.add("show");
