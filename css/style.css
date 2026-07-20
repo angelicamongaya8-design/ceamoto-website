@@ -310,9 +310,13 @@ section{
 
     display:grid;
 
-    grid-template-columns:1fr 1fr;
+    grid-template-columns:1fr;
 
     align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
 
     gap:80px;
 
@@ -325,6 +329,8 @@ section{
 .gelai-text{
 
     animation:fadeUp 1s ease;
+    max-width:900px;
+    margin:0 auto;
 
 }
 
@@ -394,7 +400,7 @@ section{
 
     max-width:290px;
 
-    margin-bottom:20px;
+    margin:0 auto 20px;
 
     overflow:hidden;
 
@@ -467,6 +473,8 @@ section{
 
     display:flex;
 
+    justify-content:center;
+
     gap:20px;
 
     flex-wrap:wrap;
@@ -528,6 +536,8 @@ section{
     margin-top:70px;
 
     display:flex;
+
+    justify-content:center;
 
     gap:50px;
 
@@ -1945,24 +1955,6 @@ footer{
 /* tablet */
 
 @media(min-width:768px) and (max-width:991px){
-
-.gelai-content{
-    grid-template-columns:1fr 1fr;
-    text-align:left;
-    gap:40px;
-}
-
-.gelai-buttons{
-    justify-content:flex-start;
-}
-
-.service-tags{
-    margin:0 0 20px;
-}
-
-.gelai-stats{
-    justify-content:flex-start;
-}
 
 .about-container{
     grid-template-columns:1fr 1fr;
