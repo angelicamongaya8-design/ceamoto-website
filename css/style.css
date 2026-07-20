@@ -553,15 +553,27 @@ section{
 
     animation:fadeRight 1.2s ease;
     position:relative;
+    display:block;
+    overflow:hidden;
+    border-radius:25px;
+    text-decoration:none;
 
 }
 
 .gelai-image img{
 
     border-radius:25px;
-
     box-shadow:var(--shadow);
+    display:block;
+    width:100%;
+    transition:.4s;
 
+}
+
+@media (hover:hover){
+.gelai-image:hover img{
+    transform:scale(1.05);
+}
 }
 
 .gelai-image-tag{
@@ -576,10 +588,21 @@ section{
     color:var(--white);
     font-size:.85rem;
     font-weight:600;
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:10px;
 
 }
 
-.gelai-image-tag span{
+.gelai-image-tag-text{
+
+    flex:1;
+    min-width:0;
+
+}
+
+.gelai-image-tag-text span{
 
     display:block;
     color:var(--secondary);
@@ -589,6 +612,28 @@ section{
     letter-spacing:1px;
     margin-top:2px;
 
+}
+
+.gelai-image-arrow{
+
+    background:var(--primary);
+    color:#111;
+    width:38px;
+    height:38px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    flex-shrink:0;
+    transition:.3s;
+
+}
+
+@media (hover:hover){
+.gelai-image:hover .gelai-image-arrow{
+    background:var(--secondary);
+    transform:translateX(3px);
+}
 }
 
 /* animations */
