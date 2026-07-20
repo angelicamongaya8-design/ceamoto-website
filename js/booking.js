@@ -1,9 +1,4 @@
-// ===========================
-// CEAMOTO - booking.js
-// Handles the public booking form: validation, and sending the
-// booking to the Google Apps Script Web App (which appends it as
-// a new row in the CEAMOTO Bookings Google Sheet - the "admin").
-// ===========================
+// booking
 
 (function(){
 
@@ -25,10 +20,7 @@
     const waitlistError = document.getElementById("bk-waitlist-error");
     const waitlistSuccess = document.getElementById("bk-waitlist-success");
 
-    // ===========================
-    // BUSINESS HOURS
-    // Open Monday-Saturday, 9:00 AM - 6:00 PM. Closed Sundays.
-    // ===========================
+    // hours
     const dateInput = document.getElementById("bk-date");
     const dateError = document.getElementById("bk-date-error");
     const timeSelect = document.getElementById("bk-time");
@@ -42,13 +34,13 @@
         };
     }
 
-    // Don't allow picking a date in the past.
+    // past
     if(dateInput){
         const t = todayParts();
         dateInput.min = `${t.yyyy}-${t.mm}-${t.dd}`;
     }
 
-    // Parses an "h:mm AM/PM" option value into a 24hr hour number.
+    // parse
     function optionHour24(text){
         const match = /^(\d+):\d+\s*(AM|PM)$/i.exec(text.trim());
         if(!match){
@@ -65,10 +57,7 @@
         return hour;
     }
 
-    // Grey out (disable) time slots that no longer make sense for the
-    // currently selected date - i.e. slots already passed, if the
-    // selected date is today, or slots that are already booked (see
-    // checkAvailability() below, which populates takenTimes).
+    // slots
     let takenTimes = [];
 
     function refreshTimeAvailability(){
@@ -96,8 +85,7 @@
 
             opt.disabled = alreadyPassed || isTaken;
 
-            // Label taken slots so it's obvious why they're greyed out
-            // (as opposed to just being in the past).
+            // label
             const baseLabel = opt.dataset.baseLabel || opt.textContent;
             opt.dataset.baseLabel = baseLabel;
             opt.textContent = isTaken && !alreadyPassed ? baseLabel + " (Fully Booked)" : baseLabel;
@@ -122,10 +110,7 @@
 
     }
 
-    // Resets the "Join Waitlist" box back to its default state (button
-    // enabled, no success/error messages showing) - used whenever the
-    // person picks a different date, since a waitlist join only ever
-    // applies to the date that was fully booked at the time.
+    // reset
     function resetWaitlistUI(){
 
         if(waitlistBtn){
@@ -138,12 +123,7 @@
 
     }
 
-    // Asks the Apps Script backend which of the day's time slots are
-    // already taken for the selected date, so we don't let two people
-    // book the same slot. Runs on every date change; if it fails
-    // (offline, etc.) we just fall back to no slots being pre-blocked -
-    // the sheet is still the source of truth and Rollie can catch a
-    // rare double-booking manually.
+    // availability
     let availabilityRequestId = 0;
 
     async function checkAvailability(dateStr){
@@ -162,8 +142,7 @@
             const res = await fetch(BOOKING_ENDPOINT_URL + "?action=availability&date=" + encodeURIComponent(dateStr));
             const data = await res.json();
 
-            // A newer request already started (person changed the date
-            // again while this one was in flight) - ignore this stale result.
+            // stale
             if(requestId !== availabilityRequestId){
                 return;
             }
@@ -184,7 +163,7 @@
     }
 
     function isSunday(dateStr){
-        // "YYYY-MM-DD" -> Date parsed as local time (avoids UTC day-shift).
+        // parse
         const parts = dateStr.split("-");
         if(parts.length !== 3){
             return false;
@@ -223,12 +202,7 @@
         });
     }
 
-    // "Join Waitlist" - reuses the name/contact/email fields already
-    // filled in at the top of the booking form, so the person doesn't
-    // have to re-type anything. Posts to the same Apps Script backend
-    // (action: "joinWaitlist"), which appends a row to the Waitlist
-    // sheet and auto-emails the person if a slot on that date opens up
-    // from a cancellation.
+    // waitlist
     if(waitlistBtn){
 
         waitlistBtn.addEventListener("click", async () => {
@@ -361,8 +335,7 @@
             const res = await fetch(BOOKING_ENDPOINT_URL, {
                 method: "POST",
                 headers: {
-                    // text/plain avoids a CORS preflight request, which
-                    // Google Apps Script web apps don't handle well.
+                    // cors
                     "Content-Type": "text/plain;charset=utf-8"
                 },
                 body: JSON.stringify(booking)
@@ -378,12 +351,7 @@
                     bookingRefDisplay.textContent = data.ref ? ("Booking Reference: " + data.ref) : "";
                 }
 
-                // Hiding the form makes the page much shorter, and
-                // scrollIntoView() run in the same tick can compute its
-                // target against the stale (taller) layout - landing the
-                // person at the bottom instead of the top of the success
-                // message. Wait a frame for the layout to settle, then
-                // jump to a manually-computed position instead.
+                // scroll
                 requestAnimationFrame(() => {
                     const navbar = document.querySelector(".navbar");
                     const navbarH = navbar ? navbar.offsetHeight : 100;

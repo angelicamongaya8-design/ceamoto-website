@@ -1,6 +1,4 @@
-// ===========================
-// CEAMOTO - script.js
-// ===========================
+// nav
 (function(){
 
     const vid = document.querySelector(".gelai-video-bg video, .site-video-bg video");
@@ -51,7 +49,7 @@
 
 })();
 
-// NAVBAR SCROLL EFFECT
+// navbar
 const navbar = document.querySelector(".navbar");
 
 window.addEventListener("scroll", () => {
@@ -62,10 +60,7 @@ window.addEventListener("scroll", () => {
     }
 });
 
-// ===========================
-// MOBILE MENU
-// ===========================
-
+// menu
 const menuBtn = document.querySelector(".menu-btn");
 const navLinks = document.querySelector(".nav-links");
 
@@ -81,8 +76,7 @@ menuBtn.addEventListener("click", () => {
 
 });
 
-// Close menu when clicking links
-
+// menu
 document.querySelectorAll(".nav-links a").forEach(link => {
 
     link.addEventListener("click", () => {
@@ -96,10 +90,7 @@ document.querySelectorAll(".nav-links a").forEach(link => {
 
 });
 
-// ===========================
-// SCROLL REVEAL
-// ===========================
-
+// reveal
 const reveals = document.querySelectorAll(
 ".service-card, .shop-card, .gallery-item, .testimonial-card, .feature, .contact-card, .section-header, .about-image, .about-content, .contact-info, .contact-map"
 );
@@ -126,18 +117,14 @@ window.addEventListener("scroll",revealElements);
 
 revealElements();
 
-// Add reveal class automatically
-
+// reveal
 reveals.forEach(el=>{
 
     el.classList.add("reveal");
 
 });
 
-// ===========================
-// SMOOTH SCROLL
-// ===========================
-
+// scroll
 document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
 
     anchor.addEventListener("click",function(e){
@@ -160,10 +147,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor=>{
 
 });
 
-// ===========================
-// ACTIVE NAVIGATION (per page)
-// ===========================
-
+// nav
 const navItems=document.querySelectorAll(".nav-links a");
 
 function setCurrentNav(){
@@ -195,10 +179,7 @@ function setCurrentNav(){
 
 setCurrentNav();
 
-// ===========================
-// GALLERY LIGHTBOX
-// ===========================
-
+// gallery
 const galleryImages=document.querySelectorAll(".gallery-item img");
 
 const lightbox=document.createElement("div");
@@ -245,10 +226,7 @@ e.stopPropagation();
 
 });
 
-// ===========================
-// GELAI COUNTER
-// ===========================
-
+// counter
 const counters=document.querySelectorAll(".gelai-stats h2");
 
 let started=false;
@@ -303,10 +281,7 @@ window.addEventListener("scroll",runCounter);
 
 runCounter();
 
-// ===========================
-// IMAGE HOVER TILT
-// ===========================
-
+// tilt
 document.querySelectorAll(".gallery-item").forEach(card=>{
 
 card.addEventListener("mousemove",(e)=>{
@@ -338,20 +313,14 @@ card.style.transform="";
 
 });
 
-// ===========================
-// LOADER
-// ===========================
-
+// loader
 window.addEventListener("load",()=>{
 
 document.body.classList.add("loaded");
 
 });
 
-// ===========================
-// CONSOLE MESSAGE 😎
-// ===========================
-
+// console
 console.log("%cCEAMOTO Website","font-size:22px;font-weight:bold;color:#d4a017;");
 
 console.log("%cDesigned by Gelai","font-size:16px;color:white;");

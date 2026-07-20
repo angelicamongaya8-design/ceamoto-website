@@ -1,20 +1,4 @@
-// ===========================
-// CEAMOTO - admin.js
-// Password-gated product manager for admin.html. Lets whoever
-// manages the shop add, edit, hide, or delete products directly -
-// writes go straight to the Products tab of the CEAMOTO Bookings
-// Google Sheet through the same Apps Script Web App the Shop page
-// reads from and the booking form posts to. No GitHub/code edits
-// needed to change what's for sale.
-//
-// Security note: the admin password is never stored in this file or
-// checked in the browser - every check happens server-side in Apps
-// Script (checkAdminPassword). This page only remembers the password
-// you type for the current browser tab (sessionStorage, cleared when
-// the tab closes) so you don't have to retype it on every action.
-// Treat this URL like a login page - don't share it publicly, and
-// log out on shared/public computers.
-// ===========================
+// admin
 
 (function(){
 
@@ -96,9 +80,7 @@
         }, 3200);
     }
 
-    // ===========================
-    // LOGIN / SESSION
-    // ===========================
+    // session
 
     function showLogin(){
         loginSection.classList.remove("admin-hidden");
@@ -173,10 +155,7 @@
         showLogin();
     });
 
-    // On load, if a password was already entered earlier this tab
-    // session, re-check it's still valid (in case it was changed in
-    // Apps Script Script Properties since) before skipping the login
-    // screen.
+    // restore
     async function restoreSession(){
 
         let saved = "";
@@ -201,9 +180,7 @@
 
     }
 
-    // ===========================
-    // LOAD + RENDER PRODUCTS
-    // ===========================
+    // table
 
     function populateCategoryOptions(){
 
@@ -286,8 +263,7 @@
             return;
         }
 
-        // Featured products first, then keep the rest in the order the
-        // sheet returns them (matches how the Shop page lists things).
+        // sort
         const sorted = list.slice().sort((a, b) => (b.featured === true) - (a.featured === true));
 
         tableBody.innerHTML = sorted.map(rowHTML).join("");
@@ -321,9 +297,7 @@
     refreshBtn.addEventListener("click", loadProducts);
     searchInput.addEventListener("input", renderTable);
 
-    // ===========================
-    // ADD / EDIT MODAL
-    // ===========================
+    // modal
 
     function openModal(mode, product){
 

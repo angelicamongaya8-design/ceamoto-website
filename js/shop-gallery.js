@@ -1,19 +1,6 @@
-// ===========================
-// CEAMOTO - shop-gallery.js
-// Clickable product images with
-// a prev/next lightbox showing
-// the 3 angles per product.
-// Only triggers from inside the
-// product detail modal's photo now
-// (product-modal.js) - the grid
-// card's own photo opens that modal
-// first instead of jumping straight
-// to the gallery.
-// ===========================
+// gallery
 
 (function(){
-
-    // Build the lightbox once and reuse it
 
     const lightbox = document.createElement("div");
     lightbox.id = "product-lightbox";
@@ -67,9 +54,7 @@
         lightbox.classList.remove("show");
     }
 
-    // Event delegation so this also works for catalog
-    // cards that get rendered into the page after load.
-
+    // delegation
     document.addEventListener("click", (e) => {
 
         const card = e.target.closest(".product-modal-img-wrap");

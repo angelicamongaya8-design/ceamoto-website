@@ -1,11 +1,4 @@
-// ===========================
-// CEAMOTO - cart.js
-// Order-request cart (no online
-// payment) - builds an order
-// summary and hands it off to
-// Messenger for manual payment
-// (GCash/Cash) arrangement.
-// ===========================
+// cart
 
 (function(){
 
@@ -29,13 +22,7 @@ function formatPrice(num){
 return "₱" + Number(num).toLocaleString("en-US");
 }
 
-// TRUSTED PRICE LOOKUP
-// A customer can open devtools and edit a product card's data-price
-// attribute (or edit the cart's saved data in localStorage directly)
-// before adding to cart / checking out. To stop a tampered price from
-// ever reaching the order message Rollie sees on Messenger, every price
-// is re-derived here from a source-of-truth list instead of trusted
-// from the page/DOM/localStorage at the moment it's used.
+// price
 const FEATURED_PRICES = {
 product1: 4839,
 product2: 3499,
@@ -77,8 +64,7 @@ const checkoutCopyBtn = document.querySelector(".checkout-copy-btn");
 const checkoutOpenBtn = document.querySelector(".checkout-open-btn");
 const checkoutOrderNumberEl = document.querySelector(".checkout-order-number");
 
-// If this page has no cart UI (shouldn't happen on shop.html,
-// but keeps the script safe if included elsewhere), stop here.
+// guard
 if(!cartBtn || !cartPanel){
 return;
 }
@@ -184,12 +170,7 @@ cartOverlay.classList.remove("show");
 cartPanel.classList.remove("show");
 }
 
-// "FLY TO CART" ANIMATION
-// Shopee-style: instead of popping the cart panel open on every
-// single Add to Cart tap (annoying when adding several items in a
-// row), clone the product's photo and animate it flying into the
-// cart icon, then give the icon a little bump. The cart itself
-// stays closed until the person actually taps it.
+// fly
 function flyToCart(sourceImgEl){
 
 if(!sourceImgEl || !cartBtn) return;
@@ -225,8 +206,7 @@ const endCenterY = endRect.top + endRect.height / 2;
 const deltaX = endCenterX - startCenterX;
 const deltaY = endCenterY - startCenterY;
 
-// Force a reflow so the browser registers the starting position
-// before we change it, otherwise the transition gets skipped.
+// reflow
 void flyer.offsetWidth;
 
 requestAnimationFrame(() => {
@@ -241,22 +221,17 @@ setTimeout(() => cartBtn.classList.remove("bump"), 350);
 };
 
 flyer.addEventListener("transitionend", cleanup, { once: true });
-setTimeout(cleanup, 700); // safety net in case transitionend never fires
+setTimeout(cleanup, 700);
 }
 
-// ADD TO CART BUTTONS
-// (event delegation so this also works for catalog
-// cards that get rendered into the page after load)
-
+// add
 document.addEventListener("click", (e) => {
 
 const btn = e.target.closest(".add-to-cart-btn");
 
 if(!btn) return;
 
-// closest("[data-id]") instead of ".shop-card" so this also
-// works from the product detail modal, which carries the same
-// data-id/name/price/img attributes but isn't a .shop-card.
+// data-id
 const card = btn.closest("[data-id]");
 
 if(!card) return;
@@ -284,10 +259,7 @@ flyToCart(productImg);
 
 });
 
-// BUY NOW BUTTONS
-// Skips the cart entirely - builds a single-item order and jumps
-// straight to the checkout modal, Shopee-style.
-
+// buynow
 document.addEventListener("click", (e) => {
 
 const btn = e.target.closest(".buy-now-btn");
@@ -310,13 +282,13 @@ openCheckoutModal([product]);
 
 });
 
-// CART BUTTON / PANEL CONTROLS
+// controls
 
 cartBtn.addEventListener("click", openCart);
 cartClose.addEventListener("click", closeCart);
 cartOverlay.addEventListener("click", closeCart);
 
-// ITEM QTY / REMOVE (event delegation)
+// qty
 
 cartItemsBox.addEventListener("click", (e) => {
 
@@ -333,22 +305,13 @@ changeQty(id, -1);
 }else if(e.target.closest(".cart-item-remove")){
 removeItem(id);
 }else if(typeof window.CEAMOTO_OPEN_PRODUCT_MODAL === "function"){
-// Let a customer check full product details (photos, description,
-// reviews) for something already in the cart, instead of having to
-// close the cart and go find it again in the grid. The product
-// modal's own overlay renders on top of the cart panel (it has a
-// higher z-index), so the cart stays open underneath - closing the
-// modal reveals the cart again exactly as it was, no re-click of
-// the cart button needed.
+// modal
 window.CEAMOTO_OPEN_PRODUCT_MODAL(id);
 }
 
 });
 
-// COPY-TO-CLIPBOARD HELPER
-// (Messenger's m.me links don't reliably pre-fill a message
-// on all devices/browsers, so we copy the order summary and
-// ask the person to paste it into the chat instead.)
+// copy
 
 function copyToClipboard(text){
 if(navigator.clipboard && navigator.clipboard.writeText){
@@ -370,17 +333,9 @@ try{ document.execCommand("copy"); }catch(e){}
 document.body.removeChild(textarea);
 }
 
-// CHECKOUT MODAL
-// (Since Messenger can't be reliably pre-filled with the order
-// text, we show the summary in a modal so the person can copy
-// it, open Messenger, and paste it into the chat themselves.)
+// checkout
 
-// Order reference number so both the customer and CEAMOTO can point
-// to the same order when following up. This same ref is also POSTed
-// to the Orders sheet (see recordOrder() below) so it doubles as the
-// reference customers use later on leave-review.html - once Rollie
-// marks that order Delivered, this ref unlocks the review form for
-// the product(s) in it.
+// ref
 function generateOrderNumber(){
 const stamp = Date.now().toString().slice(-8);
 return "CEA-" + stamp;
@@ -404,12 +359,7 @@ message += "\n\nPlease let me know how to pay (GCash/Cash) and arrange pickup or
 return message;
 }
 
-// Records the order to the Orders tab of the Products/Bookings Google
-// Sheet (via the same Apps Script Web App) so it can later be marked
-// "Delivered" by Rollie and matched against a review submission on
-// leave-review.html. Fire-and-forget: if this fails (offline, Apps
-// Script hiccup, etc.) the Messenger checkout itself still works fine,
-// it just won't be reviewable later until Rollie knows to follow up.
+// record
 function recordOrder(items, orderNumber){
 
 if(typeof BOOKING_ENDPOINT_URL === "undefined" || BOOKING_ENDPOINT_URL.indexOf("PASTE_YOUR") !== -1){
@@ -433,9 +383,7 @@ console.error("Failed to record order for review tracking:", err);
 
 }
 
-// items defaults to the full persisted cart (normal "Checkout" flow).
-// Buy Now passes a single-item array instead, without touching the
-// saved cart.
+// items
 function openCheckoutModal(items){
 
 const orderItems = sanitizeItems(items || cart);
@@ -486,23 +434,18 @@ checkoutOpenBtn.addEventListener("click", () => {
 window.open(MESSENGER_URL, "_blank");
 });
 
-// INITIAL RENDER
+// render
 
 renderCart();
 
-// Re-check saved cart prices once every script (including the product
-// catalog) has finished loading, in case someone edited the cart's
-// localStorage entry directly instead of using the Add to Cart button.
+// recheck
 window.addEventListener("load", () => {
 cart = sanitizeItems(cart);
 saveCart(cart);
 renderCart();
 });
 
-// shop-catalog.js now loads the real product list asynchronously
-// (fetched from the Products Google Sheet), so it can still be
-// loading after the page's "load" event fires. Once it's ready,
-// re-check the saved cart's prices again against the live data.
+// catalog
 window.addEventListener("ceamotoCatalogReady", () => {
 cart = sanitizeItems(cart);
 saveCart(cart);

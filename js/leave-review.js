@@ -1,12 +1,4 @@
-// ===========================
-// CEAMOTO - leave-review.js
-// Self-service product reviews: the customer enters their Order
-// Reference (given at Shop checkout), we ask the Apps Script Web App
-// to confirm that order exists and has been marked "Delivered" by
-// Rollie, then let the customer write a review per product in that
-// order. Submitting posts each review to the Reviews sheet and marks
-// the order as reviewed so it can't be resubmitted.
-// ===========================
+// review
 
 (function(){
 

@@ -1,10 +1,4 @@
-// ===========================
-// CEAMOTO - manage-booking.js
-// Self-service booking cancellation: the customer enters their
-// Booking Reference + email, we ask the Apps Script Web App to match
-// it against the Bookings sheet and mark it Cancelled (which also
-// archives the row, same as when Rollie does it manually in the sheet).
-// ===========================
+// cancel
 
 (function(){
 
