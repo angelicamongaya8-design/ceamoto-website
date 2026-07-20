@@ -2993,6 +2993,7 @@ button.secondary-btn{
     font-size:.88rem;
     line-height:1.7;
     margin-top:18px;
+    margin-bottom:0;
     padding-top:16px;
     border-top:1px solid rgba(255,255,255,.08);
     white-space:pre-line;
