@@ -1,6 +1,14 @@
-/* admin */
+/* ===========================
+   CEAMOTO - admin.css
+   Styles for admin.html, the
+   password-gated product manager.
+   Reuses color variables and
+   .form-group / .booking-form
+   patterns already defined in
+   style.css.
+=========================== */
 
-/* login */
+/* LOGIN CARD */
 
 .admin-login-wrap{
     max-width:420px;
@@ -35,7 +43,7 @@
     text-align:left;
 }
 
-/* header */
+/* ADMIN PANEL HEADER */
 
 .admin-hidden{
     display:none!important;
@@ -47,7 +55,7 @@
     justify-content:space-between;
     flex-wrap:wrap;
     gap:16px;
-    margin-bottom:30px;
+    margin-bottom:22px;
 }
 
 .admin-panel-header h2{
@@ -125,7 +133,46 @@
     color:#14100d;
 }
 
-/* search */
+/* TABS */
+
+.admin-tabs{
+    display:flex;
+    gap:8px;
+    flex-wrap:wrap;
+    margin-bottom:26px;
+    border-bottom:1px solid rgba(255,255,255,.08);
+}
+
+.admin-tab-btn{
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    background:transparent;
+    border:none;
+    color:var(--gray);
+    font-family:'Poppins',sans-serif;
+    font-weight:600;
+    font-size:.9rem;
+    padding:12px 18px;
+    cursor:pointer;
+    border-bottom:3px solid transparent;
+    transition:.2s;
+}
+
+.admin-tab-btn:hover{
+    color:#fff;
+}
+
+.admin-tab-btn.active{
+    color:var(--primary);
+    border-bottom-color:var(--primary);
+}
+
+.admin-tab-panel.admin-hidden{
+    display:none!important;
+}
+
+/* SEARCH */
 
 .admin-search-wrap{
     position:relative;
@@ -157,7 +204,7 @@
     border-color:var(--primary);
 }
 
-/* table */
+/* TABLE */
 
 .admin-table-wrap{
     background:var(--card);
@@ -256,7 +303,27 @@
     color:var(--gray);
 }
 
-/* modal */
+/* BUSINESS INFO FORM */
+
+.admin-business-form-wrap{
+    background:var(--card);
+    border-radius:var(--radius);
+    border:1px solid rgba(255,255,255,.05);
+    padding:28px;
+    max-width:640px;
+}
+
+.admin-business-form-wrap .form-group{
+    text-align:left;
+    margin-bottom:18px;
+}
+
+.admin-business-form-wrap textarea{
+    resize:vertical;
+    min-height:90px;
+}
+
+/* MODAL */
 
 .admin-modal-overlay{
     position:fixed;
@@ -354,7 +421,7 @@
     cursor:pointer;
 }
 
-/* toast */
+/* TOAST */
 
 .admin-toast{
     position:fixed;
@@ -385,7 +452,7 @@
     border-left-color:#e85555;
 }
 
-/* misc */
+/* MISC */
 
 .admin-loading{
     text-align:center;
