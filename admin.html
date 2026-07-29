@@ -1,57 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Product Admin | CEAMOTO</title>
+<title>Admin | CEAMOTO</title>
 
-    <meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="noindex, nofollow">
 
-    <link rel="icon" type="image/jpeg" href="images/logo.jpg">
+<link rel="icon" type="image/jpeg" href="images/logo.jpg">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
-    <link rel="stylesheet"
-    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <link rel="stylesheet" href="css/style.css?v=54">
-    <link rel="stylesheet" href="css/admin.css?v=2">
+<link rel="stylesheet" href="css/style.css?v=54">
+<link rel="stylesheet" href="css/admin.css?v=3">
 </head>
 
 <body data-page="admin.html">
 
 <nav class="navbar">
 
-    <a href="index.html" class="logo">
-        <img src="images/logo.jpg" alt="CEAMOTO Logo">
-        <span>CEAMOTO</span>
-    </a>
+<a href="index.html" class="logo">
+<img src="images/logo.jpg" alt="CEAMOTO Logo">
+<span>CEAMOTO</span>
+</a>
 
-    <ul class="nav-links">
+<ul class="nav-links">
 
-        <li><a href="index.html">Home</a></li>
+<li><a href="index.html">Home</a></li>
 
-        <li><a href="shop.html">Shop</a></li>
+<li><a href="shop.html">Shop</a></li>
 
-        <li><a href="booking.html">Book Service</a></li>
+<li><a href="booking.html">Book Service</a></li>
 
-    </ul>
+</ul>
 
-    <a href="shop.html" class="btn-nav">
+<a href="shop.html" class="btn-nav">
 
-        Back to Shop
+Back to Shop
 
-    </a>
+</a>
 
-    <button class="menu-btn">
+<button class="menu-btn">
 
-        <i class="fa-solid fa-bars"></i>
+<i class="fa-solid fa-bars"></i>
 
-    </button>
+</button>
 
 </nav>
 
@@ -59,33 +59,33 @@
 
 <section id="admin-login" class="top-offset">
 
-    <div class="admin-login-wrap">
+<div class="admin-login-wrap">
 
-        <div class="admin-login-card">
+<div class="admin-login-card">
 
-            <i class="fa-solid fa-lock"></i>
+<i class="fa-solid fa-lock"></i>
 
-            <h2>Product Admin</h2>
+<h2>Site Admin</h2>
 
-            <p>Enter the admin password to manage CEAMOTO's Shop products.</p>
+<p>Enter the admin password to manage CEAMOTO's products, services, gallery, and business info.</p>
 
-            <form id="admin-login-form" novalidate>
+<form id="admin-login-form" novalidate>
 
-                <div class="form-group">
-                    <label for="admin-password">Password</label>
-                    <input type="password" id="admin-password" autocomplete="current-password" required>
-                    <p class="field-error" id="admin-login-error">Incorrect password. Please try again.</p>
-                </div>
+<div class="form-group">
+<label for="admin-password">Password</label>
+<input type="password" id="admin-password" autocomplete="current-password" required>
+<p class="field-error" id="admin-login-error">Incorrect password. Please try again.</p>
+</div>
 
-                <button type="submit" class="booking-submit-btn" id="admin-login-btn">
-                    <i class="fa-solid fa-right-to-bracket"></i> Log In
-                </button>
+<button type="submit" class="booking-submit-btn" id="admin-login-btn">
+<i class="fa-solid fa-right-to-bracket"></i> Log In
+</button>
 
-            </form>
+</form>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
 </section>
 
@@ -93,139 +93,379 @@
 
 <section id="admin-panel" class="admin-hidden">
 
-    <div class="admin-panel-header">
+<div class="admin-panel-header">
 
-        <div>
-            <h2>Manage Products</h2>
-            <span class="admin-count" id="admin-count"></span>
-        </div>
+<div>
+<h2 id="admin-panel-heading">Manage Products</h2>
+<span class="admin-count" id="admin-count"></span>
+</div>
 
-        <div class="admin-header-actions">
+<div class="admin-header-actions">
 
-            <button class="admin-btn admin-btn-primary" id="admin-add-btn">
-                <i class="fa-solid fa-plus"></i> Add Product
-            </button>
+<button class="admin-btn admin-btn-primary" id="admin-add-btn">
+<i class="fa-solid fa-plus"></i> <span id="admin-add-btn-label">Add Product</span>
+</button>
 
-            <button class="admin-btn admin-btn-secondary" id="admin-refresh-btn">
-                <i class="fa-solid fa-rotate"></i> Refresh
-            </button>
+<button class="admin-btn admin-btn-secondary" id="admin-refresh-btn">
+<i class="fa-solid fa-rotate"></i> Refresh
+</button>
 
-            <button class="admin-btn admin-btn-secondary" id="admin-logout-btn">
-                <i class="fa-solid fa-right-from-bracket"></i> Log Out
-            </button>
+<button class="admin-btn admin-btn-secondary" id="admin-logout-btn">
+<i class="fa-solid fa-right-from-bracket"></i> Log Out
+</button>
 
-        </div>
+</div>
 
-    </div>
+</div>
 
-    <div class="admin-search-wrap">
-        <i class="fa-solid fa-magnifying-glass"></i>
-        <input type="text" id="admin-search" placeholder="Search products by name...">
-    </div>
+<div class="admin-tabs">
+<button class="admin-tab-btn active" data-tab="products"><i class="fa-solid fa-box"></i> Products</button>
+<button class="admin-tab-btn" data-tab="services"><i class="fa-solid fa-gears"></i> Services</button>
+<button class="admin-tab-btn" data-tab="gallery"><i class="fa-solid fa-images"></i> Gallery</button>
+<button class="admin-tab-btn" data-tab="business"><i class="fa-solid fa-store"></i> Business Info</button>
+</div>
 
-    <div class="admin-table-wrap">
+<div class="admin-search-wrap" id="admin-search-wrap">
+<i class="fa-solid fa-magnifying-glass"></i>
+<input type="text" id="admin-search" placeholder="Search products by name...">
+</div>
 
-        <table class="admin-table">
+<!-- products tab -->
+<div class="admin-tab-panel" data-tab-panel="products">
 
-            <thead>
-                <tr>
-                    <th>Photo</th>
-                    <th>Product</th>
-                    <th>Price</th>
-                    <th>Category</th>
-                    <th>Stock</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
+<div class="admin-table-wrap">
 
-            <tbody id="admin-table-body">
-                <tr class="admin-empty-row"><td colspan="7">Loading products...</td></tr>
-            </tbody>
+<table class="admin-table">
 
-        </table>
+<thead>
+<tr>
+<th>Photo</th>
+<th>Product</th>
+<th>Price</th>
+<th>Category</th>
+<th>Stock</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
 
-    </div>
+<tbody id="admin-table-body">
+<tr class="admin-empty-row"><td colspan="7">Loading products...</td></tr>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- services tab -->
+<div class="admin-tab-panel admin-hidden" data-tab-panel="services">
+
+<div class="admin-table-wrap">
+
+<table class="admin-table">
+
+<thead>
+<tr>
+<th>Icon</th>
+<th>Title</th>
+<th>Description</th>
+<th>Order</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="admin-services-table-body">
+<tr class="admin-empty-row"><td colspan="6">Loading services...</td></tr>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- gallery tab -->
+<div class="admin-tab-panel admin-hidden" data-tab-panel="gallery">
+
+<div class="admin-table-wrap">
+
+<table class="admin-table">
+
+<thead>
+<tr>
+<th>Photo</th>
+<th>Category</th>
+<th>Caption</th>
+<th>Order</th>
+<th>Status</th>
+<th>Actions</th>
+</tr>
+</thead>
+
+<tbody id="admin-gallery-table-body">
+<tr class="admin-empty-row"><td colspan="6">Loading gallery...</td></tr>
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+<!-- business info tab -->
+<div class="admin-tab-panel admin-hidden" data-tab-panel="business">
+
+<div class="admin-table-wrap admin-business-form-wrap">
+
+<form id="admin-business-form" novalidate>
+
+<div class="form-group">
+<label for="bf-address">Address</label>
+<input type="text" id="bf-address">
+</div>
+
+<div class="form-group">
+<label for="bf-phone">Phone Number</label>
+<input type="text" id="bf-phone">
+</div>
+
+<div class="form-group">
+<label for="bf-hours">Business Hours</label>
+<input type="text" id="bf-hours">
+</div>
+
+<div class="form-group">
+<label for="bf-facebook">Facebook URL</label>
+<input type="text" id="bf-facebook">
+</div>
+
+<div class="form-group">
+<label for="bf-shopee">Shopee URL</label>
+<input type="text" id="bf-shopee">
+</div>
+
+<div class="form-group">
+<label for="bf-instagram">Instagram URL</label>
+<input type="text" id="bf-instagram">
+</div>
+
+<div class="form-group">
+<label for="bf-about">Footer About Text</label>
+<textarea id="bf-about" rows="2"></textarea>
+</div>
+
+<p class="field-error" id="admin-business-error"></p>
+
+<button type="button" class="admin-btn admin-btn-primary" id="admin-business-save-btn">
+<i class="fa-solid fa-check"></i> Save Business Info
+</button>
+
+</form>
+
+</div>
+
+</div>
 
 </section>
 
-<!-- modal -->
+<!-- product modal -->
 
 <div class="admin-modal-overlay" id="admin-modal-overlay"></div>
 
 <div class="admin-modal" id="admin-modal">
 
-    <div class="admin-modal-header">
-        <h3 id="admin-modal-title">Add Product</h3>
-        <button class="admin-modal-close" id="admin-modal-close" aria-label="Close">
-            <i class="fa-solid fa-xmark"></i>
-        </button>
-    </div>
+<div class="admin-modal-header">
+<h3 id="admin-modal-title">Add Product</h3>
+<button class="admin-modal-close" id="admin-modal-close" aria-label="Close">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
 
-    <div class="admin-modal-body">
+<div class="admin-modal-body">
 
-        <form id="admin-product-form" novalidate>
+<form id="admin-product-form" novalidate>
 
-            <input type="hidden" id="pf-id">
+<input type="hidden" id="pf-id">
 
-            <div class="form-group">
-                <label for="pf-name">Product Name <span class="req">*</span></label>
-                <input type="text" id="pf-name" required>
-            </div>
+<div class="form-group">
+<label for="pf-name">Product Name <span class="req">*</span></label>
+<input type="text" id="pf-name" required>
+</div>
 
-            <div class="form-row">
+<div class="form-row">
 
-                <div class="form-group">
-                    <label for="pf-price">Price (₱) <span class="req">*</span></label>
-                    <input type="number" id="pf-price" min="0" step="1" required>
-                </div>
+<div class="form-group">
+<label for="pf-price">Price (₱) <span class="req">*</span></label>
+<input type="number" id="pf-price" min="0" step="1" required>
+</div>
 
-                <div class="form-group">
-                    <label for="pf-stock">Stock <span class="req">*</span></label>
-                    <input type="number" id="pf-stock" min="0" step="1" required>
-                </div>
+<div class="form-group">
+<label for="pf-stock">Stock <span class="req">*</span></label>
+<input type="number" id="pf-stock" min="0" step="1" required>
+</div>
 
-            </div>
+</div>
 
-            <div class="form-group">
-                <label for="pf-category">Category <span class="req">*</span></label>
-                <input type="text" id="pf-category" list="pf-category-options" required placeholder="e.g. Lights & Electrical">
-                <datalist id="pf-category-options"></datalist>
-            </div>
+<div class="form-group">
+<label for="pf-category">Category <span class="req">*</span></label>
+<input type="text" id="pf-category" list="pf-category-options" required placeholder="e.g. Lights & Electrical">
+<datalist id="pf-category-options"></datalist>
+</div>
 
-            <div class="form-group">
-                <label for="pf-images">Photo URL(s) <span class="req">*</span></label>
-                <textarea id="pf-images" rows="3" placeholder="Paste one image link per line. The first line is used as the main photo." required></textarea>
-                <p class="field-hint">Tip: upload photos anywhere online (e.g. Google Photos, Imgur) and paste the direct image link here. Add more lines for extra angles.</p>
-            </div>
+<div class="form-group">
+<label for="pf-images">Photo URL(s) <span class="req">*</span></label>
+<textarea id="pf-images" rows="3" placeholder="Paste one image link per line. The first line is used as the main photo." required></textarea>
+<p class="field-hint">Tip: upload photos anywhere online (e.g. Google Photos, Imgur) and paste the direct image link here. Add more lines for extra angles.</p>
+</div>
 
-            <div class="form-group">
-                <label for="pf-description">Description</label>
-                <textarea id="pf-description" rows="2" placeholder="Optional short description"></textarea>
-            </div>
+<div class="form-group">
+<label for="pf-description">Description</label>
+<textarea id="pf-description" rows="2" placeholder="Optional short description"></textarea>
+</div>
 
-            <div class="checkbox-row">
-                <input type="checkbox" id="pf-featured">
-                <label for="pf-featured">Show in "Featured Builds" section</label>
-            </div>
+<div class="checkbox-row">
+<input type="checkbox" id="pf-featured">
+<label for="pf-featured">Show in "Featured Builds" section</label>
+</div>
 
-            <div class="checkbox-row">
-                <input type="checkbox" id="pf-active" checked>
-                <label for="pf-active">Visible on Shop page (uncheck to hide without deleting)</label>
-            </div>
+<div class="checkbox-row">
+<input type="checkbox" id="pf-active" checked>
+<label for="pf-active">Visible on Shop page (uncheck to hide without deleting)</label>
+</div>
 
-            <p class="field-error" id="admin-form-error"></p>
+<p class="field-error" id="admin-form-error"></p>
 
-        </form>
+</form>
 
-    </div>
+</div>
 
-    <div class="admin-modal-footer">
-        <button class="admin-btn admin-btn-secondary" id="admin-modal-cancel">Cancel</button>
-        <button class="admin-btn admin-btn-primary" id="admin-modal-save">
-            <i class="fa-solid fa-check"></i> Save Product
-        </button>
-    </div>
+<div class="admin-modal-footer">
+<button class="admin-btn admin-btn-secondary" id="admin-modal-cancel">Cancel</button>
+<button class="admin-btn admin-btn-primary" id="admin-modal-save">
+<i class="fa-solid fa-check"></i> Save Product
+</button>
+</div>
+
+</div>
+
+<!-- service modal -->
+
+<div class="admin-modal" id="admin-service-modal">
+
+<div class="admin-modal-header">
+<h3 id="admin-service-modal-title">Add Service</h3>
+<button class="admin-modal-close" id="admin-service-modal-close" aria-label="Close">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+
+<div class="admin-modal-body">
+
+<form id="admin-service-form" novalidate>
+
+<input type="hidden" id="sf-id">
+
+<div class="form-group">
+<label for="sf-title">Service Title <span class="req">*</span></label>
+<input type="text" id="sf-title" required>
+</div>
+
+<div class="form-group">
+<label for="sf-icon">Icon (Font Awesome class)</label>
+<input type="text" id="sf-icon" placeholder="e.g. fa-solid fa-gears">
+<p class="field-hint">Browse icons at fontawesome.com/search and paste the class name, e.g. "fa-solid fa-oil-can".</p>
+</div>
+
+<div class="form-group">
+<label for="sf-description">Description</label>
+<textarea id="sf-description" rows="3" placeholder="Short description shown on the Services page"></textarea>
+</div>
+
+<div class="form-group">
+<label for="sf-order">Display Order</label>
+<input type="number" id="sf-order" min="0" step="1" value="0">
+<p class="field-hint">Lower numbers show first.</p>
+</div>
+
+<div class="checkbox-row">
+<input type="checkbox" id="sf-active" checked>
+<label for="sf-active">Visible on Services page (uncheck to hide without deleting)</label>
+</div>
+
+<p class="field-error" id="admin-service-form-error"></p>
+
+</form>
+
+</div>
+
+<div class="admin-modal-footer">
+<button class="admin-btn admin-btn-secondary" id="admin-service-modal-cancel">Cancel</button>
+<button class="admin-btn admin-btn-primary" id="admin-service-modal-save">
+<i class="fa-solid fa-check"></i> Save Service
+</button>
+</div>
+
+</div>
+
+<!-- gallery modal -->
+
+<div class="admin-modal" id="admin-gallery-modal">
+
+<div class="admin-modal-header">
+<h3 id="admin-gallery-modal-title">Add Gallery Photo</h3>
+<button class="admin-modal-close" id="admin-gallery-modal-close" aria-label="Close">
+<i class="fa-solid fa-xmark"></i>
+</button>
+</div>
+
+<div class="admin-modal-body">
+
+<form id="admin-gallery-form" novalidate>
+
+<input type="hidden" id="gf-id">
+
+<div class="form-group">
+<label for="gf-image">Photo URL <span class="req">*</span></label>
+<input type="text" id="gf-image" required placeholder="Paste the direct image link">
+<p class="field-hint">Tip: upload photos anywhere online (e.g. Google Photos, Imgur) and paste the direct image link here.</p>
+</div>
+
+<div class="form-group">
+<label for="gf-category">Category Label</label>
+<input type="text" id="gf-category" placeholder="e.g. Fabrication">
+</div>
+
+<div class="form-group">
+<label for="gf-caption">Caption</label>
+<input type="text" id="gf-caption" placeholder="e.g. Custom Seat">
+</div>
+
+<div class="form-group">
+<label for="gf-order">Display Order</label>
+<input type="number" id="gf-order" min="0" step="1" value="0">
+<p class="field-hint">Lower numbers show first.</p>
+</div>
+
+<div class="checkbox-row">
+<input type="checkbox" id="gf-active" checked>
+<label for="gf-active">Visible on Gallery page (uncheck to hide without deleting)</label>
+</div>
+
+<p class="field-error" id="admin-gallery-form-error"></p>
+
+</form>
+
+</div>
+
+<div class="admin-modal-footer">
+<button class="admin-btn admin-btn-secondary" id="admin-gallery-modal-cancel">Cancel</button>
+<button class="admin-btn admin-btn-primary" id="admin-gallery-modal-save">
+<i class="fa-solid fa-check"></i> Save Photo
+</button>
+</div>
 
 </div>
 
@@ -237,7 +477,7 @@
 
 <script src="js/booking-config.js?v=2"></script>
 <script src="js/script.js?v=6"></script>
-<script src="js/admin.js?v=2"></script>
+<script src="js/admin.js?v=3"></script>
 
 </body>
 </html>
