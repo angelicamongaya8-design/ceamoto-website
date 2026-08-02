@@ -1,4 +1,4 @@
-// cancel
+// manage-booking
 
 (function(){
 

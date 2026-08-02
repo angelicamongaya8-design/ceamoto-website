@@ -1,18 +1,4 @@
-// ===========================
-// CEAMOTO - stock.js
-// Applies stock-based UI to the 4
-// static "Featured Builds" cards
-// (data-driven catalog cards get
-// the same treatment baked
-// straight into shop-catalog.js's
-// render, since those are rebuilt
-// on every render() call anyway).
-//
-// Behavior:
-// - stock <= 0  -> hide the card entirely
-// - 1-5 left    -> show a "Only X left!" badge
-// - 6+ left     -> no badge, business as usual
-// ===========================
+// stock
 
 (function(){
 

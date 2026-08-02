@@ -34,13 +34,13 @@
         };
     }
 
-    // past
+    // min date
     if(dateInput){
         const t = todayParts();
         dateInput.min = `${t.yyyy}-${t.mm}-${t.dd}`;
     }
 
-    // parse
+    // parse time
     function optionHour24(text){
         const match = /^(\d+):\d+\s*(AM|PM)$/i.exec(text.trim());
         if(!match){
@@ -57,7 +57,7 @@
         return hour;
     }
 
-    // slots
+    // availability
     let takenTimes = [];
 
     function refreshTimeAvailability(){
@@ -110,7 +110,7 @@
 
     }
 
-    // reset
+    // reset waitlist
     function resetWaitlistUI(){
 
         if(waitlistBtn){
@@ -123,7 +123,7 @@
 
     }
 
-    // availability
+    // availability check
     let availabilityRequestId = 0;
 
     async function checkAvailability(dateStr){
@@ -142,7 +142,7 @@
             const res = await fetch(BOOKING_ENDPOINT_URL + "?action=availability&date=" + encodeURIComponent(dateStr));
             const data = await res.json();
 
-            // stale
+            // stale check
             if(requestId !== availabilityRequestId){
                 return;
             }
@@ -163,7 +163,7 @@
     }
 
     function isSunday(dateStr){
-        // parse
+        // local date
         const parts = dateStr.split("-");
         if(parts.length !== 3){
             return false;
@@ -335,7 +335,7 @@
             const res = await fetch(BOOKING_ENDPOINT_URL, {
                 method: "POST",
                 headers: {
-                    // cors
+                    // text/plain
                     "Content-Type": "text/plain;charset=utf-8"
                 },
                 body: JSON.stringify(booking)
@@ -351,7 +351,7 @@
                     bookingRefDisplay.textContent = data.ref ? ("Booking Reference: " + data.ref) : "";
                 }
 
-                // scroll
+                // scroll fix
                 requestAnimationFrame(() => {
                     const navbar = document.querySelector(".navbar");
                     const navbarH = navbar ? navbar.offsetHeight : 100;
