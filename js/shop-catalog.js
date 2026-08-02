@@ -1,9 +1,8 @@
-// shop-catalog
+// catalog
 
 (function(){
 
-    // navbar height
-
+    // navbar
     const navbar = document.querySelector(".navbar");
 
     function syncNavbarHeight(){
@@ -23,7 +22,7 @@
         return;
     }
 
-    // hide featured
+    // hide
     if(featuredSection){
         featuredSection.style.display = "none";
     }
@@ -51,7 +50,7 @@
         return "₱" + Number(num).toLocaleString("en-US");
     }
 
-    // categories
+    // category
     function populateCategoryOptions(list){
 
         if(!categorySelect) return;
@@ -65,7 +64,7 @@
 
     function getFiltered(){
 
-        // in stock
+        // filter
         let list = allProducts.filter(p => (p.stock === undefined || p.stock > 0));
 
         if(category !== "all"){
@@ -90,7 +89,6 @@
         }else if(sortBy === "price-high"){
             sorted.sort((a, b) => b.price - a.price);
         }
-        // relevance = default order
 
         return sorted;
 
@@ -123,7 +121,7 @@
         return `<span class="shop-sold">${num.toLocaleString("en-US")} sold</span>`;
     }
 
-    // sold out
+    // soldout
     function isSoldOut(p){
         return p.soldOut === true || p.soldOut === "TRUE" || p.soldOut === 1;
     }
@@ -136,12 +134,14 @@
     function cardHTML(p){
 
         const safeName = escapeAttr(p.name);
+        const safeDescription = escapeAttr(p.description || "");
+        const safeReviews = escapeAttr(JSON.stringify(p.reviews || []));
         const images = (p.images && p.images.length) ? p.images : (p.img ? [p.img] : []);
         const mainImg = images[0] || "";
         const soldOut = isSoldOut(p);
 
         return `
-            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}" data-rating="${p.rating || ''}" data-sold="${p.sold || ''}" data-soldout="${soldOut ? '1' : ''}">
+            <div class="shop-card" data-id="${p.id}" data-name="${safeName}" data-price="${p.price}" data-img="${mainImg}" data-stock="${p.stock}" data-rating="${p.rating || ''}" data-sold="${p.sold || ''}" data-soldout="${soldOut ? '1' : ''}" data-description="${safeDescription}" data-reviews="${safeReviews}">
                 <div class="shop-card-img${soldOut ? ' sold-out' : ''}" data-images='${JSON.stringify(images)}'>
                     <img src="${mainImg}" alt="${safeName}" loading="lazy">
                     ${imageCountHTML(images)}
@@ -162,7 +162,6 @@
     }
 
     // featured
-
     function renderFeatured(){
 
         if(!featuredGrid) return;
@@ -176,8 +175,6 @@
         featuredGrid.innerHTML = featured.map(cardHTML).join("");
 
     }
-
-    // catalog
 
     // columns
     function currentColumnCount(){
@@ -198,7 +195,7 @@
 
         const filtered = getSorted(getFiltered());
 
-        // full row
+        // rows
         let visibleCount = Math.min(shown, filtered.length);
         const columns = currentColumnCount();
         const remainder = visibleCount % columns;
@@ -230,8 +227,7 @@
         searchClearBtn.classList.toggle("show", searchInput.value.length > 0);
     }
 
-    // scroll fix
-
+    // scroll
     function keepSearchInView(){
         const wrap = document.querySelector(".catalog-list-wrap");
         if(!wrap) return;
@@ -251,7 +247,7 @@
             keepSearchInView();
         });
 
-        // blur
+        // keydown
         searchInput.addEventListener("keydown", (e) => {
             if(e.key === "Enter"){
                 e.preventDefault();
@@ -300,12 +296,12 @@
         sortSelect.addEventListener("change", () => {
             sortBy = sortSelect.value;
             render();
+            keepSearchInView();
         });
 
     }
 
     // loading
-
     function showLoading(){
         const msg = '<p class="catalog-empty">Loading products...</p>';
         if(featuredGrid) featuredGrid.innerHTML = msg;
@@ -319,7 +315,6 @@
     }
 
     // fetch
-
     async function loadProducts(){
 
         if(typeof BOOKING_ENDPOINT_URL === "undefined" || BOOKING_ENDPOINT_URL.indexOf("PASTE_YOUR") !== -1){
@@ -340,14 +335,14 @@
 
             allProducts = data.products;
 
-            // catalog global
+            // global
             window.CEAMOTO_CATALOG = allProducts;
 
             populateCategoryOptions(allProducts.filter(p => (p.stock === undefined || p.stock > 0)));
             renderFeatured();
             render();
 
-            // ready event
+            // ready
             window.dispatchEvent(new Event("ceamotoCatalogReady"));
 
         }catch(err){
