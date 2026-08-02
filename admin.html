@@ -19,7 +19,7 @@
 href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
 <link rel="stylesheet" href="css/style.css?v=54">
-<link rel="stylesheet" href="css/admin.css?v=3">
+<link rel="stylesheet" href="css/admin.css?v=4">
 </head>
 
 <body data-page="admin.html">
@@ -82,6 +82,64 @@ Back to Shop
 </button>
 
 </form>
+
+<p class="admin-forgot-link"><a href="#" id="admin-forgot-link">Forgot password?</a></p>
+
+</div>
+
+<div class="admin-login-card admin-hidden" id="admin-forgot-card">
+
+<i class="fa-solid fa-key"></i>
+
+<h2>Reset Password</h2>
+
+<div id="admin-forgot-step1">
+
+<p>We'll email a 6-digit reset code to the business owner's registered email address.</p>
+
+<button type="button" class="booking-submit-btn" id="admin-forgot-send-btn">
+<i class="fa-solid fa-paper-plane"></i> Send Reset Code
+</button>
+
+<p class="field-error" id="admin-forgot-error"></p>
+
+</div>
+
+<div class="admin-hidden" id="admin-forgot-step2">
+
+<p>We sent a code to <strong id="admin-forgot-masked-email"></strong>. Enter it below along with your new password.</p>
+
+<div class="form-group">
+<label for="admin-reset-code">Reset Code</label>
+<input type="text" id="admin-reset-code" inputmode="numeric" maxlength="6" placeholder="6-digit code">
+</div>
+
+<div class="form-group">
+<label for="admin-reset-new-password">New Password</label>
+<input type="password" id="admin-reset-new-password" autocomplete="new-password">
+</div>
+
+<div class="form-group">
+<label for="admin-reset-confirm-password">Confirm New Password</label>
+<input type="password" id="admin-reset-confirm-password" autocomplete="new-password">
+</div>
+
+<button type="button" class="booking-submit-btn" id="admin-reset-submit-btn">
+<i class="fa-solid fa-check"></i> Reset Password
+</button>
+
+<p class="field-error" id="admin-reset-error"></p>
+<p class="field-hint" id="admin-reset-resend"><a href="#" id="admin-reset-resend-link">Didn't get a code? Send again</a></p>
+
+</div>
+
+<div class="admin-hidden" id="admin-forgot-success">
+
+<p><i class="fa-solid fa-circle-check" style="color:#4fcf94"></i> Password updated. You can now log in with your new password.</p>
+
+</div>
+
+<p class="admin-forgot-link"><a href="#" id="admin-forgot-back-link">Back to Log In</a></p>
 
 </div>
 
@@ -477,7 +535,7 @@ Back to Shop
 
 <script src="js/booking-config.js?v=2"></script>
 <script src="js/script.js?v=6"></script>
-<script src="js/admin.js?v=3"></script>
+<script src="js/admin.js?v=4"></script>
 
 </body>
 </html>
