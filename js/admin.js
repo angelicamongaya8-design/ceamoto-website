@@ -145,6 +145,147 @@ loginError.classList.add("show");
 
 });
 
+// ===================== FORGOT PASSWORD =====================
+
+const forgotLink = document.getElementById("admin-forgot-link");
+const forgotBackLink = document.getElementById("admin-forgot-back-link");
+const loginCard = document.querySelector("#admin-login .admin-login-card:not(#admin-forgot-card)");
+const forgotCard = document.getElementById("admin-forgot-card");
+const forgotStep1 = document.getElementById("admin-forgot-step1");
+const forgotStep2 = document.getElementById("admin-forgot-step2");
+const forgotSuccess = document.getElementById("admin-forgot-success");
+const forgotSendBtn = document.getElementById("admin-forgot-send-btn");
+const forgotError = document.getElementById("admin-forgot-error");
+const forgotMaskedEmail = document.getElementById("admin-forgot-masked-email");
+const resetCodeInput = document.getElementById("admin-reset-code");
+const resetNewPasswordInput = document.getElementById("admin-reset-new-password");
+const resetConfirmPasswordInput = document.getElementById("admin-reset-confirm-password");
+const resetSubmitBtn = document.getElementById("admin-reset-submit-btn");
+const resetError = document.getElementById("admin-reset-error");
+const resetResendLink = document.getElementById("admin-reset-resend-link");
+
+let sendingReset = false;
+let submittingReset = false;
+
+function showForgotCard(){
+loginCard.classList.add("admin-hidden");
+forgotCard.classList.remove("admin-hidden");
+forgotStep1.classList.remove("admin-hidden");
+forgotStep2.classList.add("admin-hidden");
+forgotSuccess.classList.add("admin-hidden");
+forgotError.textContent = "";
+resetError.textContent = "";
+}
+
+function showLoginCard(){
+forgotCard.classList.add("admin-hidden");
+loginCard.classList.remove("admin-hidden");
+}
+
+forgotLink.addEventListener("click", (e) => {
+e.preventDefault();
+showForgotCard();
+});
+
+forgotBackLink.addEventListener("click", (e) => {
+e.preventDefault();
+showLoginCard();
+});
+
+async function requestResetCode(){
+
+if(sendingReset || !endpointReady()) return;
+
+sendingReset = true;
+forgotError.textContent = "";
+forgotSendBtn.disabled = true;
+forgotSendBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Sending...';
+
+try{
+
+const data = await callApi({action: "forgotPassword"});
+
+if(!data || data.result !== "success"){
+throw new Error((data && data.error) || "Failed to send reset code");
+}
+
+forgotMaskedEmail.textContent = data.maskedEmail || "your email";
+forgotStep1.classList.add("admin-hidden");
+forgotStep2.classList.remove("admin-hidden");
+resetCodeInput.value = "";
+resetNewPasswordInput.value = "";
+resetConfirmPasswordInput.value = "";
+resetError.textContent = "";
+
+}catch(err){
+console.error("Failed to send reset code:", err);
+forgotError.textContent = err.message || "Something went wrong. Please try again.";
+}
+
+sendingReset = false;
+forgotSendBtn.disabled = false;
+forgotSendBtn.innerHTML = '<i class="fa-solid fa-paper-plane"></i> Send Reset Code';
+
+}
+
+forgotSendBtn.addEventListener("click", requestResetCode);
+
+resetResendLink.addEventListener("click", (e) => {
+e.preventDefault();
+requestResetCode();
+});
+
+resetSubmitBtn.addEventListener("click", async () => {
+
+if(submittingReset) return;
+
+const code = resetCodeInput.value.trim();
+const newPassword = resetNewPasswordInput.value;
+const confirmPassword = resetConfirmPasswordInput.value;
+
+resetError.textContent = "";
+
+if(!code){
+resetError.textContent = "Please enter the code we emailed you.";
+return;
+}
+
+if(newPassword.length < 6){
+resetError.textContent = "New password must be at least 6 characters.";
+return;
+}
+
+if(newPassword !== confirmPassword){
+resetError.textContent = "Passwords do not match.";
+return;
+}
+
+submittingReset = true;
+resetSubmitBtn.disabled = true;
+resetSubmitBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Saving...';
+
+try{
+
+const data = await callApi({action: "resetPassword", code: code, newPassword: newPassword});
+
+if(!data || data.result !== "success"){
+throw new Error((data && data.error) || "Failed to reset password");
+}
+
+forgotStep2.classList.add("admin-hidden");
+forgotSuccess.classList.remove("admin-hidden");
+
+}catch(err){
+console.error("Failed to reset password:", err);
+resetError.textContent = err.message || "Something went wrong. Please try again.";
+}
+
+submittingReset = false;
+resetSubmitBtn.disabled = false;
+resetSubmitBtn.innerHTML = '<i class="fa-solid fa-check"></i> Reset Password';
+
+});
+
 logoutBtn.addEventListener("click", () => {
 password = "";
 try{ sessionStorage.removeItem(SESSION_KEY); }catch(e){}
