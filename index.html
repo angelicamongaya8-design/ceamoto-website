@@ -25,7 +25,7 @@
     <link rel="stylesheet"
     href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
 
-    <link rel="stylesheet" href="css/style.css?v=54">
+    <link rel="stylesheet" href="css/style.css?v=35">
 </head>
 
 <body data-page="index.html">
@@ -165,73 +165,21 @@
 
         </div>
 
+        <div class="gelai-image">
+
+            <img src="images/caferacer.jpg"
+            alt="Classic Motorcycle">
+
+            <div class="gelai-image-tag">
+                Featured Build
+                <span>Custom Cafe Racer Remodel</span>
+            </div>
+
+        </div>
+
     </section>
 
 </header>
-
-<!-- styles -->
-
-<section id="build-styles">
-
-    <div class="section-header reveal">
-
-        <span>Explore Our Builds</span>
-
-        <h2>Find Your Style</h2>
-
-        <p>
-            From cafe racers to full restorations, here's a look at
-            the builds CEAMOTO specializes in.
-        </p>
-
-    </div>
-
-    <div class="style-accordion">
-
-        <a href="gallery.html" class="style-panel" style="background-image:url('images/gallery4.jpg')">
-            <div class="style-panel-body">
-                <span class="style-label-vertical">Cafe Racer</span>
-                <span class="style-label-horizontal">Cafe Racer</span>
-                <i class="fa-solid fa-arrow-right style-panel-arrow"></i>
-            </div>
-        </a>
-
-        <a href="gallery.html" class="style-panel" style="background-image:url('images/gallery6.jpg')">
-            <div class="style-panel-body">
-                <span class="style-label-vertical">Scrambler</span>
-                <span class="style-label-horizontal">Scrambler</span>
-                <i class="fa-solid fa-arrow-right style-panel-arrow"></i>
-            </div>
-        </a>
-
-        <a href="gallery.html" class="style-panel" style="background-image:url('images/gallery7.jpg')">
-            <div class="style-panel-body">
-                <span class="style-label-vertical">Brat</span>
-                <span class="style-label-horizontal">Brat</span>
-                <i class="fa-solid fa-arrow-right style-panel-arrow"></i>
-            </div>
-        </a>
-
-        <a href="gallery.html" class="style-panel" style="background-image:url('images/gallery2.jpg')">
-            <div class="style-panel-body">
-                <span class="style-label-vertical">Restoration</span>
-                <span class="style-label-horizontal">Restoration</span>
-                <i class="fa-solid fa-arrow-right style-panel-arrow"></i>
-            </div>
-        </a>
-
-        <a href="gallery.html" class="style-panel" style="background-image:url('images/gallery1.jpg')">
-            <div class="style-panel-body">
-                <span class="style-label-vertical">Custom Parts</span>
-                <span class="style-label-horizontal">Custom Parts</span>
-                <i class="fa-solid fa-arrow-right style-panel-arrow"></i>
-            </div>
-        </a>
-
-    </div>
-
-</section>
-
 <!-- footer -->
 
 <footer>
@@ -277,8 +225,6 @@
                 <li><a href="about.html"><i class="fa-solid fa-chevron-right"></i> About</a></li>
 
                 <li><a href="contact.html"><i class="fa-solid fa-chevron-right"></i> Contact</a></li>
-
-                <li><a href="leave-review.html"><i class="fa-solid fa-chevron-right"></i> Leave a Review</a></li>
 
             </ul>
 
@@ -349,7 +295,7 @@
 
 <!-- floating -->
 
-<button class="messenger-btn" id="chat-launch-btn" aria-label="Chat with us" onclick="if(window.$crisp){$crisp.push(['do','chat:show']);$crisp.push(['do','chat:open']);}">
+<button class="messenger-btn" id="chat-launch-btn" aria-label="Chat with us" onclick="if(window.Tawk_API && Tawk_API.toggle){Tawk_API.toggle();}">
 
     <i class="fa-solid fa-comment-dots"></i>
 
@@ -357,28 +303,24 @@
 
 <!-- javascript -->
 
-<script src="js/script.js?v=6"></script>
+<script src="js/script.js?v=5"></script>
 
-<!-- crisp -->
+<!-- tawk -->
 
 <script type="text/javascript">
-window.$crisp = [];
-window.CRISP_WEBSITE_ID = "bf5a1d59-a713-45bc-83fe-ba802aa8304f";
-(function() {
-    var d = document;
-    var s = d.createElement("script");
-    s.src = "https://client.crisp.chat/l.js";
-    s.async = 1;
-    d.getElementsByTagName("head")[0].appendChild(s);
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+(function(){
+var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+s1.async=true;
+s1.src='https://embed.tawk.to/6a5780f56076b81d4b66861c/1jtisvg57';
+s1.charset='UTF-8';
+s1.setAttribute('crossorigin','*');
+s0.parentNode.insertBefore(s1,s0);
 })();
-// Using our own site-styled chat button instead of Crisp's default
-// floating launcher, so keep theirs hidden and only reveal the panel
-// when our button is clicked.
-$crisp.push(["config", "color:theme", ["orange"]]);
-$crisp.push(["do", "chat:hide"]);
-$crisp.push(["on", "chat:closed", function () {
-    $crisp.push(["do", "chat:hide"]);
-}]);
+Tawk_API.onLoad = function(){
+    // hide widget
+    Tawk_API.hideWidget();
+};
 </script>
 
 </body>

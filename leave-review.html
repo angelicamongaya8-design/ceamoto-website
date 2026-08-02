@@ -288,9 +288,7 @@ window.CRISP_WEBSITE_ID = "bf5a1d59-a713-45bc-83fe-ba802aa8304f";
     s.async = 1;
     d.getElementsByTagName("head")[0].appendChild(s);
 })();
-// Using our own site-styled chat button instead of Crisp's default
-// floating launcher, so keep theirs hidden and only reveal the panel
-// when our button is clicked.
+// hide widget
 $crisp.push(["config", "color:theme", ["orange"]]);
 $crisp.push(["do", "chat:hide"]);
 $crisp.push(["on", "chat:closed", function () {

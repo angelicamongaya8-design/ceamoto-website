@@ -18,11 +18,7 @@ body{
     z-index:0;
 }
 
-/* Sitewide video background - same clip as the Home hero, but fixed
-   behind every page's content (not just the top banner) so the video
-   plays continuously as an ambient backdrop while browsing any tab.
-   Explicit negative z-index (rather than relying on DOM order alone)
-   so it can never end up on top of page content/text. */
+/* video */
 
 .site-video-bg{
     position:fixed;
@@ -66,9 +62,7 @@ section{
     padding:100px 8%;
 }
 
-/* ===========================
-   COLORS
-=========================== */
+/* colors */
 
 :root{
 
@@ -88,9 +82,7 @@ section{
 
 }
 
-/* ===========================
-   GELAI
-=========================== */
+/* gelai */
 
 .gelai{
 
@@ -120,11 +112,7 @@ section{
 
 }
 
-/* Video gelai background: single clip, cropped full-bleed to fill the
-   whole banner (same treatment as a normal landscape gelai video).
-   The source clip is portrait, so this zooms into the center of the
-   frame - deliberate, so it reads as an intentional close-up detail
-   shot instead of a vertical video "windowed" inside a blurred box. */
+/* video */
 
 .gelai-video-bg{
 
@@ -147,9 +135,7 @@ section{
 
 }
 
-/* ===========================
-   NAVBAR
-=========================== */
+/* navbar */
 
 .navbar{
 
@@ -315,9 +301,7 @@ section{
 
 }
 
-/* ===========================
-   GELAI CONTENT
-=========================== */
+/* gelai */
 
 .gelai-content{
 
@@ -607,9 +591,7 @@ section{
 
 }
 
-/* ===========================
-   ANIMATIONS
-=========================== */
+/* animations */
 
 @keyframes fadeUp{
 
@@ -651,9 +633,7 @@ section{
 
 }
 
-/* ===========================
-   RESPONSIVE
-=========================== */
+/* responsive */
 
 @media(max-width:991px){
 
@@ -799,9 +779,7 @@ gap:30px;
 }
 
 }
-/* ===========================
-   SERVICES
-=========================== */
+/* services */
 
 #services{
     background:transparent;
@@ -898,9 +876,7 @@ gap:30px;
 }
 }
 
-/* ===========================
-   WHY CHOOSE US
-=========================== */
+/* features */
 
 #about{
     background:transparent;
@@ -968,9 +944,7 @@ gap:30px;
     font-size:.95rem;
 }
 
-/* ===========================
-   GALLERY
-=========================== */
+/* gallery */
 
 #gallery{
     background:transparent;
@@ -1065,9 +1039,7 @@ gap:30px;
 }
 }
 
-/* ===========================
-   RESPONSIVE
-=========================== */
+/* responsive */
 
 @media(max-width:991px){
 
@@ -1100,9 +1072,7 @@ gap:30px;
 }
 
 }
-/* ===========================
-   TESTIMONIALS
-=========================== */
+/* testimonials */
 
 #testimonials{
     background:#14100d;
@@ -1165,9 +1135,7 @@ gap:30px;
     font-size:.9rem;
 }
 
-/* ===========================
-   CONTACT
-=========================== */
+/* contact */
 
 #contact{
     background:transparent;
@@ -1260,9 +1228,7 @@ gap:30px;
     border-radius:20px;
 }
 
-/* ===========================
-   FOOTER
-=========================== */
+/* footer */
 
 footer{
     position:relative;
@@ -1396,9 +1362,7 @@ footer::before{
     white-space:nowrap;
 }
 
-/* ===========================
-   FLOATING BUTTONS
-=========================== */
+/* floating */
 
 .back-to-top,
 .messenger-btn{
@@ -1431,9 +1395,7 @@ footer::before{
 }
 }
 
-/* ===========================
-   SCROLL ANIMATION
-=========================== */
+/* scroll */
 
 .reveal{
     opacity:1;
@@ -1446,9 +1408,7 @@ footer::before{
     transform:translateY(0);
 }
 
-/* ===========================
-   RESPONSIVE
-=========================== */
+/* responsive */
 
 @media(max-width:991px){
 
@@ -1573,10 +1533,7 @@ footer{
     box-shadow:0 20px 50px rgba(0,0,0,.4);
 }
 
-/* ===========================
-   MOBILE NAV - BOOK SERVICE
-   (btn-nav is hidden at 991px)
-=========================== */
+/* mobilenav */
 
 .nav-cta-item{
     display:none;
@@ -1663,9 +1620,7 @@ footer{
     color:#111;
 }
 
-/* ===========================
-   PRODUCT LIGHTBOX (SHOP)
-=========================== */
+/* lightbox */
 
 #product-lightbox{
     position:fixed;
@@ -1797,14 +1752,10 @@ footer{
 }
 
 .loaded{
-    /* page fade-in removed per request */
+    /* fade */
 }
 
-/* ===========================
-   SUBPAGE TOP SPACING
-   (clears the fixed navbar on
-   pages that don't use .gelai)
-=========================== */
+/* spacing */
 
 .top-offset{
     padding-top:100px;
@@ -1822,9 +1773,7 @@ footer{
     }
 }
 
-/* ===========================
-   TABLET / IPAD FIX
-=========================== */
+/* tablet */
 
 @media(min-width:768px) and (max-width:991px){
 
@@ -1897,9 +1846,7 @@ footer{
 
 }
 
-/* ===========================
-   SHOP
-=========================== */
+/* shop */
 
 #shop{
     background:transparent;
@@ -2066,11 +2013,7 @@ footer{
 }
 
 @media(max-width:600px){
-/* Extra right clearance so the right-column cards never sit
-   underneath the fixed cart/messenger/back-to-top buttons that
-   float in that same corner while scrolling. Left stays at the
-   normal 8% - only the right needs the buffer, so the grid still
-   reads as full-width instead of squeezed toward the center. */
+/* clearance */
 #shop{
     padding-right:calc(8% + 40px);
 }
@@ -2108,9 +2051,7 @@ footer{
 }
 }
 
-/* ===========================
-   SHOP - FULL CATALOG
-=========================== */
+/* catalog */
 
 #featured-section{
     margin-bottom:80px;
@@ -2284,9 +2225,7 @@ button.secondary-btn{
     cursor:pointer;
 }
 
-/* ===========================
-   CART - FLOATING BUTTON
-=========================== */
+/* cart */
 
 .cart-btn{
     position:fixed;
@@ -2329,9 +2268,7 @@ button.secondary-btn{
     border:2px solid var(--dark);
 }
 
-/* ===========================
-   CART - OVERLAY + PANEL
-=========================== */
+/* cart */
 
 .cart-overlay{
     position:fixed;
@@ -2571,9 +2508,7 @@ button.secondary-btn{
     transform:translateX(-50%) translateY(0);
 }
 
-/* ===========================
-   CHECKOUT MODAL
-=========================== */
+/* checkout */
 
 .checkout-overlay{
     position:fixed;
@@ -2780,9 +2715,7 @@ button.secondary-btn{
 }
 }
 
-/* ===========================
-   PRODUCT DETAIL MODAL
-=========================== */
+/* modal */
 
 .product-overlay{
     position:fixed;
@@ -2936,9 +2869,7 @@ button.secondary-btn{
 
 }
 
-/* ===========================
-   BOOKING
-=========================== */
+/* booking */
 
 #booking{
     background:transparent;
