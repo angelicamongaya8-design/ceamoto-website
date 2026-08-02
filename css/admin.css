@@ -1,3 +1,13 @@
+/* ===========================
+   CEAMOTO - admin.css
+   Styles for admin.html, the
+   password-gated product manager.
+   Reuses color variables and
+   .form-group / .booking-form
+   patterns already defined in
+   style.css.
+=========================== */
+
 /* LOGIN CARD */
 
 .admin-login-wrap{
@@ -31,6 +41,25 @@
 
 .admin-login-card .form-group{
     text-align:left;
+}
+
+.admin-forgot-link{
+    margin-top:18px;
+    font-size:.85rem;
+}
+
+.admin-forgot-link a{
+    color:var(--secondary);
+    text-decoration:none;
+}
+
+.admin-forgot-link a:hover{
+    text-decoration:underline;
+}
+
+#admin-forgot-card .field-hint{
+    margin-top:14px;
+    text-align:center;
 }
 
 /* ADMIN PANEL HEADER */
