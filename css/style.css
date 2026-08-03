@@ -1651,12 +1651,7 @@ footer{
     grid-template-columns:repeat(2,1fr);
     align-items:center;
     justify-items:center;
-    row-gap:14px;
-}
-
-.footer-links a{
-    justify-content:center;
-}
+    row-gap:14px;}.footer-links a{justify-content:center;}.footer-links li:last-child{grid-column:1/-1;margin-top:6px;}.footer-links li:last-child a{display:inline-flex;width:fit-content;margin:0 auto;padding:10px 24px;background:rgba(210,105,30,.12);border:1px solid rgba(210,105,30,.4);border-radius:30px;color:var(--secondary);font-weight:600;}
 
 .social-icons{
     justify-content:center;
