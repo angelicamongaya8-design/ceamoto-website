@@ -1299,11 +1299,7 @@ gap:30px;
 }
 }
 
-.testimonial-card i{
-    color:var(--primary);
-    font-size:1.4rem;
-    margin-bottom:20px;
-}
+.testimonial-card i{color:var(--primary);font-size:1.4rem;margin-bottom:20px;}.star-rating{display:flex;gap:4px;margin-bottom:12px;}.star-rating i{font-size:.85rem;margin-bottom:0;}
 
 .testimonial-card p{
     color:var(--gray);
